@@ -12,57 +12,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  
-/* TLAČÍTKO JSME TU */
-
-.arrival-button {
-  display: block;
-  width: 100%;
-  margin-top: 28px;
-  padding: 19px 15px;
-
-  border: 2px solid #F0D99B;
-  border-radius: 12px;
-
-  background: linear-gradient(
-    135deg,
-    #E9D29A,
-    #B38A47
-  );
-
-  color: #092F25;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 17px;
-  font-weight: 800;
-  text-decoration: none;
-  text-align: center;
-
-  box-shadow:
-    0 5px 0 #6C502A,
-    0 8px 22px rgba(0,0,0,.35);
-
-  transition: transform .2s;
-}
-
-.arrival-button:active {
-  transform: translateY(4px);
-  box-shadow: 0 1px 0 #6C502A;
-}
-
-.arrival-button:focus-visible {
-  outline: 3px solid white;
-  outline-offset: 4px;
-}
-
-.arrival-note {
-  margin-top: 15px;
-  color: #D9C395;
-  font-size: 12px;
-  font-style: italic;
-  line-height: 1.6;
-}
-
-  
 <style>
 :root {
   --green: #092F25;
@@ -89,13 +38,12 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* POZADÍ */
+/* HISTORICKÉ POZADÍ */
 
 .background {
   position: fixed;
   inset: 0;
   z-index: 0;
-
   background:
     linear-gradient(
       rgba(4,24,18,.38),
@@ -104,7 +52,7 @@ body {
     url("pozadi.png") center center / cover no-repeat;
 }
 
-/* OBSAH */
+/* HLAVNÍ OBSAH */
 
 .container {
   position: relative;
@@ -165,7 +113,7 @@ h1 {
   line-height: 1.7;
 }
 
-/* KARTA */
+/* HLAVNÍ KARTA */
 
 .card {
   width: 100%;
@@ -281,6 +229,7 @@ h1 {
 .divider {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   margin: 28px 0;
   color: var(--gold);
@@ -295,7 +244,7 @@ h1 {
   background: rgba(217,190,123,.55);
 }
 
-/* QR SEKCE */
+/* QR KÓD */
 
 .qr-title {
   font-family: 'Cinzel', serif;
@@ -319,6 +268,7 @@ h1 {
   background: #FFFFFF;
   border: 4px solid #D9BE7B;
   box-shadow: 0 8px 25px rgba(0,0,0,.4);
+  cursor: pointer;
 }
 
 .qr-frame img {
@@ -326,7 +276,6 @@ h1 {
   width: min(62vw, 250px);
   max-width: 100%;
   height: auto;
-  image-rendering: auto;
 }
 
 .qr-note {
@@ -336,7 +285,64 @@ h1 {
   line-height: 1.6;
 }
 
-/* ZVĚTŠENÍ QR */
+/* TLAČÍTKO JSME TU */
+
+.arrival-button {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+  padding: 20px 15px;
+
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #E9D29A,
+    #B38A47
+  );
+
+  color: #092F25;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+
+  box-shadow:
+    0 5px 0 #6C502A,
+    0 8px 22px rgba(0,0,0,.35);
+
+  transition: transform .2s;
+}
+
+.arrival-button:hover {
+  background: linear-gradient(
+    135deg,
+    #F4DFAE,
+    #C9A15C
+  );
+}
+
+.arrival-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.arrival-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.arrival-note {
+  margin: 17px 0 0;
+  color: #D9C395;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* ZVĚTŠENÍ QR KÓDU */
 
 .qr-overlay {
   position: fixed;
@@ -391,7 +397,7 @@ h1 {
   text-shadow: 0 2px 5px #000;
 }
 
-/* MALÉ MOBILY */
+/* MOBILY */
 
 @media (max-width: 390px) {
   .container {
@@ -415,10 +421,16 @@ h1 {
     width: 66px;
     height: 66px;
   }
+
+  .arrival-button {
+    font-size: 16px;
+    padding: 18px 12px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .play-button {
+  .play-button,
+  .arrival-button {
     transition: none;
   }
 }
@@ -430,6 +442,8 @@ h1 {
 <div class="background"></div>
 
 <main class="container">
+
+  <!-- LOGO -->
 
   <img
     class="logo"
@@ -457,7 +471,7 @@ h1 {
       se to dobrovolně namočili.
     </p>
 
-    <!-- AUDIO -->
+    <!-- AUDIO PŘEHRÁVAČ -->
 
     <div class="audio-player">
 
@@ -523,7 +537,6 @@ h1 {
       class="qr-frame"
       id="qrButton"
       aria-label="Zvětšit QR kód"
-      style="cursor:pointer"
     >
       <img
         src="Zahrada.png"
@@ -534,6 +547,18 @@ h1 {
     <div class="qr-note">
       🔍 Klepnutím QR kód zvětšíte.
     </div>
+
+    <!-- TLAČÍTKO JSME TU -->
+
+    <a href="s3.html" class="arrival-button">
+      📍 JSME TU!
+    </a>
+
+    <p class="arrival-note">
+      Dorazili jste na místo?
+      Výborně! Teď už jen doufat,
+      že je to opravdu to správné. 😂
+    </p>
 
   </section>
 
@@ -559,7 +584,11 @@ h1 {
       alt="Zvětšený QR kód"
     >
 
-    <button class="close-qr" id="closeQr">
+    <button
+      class="close-qr"
+      id="closeQr"
+      type="button"
+    >
       ✕ ZAVŘÍT
     </button>
 
@@ -574,6 +603,8 @@ const currentTimeText = document.getElementById("currentTime");
 const durationText = document.getElementById("duration");
 const audioStatus = document.getElementById("audioStatus");
 
+/* FORMÁTOVÁNÍ ČASU */
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) return "0:00";
 
@@ -583,6 +614,8 @@ function formatTime(seconds) {
   return minutes + ":" + String(secs).padStart(2, "0");
 }
 
+/* AKTUALIZACE PŘEHRÁVÁNÍ */
+
 function updateProgress() {
   currentTimeText.textContent = formatTime(audio.currentTime);
 
@@ -591,13 +624,15 @@ function updateProgress() {
   }
 }
 
+/* PLAY / PAUSE */
+
 playButton.addEventListener("click", async () => {
   if (audio.paused) {
     try {
       await audio.play();
     } catch (error) {
       audioStatus.textContent =
-        "Nahrávku nelze spustit. Zkontrolujte soubor Start.mp3.";
+        "Nahrávku nelze spustit. Zkontrolujte Start.mp3.";
     }
   } else {
     audio.pause();
@@ -627,7 +662,8 @@ audio.addEventListener("timeupdate", updateProgress);
 
 progress.addEventListener("input", () => {
   if (Number.isFinite(audio.duration) && audio.duration > 0) {
-    audio.currentTime = (Number(progress.value) / 100) * audio.duration;
+    audio.currentTime =
+      (Number(progress.value) / 100) * audio.duration;
   }
 });
 
@@ -635,7 +671,8 @@ audio.addEventListener("ended", () => {
   playButton.textContent = "▶";
   playButton.setAttribute("aria-label", "Přehrát nahrávku");
   progress.value = 100;
-  audioStatus.textContent = "✓ Zpráva byla přehrána. Vzhůru za dobrodružstvím!";
+  audioStatus.textContent =
+    "✓ Zpráva byla přehrána. Vzhůru za dobrodružstvím!";
 });
 
 audio.addEventListener("error", () => {
@@ -643,7 +680,7 @@ audio.addEventListener("error", () => {
     "Soubor Start.mp3 se nepodařilo načíst.";
 });
 
-/* QR KÓD */
+/* ZVĚTŠENÍ QR KÓDU */
 
 const qrOverlay = document.getElementById("qrOverlay");
 const qrButton = document.getElementById("qrButton");
@@ -662,12 +699,16 @@ function hideQr() {
 closeQr.addEventListener("click", hideQr);
 
 qrOverlay.addEventListener("click", (event) => {
-  if (event.target === qrOverlay) hideQr();
+  if (event.target === qrOverlay) {
+    hideQr();
+  }
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" &&
-      qrOverlay.classList.contains("active")) {
+  if (
+    event.key === "Escape" &&
+    qrOverlay.classList.contains("active")
+  ) {
     hideQr();
   }
 });
