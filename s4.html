@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Cesta zahradami | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+<link rel="preconnect"
+href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* HISTORICKÉ POZADÍ */
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.62)
+    ),
+    url("pozadi.png") center center / cover no-repeat;
+}
+
+/* HLAVNÍ OBSAH */
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(30px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* LOGO */
+
+.logo {
+  display: block;
+  width: min(42vw, 160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+/* ORNAMENT */
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+/* NADPIS */
+
+h1 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(25px, 6vw, 35px);
+  line-height: 1.3;
+  color: var(--cream);
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin-top: 12px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1.6;
+}
+
+/* HLAVNÍ KARTA */
+
+.card {
+  width: 100%;
+  margin-top: 27px;
+  padding: 28px 20px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 20px;
+  color: #E7CD91;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+}
+
+/* BÁSNIČKA */
+
+.riddle {
+  padding: 25px 13px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.riddle-icon {
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.verse {
+  margin: 0 0 25px;
+  color: #F5E6C5;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(13px, 3.7vw, 17px);
+  font-weight: 600;
+  line-height: 1.9;
+}
+
+.verse:last-child {
+  margin-bottom: 0;
+}
+
+.highlight {
+  color: #E7CD91;
+}
+
+/* TLAČÍTKA */
+
+.hint-button,
+.next-button {
+  display: block;
+  width: 100%;
+  padding: 18px 12px;
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: transform .2s;
+}
+
+.hint-button {
+  margin-top: 27px;
+  border: 1px solid #D9BE7B;
+  background: linear-gradient(135deg,#174D39,#0B3024);
+  color: #F5E6C5;
+  font-size: 13px;
+}
+
+.next-button {
+  margin-top: 15px;
+  border: 2px solid #F0D99B;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: #092F25;
+  font-size: 17px;
+  text-decoration: none;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.hint-button:active,
+.next-button:active {
+  transform: translateY(3px);
+}
+
+.hint-button:focus-visible,
+.next-button:focus-visible,
+.close-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+/* VTÍPEK */
+
+.note {
+  margin: 22px 0 0;
+  color: #D9C395;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* POPUP NÁPOVĚDY */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    18px
+    calc(20px + env(safe-area-inset-bottom));
+
+  background: rgba(0,0,0,.88);
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 400px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 25px 18px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  background: #103629;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0,0,0,.6);
+}
+
+.modal h2 {
+  margin: 0 0 13px;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  color: var(--gold);
+}
+
+.modal p {
+  color: var(--cream);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.qr-frame {
+  width: fit-content;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 12px;
+  background: #FFFFFF;
+  border: 3px solid #D9BE7B;
+  border-radius: 12px;
+}
+
+.qr-frame img {
+  display: block;
+  width: min(65vw, 260px);
+  max-width: 100%;
+  height: auto;
+}
+
+.close-button {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 15px;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  background: #174D39;
+  color: var(--cream);
+  font-family: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* PATIČKA */
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px #000;
+}
+
+/* MALÉ MOBILY */
+
+@media (max-width: 390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .logo {
+    width: min(40vw, 140px);
+  }
+
+  .card {
+    padding: 22px 14px;
+  }
+
+  .riddle {
+    padding: 20px 10px;
+  }
+
+  .verse {
+    font-size: 13px;
+  }
+
+  .next-button {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint-button,
+  .next-button {
+    transition: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <!-- LOGO -->
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>CESTA<br>ZAHRADAMI</h1>
+
+  <p class="subtitle">
+    🌿 DALŠÍ KROK VAŠÍ VÝPRAVY
+  </p>
+
+  <section class="card">
+
+    <h2>📜 VAŠE ZADÁNÍ</h2>
+
+    <!-- BÁSNIČKA -->
+
+    <div class="riddle">
+
+      <div class="riddle-icon">
+        🌿 🧭 🏰
+      </div>
+
+      <p class="verse">
+        A teď dál se vydáme,<br>
+        <span class="highlight">
+          uvidíme, kam nás vítr zavane.
+        </span>
+      </p>
+
+      <p class="verse">
+        K Barboře se opět blížíme,<br>
+        <span class="highlight">
+          avšak teď cestu skrz zahrady volíme!
+        </span>
+      </p>
+
+      <p class="verse">
+        A tak jdem a jdem,<br>
+        <span class="highlight">
+          dokud schody nenajdem!
+        </span>
+      </p>
+
+    </div>
+
+    <!-- NÁPOVĚDA -->
+
+    <button
+      type="button"
+      class="hint-button"
+      id="hintButton"
+    >
+      🧭 KDYŽ ORIENTACE NEORIENTUJE
+    </button>
+
+    <!-- POKRAČOVÁNÍ -->
+
+    <a href="s5.html" class="next-button">
+      📍 JSME TU!
+    </a>
+
+    <p class="note">
+      Pokud jste našli schody, gratulujeme.
+      Schopnost rozpoznat schodiště
+      je v dnešní době očividně vzácná. 😂
+    </p>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- VYSKAKOVACÍ NÁPOVĚDA -->
+
+<div
+  class="overlay"
+  id="hintOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hintTitle"
+>
+
+  <div class="modal">
+
+    <h2 id="hintTitle">
+      🧭 ORIENTAČNÍ KOLAPS
+    </h2>
+
+    <p>
+      Takže orientace selhala?
+      Nevadí. Někteří lidé se ztratí
+      i na rovné chodbě.
+    </p>
+
+    <p>
+      Tady máte malou záchranu:
+    </p>
+
+    <div class="qr-frame">
+      <img
+        src="schody1.png"
+        alt="QR nápověda ke schodům"
+      >
+    </div>
+
+    <button
+      type="button"
+      class="close-button"
+      id="closeHint"
+    >
+      ✕ ZAVŘÍT NÁPOVĚDU
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+const hintButton = document.getElementById("hintButton");
+const hintOverlay = document.getElementById("hintOverlay");
+const closeHint = document.getElementById("closeHint");
+
+function openHint() {
+  hintOverlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+
+  // Započítání nápovědy jen jednou na tomto stanovišti
+  const hintKey = "kh_hint_s4";
+
+  if (localStorage.getItem(hintKey) !== "1") {
+    const current = Number(localStorage.getItem("kh_hints") || "0");
+    localStorage.setItem("kh_hints", String(current + 1));
+    localStorage.setItem(hintKey, "1");
+  }
+
+  closeHint.focus();
+}
+
+function hideHint() {
+  hintOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+  hintButton.focus();
+}
+
+hintButton.addEventListener("click", openHint);
+closeHint.addEventListener("click", hideHint);
+
+hintOverlay.addEventListener("click", function(event) {
+  if (event.target === hintOverlay) {
+    hideHint();
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+  if (
+    event.key === "Escape" &&
+    hintOverlay.classList.contains("active")
+  ) {
+    hideHint();
+  }
+});
+</script>
+
+</body>
+</html>
