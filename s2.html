@@ -1,0 +1,626 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Začátek výpravy | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  color: var(--cream);
+  background: var(--green);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* POZADÍ */
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.62)
+    ),
+    url("pozadi.png") center center / cover no-repeat;
+}
+
+/* OBSAH */
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(24px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* LOGO */
+
+.logo {
+  display: block;
+  width: min(42vw, 160px);
+  height: auto;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+/* ORNAMENT */
+
+.ornament {
+  color: var(--gold);
+  font-size: 19px;
+  letter-spacing: 5px;
+  margin-bottom: 15px;
+}
+
+/* NADPIS */
+
+h1 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(25px, 6vw, 34px);
+  line-height: 1.3;
+  color: var(--cream);
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin: 13px 0 0;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+/* KARTA */
+
+.card {
+  width: 100%;
+  margin-top: 25px;
+  padding: 25px 20px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  color: #E7CD91;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+}
+
+.description {
+  color: #F2E9D6;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0 0 22px;
+}
+
+/* AUDIO PŘEHRÁVAČ */
+
+.audio-player {
+  width: 100%;
+  padding: 22px 17px;
+  border-radius: 16px;
+  border: 1px solid rgba(217,190,123,.65);
+  background: linear-gradient(
+    145deg,
+    #174D39,
+    #071F18
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 8px 25px rgba(0,0,0,.3);
+}
+
+.audio-label {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 17px;
+}
+
+.play-button {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  border: 2px solid #F0D99B;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: #092F25;
+  font-size: 29px;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 7px rgba(217,190,123,.09),
+    0 8px 20px rgba(0,0,0,.35);
+  transition: transform .2s;
+}
+
+.play-button:active {
+  transform: scale(.94);
+}
+
+.play-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 5px;
+}
+
+.audio-title {
+  color: var(--cream);
+  font-weight: 800;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  width: 100%;
+  height: 7px;
+  display: block;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--gold);
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 9px;
+  color: #D9C395;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.audio-status {
+  margin-top: 17px;
+  font-size: 12px;
+  color: #E7CD91;
+  min-height: 18px;
+}
+
+/* ODDĚLOVAČ */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0;
+  color: var(--gold);
+  font-size: 16px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  width: 60px;
+  height: 1px;
+  background: rgba(217,190,123,.55);
+}
+
+/* QR SEKCE */
+
+.qr-title {
+  font-family: 'Cinzel', serif;
+  font-size: 19px;
+  color: #E7CD91;
+  margin: 0 0 13px;
+}
+
+.qr-description {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--cream);
+  margin: 0 0 20px;
+}
+
+.qr-frame {
+  display: inline-block;
+  max-width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  border: 4px solid #D9BE7B;
+  box-shadow: 0 8px 25px rgba(0,0,0,.4);
+}
+
+.qr-frame img {
+  display: block;
+  width: min(62vw, 250px);
+  max-width: 100%;
+  height: auto;
+  image-rendering: auto;
+}
+
+.qr-note {
+  margin-top: 13px;
+  color: #D9C395;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* ZVĚTŠENÍ QR */
+
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.92);
+}
+
+.qr-overlay.active {
+  display: flex;
+}
+
+.qr-overlay-content {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.qr-overlay-content img {
+  display: block;
+  width: 100%;
+  max-height: 75dvh;
+  object-fit: contain;
+  padding: 15px;
+  border-radius: 12px;
+  background: white;
+}
+
+.close-qr {
+  margin-top: 20px;
+  padding: 13px 25px;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  background: #103629;
+  color: var(--cream);
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* PATIČKA */
+
+.footer {
+  margin-top: 28px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px #000;
+}
+
+/* MALÉ MOBILY */
+
+@media (max-width: 390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .logo {
+    width: min(40vw, 140px);
+  }
+
+  .card {
+    padding: 20px 14px;
+  }
+
+  .audio-player {
+    padding: 19px 13px;
+  }
+
+  .play-button {
+    width: 66px;
+    height: 66px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play-button {
+    transition: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>VAŠE VÝPRAVA<br>ZAČÍNÁ</h1>
+
+  <p class="subtitle">
+    🎧 NEJDŘÍV SI POSLECHNĚTE SVŮJ ÚKOL
+  </p>
+
+  <section class="card">
+
+    <h2>📜 ZPRÁVA PRO VÁŠ TÝM</h2>
+
+    <p class="description">
+      Než se vydáte do ulic Kutné Hory,
+      věnujte chvilku následující nahrávce.
+      Možná se dozvíte něco důležitého.
+      A možná jen zjistíte, do čeho jste
+      se to dobrovolně namočili.
+    </p>
+
+    <!-- AUDIO -->
+
+    <div class="audio-player">
+
+      <div class="audio-label">
+        ✦ TAJNÁ AUDIOZPRÁVA ✦
+      </div>
+
+      <button
+        class="play-button"
+        id="playButton"
+        type="button"
+        aria-label="Přehrát nahrávku"
+      >
+        ▶
+      </button>
+
+      <div class="audio-title">
+        🎧 Úvodní instrukce
+      </div>
+
+      <input
+        type="range"
+        class="progress"
+        id="progress"
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+        aria-label="Pozice přehrávání"
+      >
+
+      <div class="time-row">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+
+      <div class="audio-status" id="audioStatus">
+        Stiskněte ▶ pro přehrání
+      </div>
+
+      <audio id="audio" preload="metadata">
+        <source src="Start.mp3" type="audio/mpeg">
+      </audio>
+
+    </div>
+
+    <!-- ODDĚLOVAČ -->
+
+    <div class="divider">✦</div>
+
+    <!-- QR KÓD -->
+
+    <h2 class="qr-title">🧭 KAM DÁL?</h2>
+
+    <p class="qr-description">
+      Další vodítko najdete zde.
+      Naskenujte QR kód a pokračujte
+      ve své výpravě.
+    </p>
+
+    <button
+      type="button"
+      class="qr-frame"
+      id="qrButton"
+      aria-label="Zvětšit QR kód"
+      style="cursor:pointer"
+    >
+      <img
+        src="Zahrada.png"
+        alt="QR kód pro další část hry"
+      >
+    </button>
+
+    <div class="qr-note">
+      🔍 Klepnutím QR kód zvětšíte.
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- ZVĚTŠENÝ QR KÓD -->
+
+<div
+  class="qr-overlay"
+  id="qrOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Zvětšený QR kód"
+>
+  <div class="qr-overlay-content">
+
+    <img
+      src="Zahrada.png"
+      alt="Zvětšený QR kód"
+    >
+
+    <button class="close-qr" id="closeQr">
+      ✕ ZAVŘÍT
+    </button>
+
+  </div>
+</div>
+
+<script>
+const audio = document.getElementById("audio");
+const playButton = document.getElementById("playButton");
+const progress = document.getElementById("progress");
+const currentTimeText = document.getElementById("currentTime");
+const durationText = document.getElementById("duration");
+const audioStatus = document.getElementById("audioStatus");
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds)) return "0:00";
+
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+
+  return minutes + ":" + String(secs).padStart(2, "0");
+}
+
+function updateProgress() {
+  currentTimeText.textContent = formatTime(audio.currentTime);
+
+  if (Number.isFinite(audio.duration) && audio.duration > 0) {
+    progress.value = (audio.currentTime / audio.duration) * 100;
+  }
+}
+
+playButton.addEventListener("click", async () => {
+  if (audio.paused) {
+    try {
+      await audio.play();
+    } catch (error) {
+      audioStatus.textContent =
+        "Nahrávku nelze spustit. Zkontrolujte soubor Start.mp3.";
+    }
+  } else {
+    audio.pause();
+  }
+});
+
+audio.addEventListener("play", () => {
+  playButton.textContent = "❚❚";
+  playButton.setAttribute("aria-label", "Pozastavit nahrávku");
+  audioStatus.textContent = "Přehrává se tajná zpráva...";
+});
+
+audio.addEventListener("pause", () => {
+  playButton.textContent = "▶";
+  playButton.setAttribute("aria-label", "Přehrát nahrávku");
+
+  if (!audio.ended) {
+    audioStatus.textContent = "Nahrávka pozastavena";
+  }
+});
+
+audio.addEventListener("loadedmetadata", () => {
+  durationText.textContent = formatTime(audio.duration);
+});
+
+audio.addEventListener("timeupdate", updateProgress);
+
+progress.addEventListener("input", () => {
+  if (Number.isFinite(audio.duration) && audio.duration > 0) {
+    audio.currentTime = (Number(progress.value) / 100) * audio.duration;
+  }
+});
+
+audio.addEventListener("ended", () => {
+  playButton.textContent = "▶";
+  playButton.setAttribute("aria-label", "Přehrát nahrávku");
+  progress.value = 100;
+  audioStatus.textContent = "✓ Zpráva byla přehrána. Vzhůru za dobrodružstvím!";
+});
+
+audio.addEventListener("error", () => {
+  audioStatus.textContent =
+    "Soubor Start.mp3 se nepodařilo načíst.";
+});
+
+/* QR KÓD */
+
+const qrOverlay = document.getElementById("qrOverlay");
+const qrButton = document.getElementById("qrButton");
+const closeQr = document.getElementById("closeQr");
+
+qrButton.addEventListener("click", () => {
+  qrOverlay.classList.add("active");
+  closeQr.focus();
+});
+
+function hideQr() {
+  qrOverlay.classList.remove("active");
+  qrButton.focus();
+}
+
+closeQr.addEventListener("click", hideQr);
+
+qrOverlay.addEventListener("click", (event) => {
+  if (event.target === qrOverlay) hideQr();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" &&
+      qrOverlay.classList.contains("active")) {
+    hideQr();
+  }
+});
+</script>
+
+</body>
+</html>
