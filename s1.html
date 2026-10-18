@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Výběr týmu | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  color: var(--cream);
+  background: var(--green);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* HISTORICKÉ POZADÍ */
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      rgba(4,24,18,.35),
+      rgba(4,24,18,.55)
+    ),
+    url("pozadi.png") center center / cover no-repeat;
+}
+
+/* OBSAH */
+
+.container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  margin: 0 auto;
+  padding:
+    calc(25px + env(safe-area-inset-top))
+    20px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* LOGO */
+
+.logo {
+  width: min(46vw, 175px);
+  height: auto;
+  display: block;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+/* ORNAMENT */
+
+.ornament {
+  color: var(--gold);
+  font-size: 19px;
+  letter-spacing: 5px;
+  margin-bottom: 15px;
+}
+
+/* NADPIS */
+
+h1 {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(25px, 6vw, 35px);
+  line-height: 1.3;
+  color: var(--cream);
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin: 13px 0 0;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+/* KARTA */
+
+.card {
+  width: 100%;
+  margin-top: 25px;
+  padding: 25px 20px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.94);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  color: #E7CD91;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+}
+
+.card p {
+  margin: 0 0 23px;
+  color: #F2E9D6;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* TÝMOVÁ TLAČÍTKA */
+
+.team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.team-button {
+  width: 100%;
+  min-height: 58px;
+  padding: 15px 18px;
+
+  border: 2px solid #D4B878;
+  border-radius: 11px;
+
+  background: linear-gradient(
+    135deg,
+    #174D39,
+    #0D3025
+  );
+
+  color: #F5E6C5;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+  transition:
+    background .2s,
+    transform .2s,
+    border-color .2s;
+}
+
+.team-button:hover {
+  background: linear-gradient(
+    135deg,
+    #27684D,
+    #164532
+  );
+  border-color: #F5D995;
+}
+
+.team-button:active {
+  transform: scale(.98);
+}
+
+.team-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+/* POTVRZOVACÍ OKNO */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.82);
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 390px;
+  padding: 28px 22px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  background: #103629;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0,0,0,.6);
+}
+
+.modal-icon {
+  font-size: 43px;
+  margin-bottom: 12px;
+}
+
+.modal h2 {
+  margin: 0 0 13px;
+  font-family: 'Cinzel', serif;
+  font-size: 23px;
+  color: var(--gold);
+}
+
+.modal p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--cream);
+}
+
+.confirm-button,
+.cancel-button {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.confirm-button {
+  margin-top: 15px;
+  border: 2px solid #E4CA8B;
+  background: linear-gradient(135deg,#E3CB90,#B38A47);
+  color: #092F25;
+}
+
+.cancel-button {
+  margin-top: 10px;
+  border: 1px solid #B89B60;
+  background: transparent;
+  color: var(--cream);
+}
+
+/* PATIČKA */
+
+.footer {
+  margin-top: 28px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px #000;
+}
+
+/* MALÉ MOBILY */
+
+@media (max-width: 390px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .logo {
+    width: min(42vw, 145px);
+  }
+
+  .card {
+    padding: 20px 15px;
+  }
+
+  .team-button {
+    min-height: 54px;
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-button {
+    transition: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <!-- LOGO -->
+  <img
+    class="logo"
+    src="Logo.png"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>VYBERTE SI<br>SVŮJ TÝM</h1>
+
+  <p class="subtitle">
+    🧭 Pět týmů. Jedna Kutná Hora.<br>
+    A jen omezené množství zdravého rozumu.
+  </p>
+
+  <section class="card">
+
+    <h2>KAM PATŘÍTE?</h2>
+
+    <p>
+      Vyberte svůj tým.
+      Dobře si svou volbu rozmyslete,
+      protože některé životní chyby
+      už prostě nevezmete zpátky. 😂
+    </p>
+
+    <div class="team-list">
+
+      <button class="team-button" onclick="selectTeam(1)">
+        🧭 TÝM 1
+      </button>
+
+      <button class="team-button" onclick="selectTeam(2)">
+        🗺️ TÝM 2
+      </button>
+
+      <button class="team-button" onclick="selectTeam(3)">
+        ⚔️ TÝM 3
+      </button>
+
+      <button class="team-button" onclick="selectTeam(4)">
+        🏰 TÝM 4
+      </button>
+
+      <button class="team-button" onclick="selectTeam(5)">
+        💎 TÝM 5
+      </button>
+
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- POTVRZENÍ VÝBĚRU -->
+
+<div class="overlay" id="overlay" role="dialog"
+     aria-modal="true" aria-labelledby="modalTitle">
+
+  <div class="modal">
+
+    <div class="modal-icon">🧭</div>
+
+    <h2 id="modalTitle">TÝM <span id="teamNumber"></span></h2>
+
+    <p>
+      Takže vy jste ti vyvolení?
+      Výborně. Doufejme, že alespoň
+      někdo z vás ví, co dělá.
+    </p>
+
+    <p>
+      <strong>Potvrzujete výběr tohoto týmu?</strong>
+    </p>
+
+    <button class="confirm-button" onclick="confirmTeam()">
+      ✓ ANO, JDEME NA TO!
+    </button>
+
+    <button class="cancel-button" onclick="closeModal()">
+      ZPĚT K VÝBĚRU
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+let selectedTeam = null;
+
+function selectTeam(number) {
+  selectedTeam = number;
+
+  document.getElementById("teamNumber").textContent = number;
+  document.getElementById("overlay").classList.add("active");
+}
+
+function closeModal() {
+  document.getElementById("overlay").classList.remove("active");
+  selectedTeam = null;
+}
+
+function confirmTeam() {
+  if (selectedTeam === null) return;
+
+  // Uložení týmu pro další stránky
+  localStorage.setItem("kh_team", String(selectedTeam));
+
+  // Začátek měření času hry
+  localStorage.setItem("kh_start_time", String(Date.now()));
+
+  // Počet použitých nápověd
+  localStorage.setItem("kh_hints", "0");
+
+  // Přechod na další stránku
+  window.location.href = "s2.html";
+}
+
+// Zavření okna klávesou Escape
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+});
+</script>
+
+</body>
+</html>
