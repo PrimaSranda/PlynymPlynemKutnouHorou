@@ -3,18 +3,26 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#092F25">
 
 <title>Plným plynem Kutnou Horou</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
 
 <style>
-
-/* ZÁKLADNÍ NASTAVENÍ */
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
 
 * {
   box-sizing: border-box;
@@ -22,111 +30,141 @@
 
 html {
   min-height: 100%;
-  background: #092F25;
+  background: var(--green);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  color: #F4E8CD;
-  font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
-  background: #092F25;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* HISTORICKÉ POZADÍ */
+/* POZADÍ */
 
 .background {
   position: fixed;
   inset: 0;
   z-index: 0;
 
-  background:
+  background-image:
     linear-gradient(
-      180deg,
-      rgba(4, 24, 18, .25),
-      rgba(4, 24, 18, .40)
+      rgba(4, 24, 18, .30),
+      rgba(4, 24, 18, .48)
     ),
-    url("pozadi.png") center center / cover no-repeat;
+    url("pozadi.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* HLAVNÍ KONTEJNER */
+/* HLAVNÍ STRÁNKA */
 
 .container {
   position: relative;
   z-index: 1;
 
   width: 100%;
-  max-width: 600px;
-
+  max-width: 540px;
   min-height: 100vh;
   min-height: 100dvh;
 
   margin: 0 auto;
 
   padding:
-    max(45px, env(safe-area-inset-top))
+    calc(24px + env(safe-area-inset-top))
     20px
-    max(45px, env(safe-area-inset-bottom));
+    calc(30px + env(safe-area-inset-bottom));
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
+
   text-align: center;
 }
 
-/* KULATÉ LOGO */
+/* LOGO */
 
-.logo-circle {
-  width: min(70vw, 280px);
-  aspect-ratio: 1;
+.logo-wrapper {
+  width: min(66vw, 250px);
+  aspect-ratio: 1 / 1;
+
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 18px;
 
   border-radius: 50%;
-  padding: 0;
+  overflow: hidden;
 
   background: transparent;
-  border: none;
-
-  box-shadow: 0 12px 35px rgba(0,0,0,.45);
-
-  overflow: hidden;
-  flex-shrink: 0;
-
-  animation: appear 1s ease both;
+  filter: drop-shadow(
+    0 8px 18px rgba(0, 0, 0, .55)
+  );
 }
 
-.logo-circle img {
+.logo-wrapper img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center;
+}
+
+/* NÁHRADNÍ ZOBRAZENÍ LOGA */
+
+.logo-fallback {
+  display: none;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  background: #103D2F;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logo-fallback span {
+  font-size: 46px;
+}
+
+.logo-fallback strong {
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 1px;
 }
 
 /* ORNAMENT */
 
 .ornament {
-  margin: 26px 0 16px;
-  color: #D4B878;
-  font-size: 21px;
+  color: var(--gold);
+  font-size: 20px;
   letter-spacing: 5px;
+  margin: 4px 0 17px;
 }
 
-/* HLAVNÍ NADPIS */
+/* NADPIS */
 
 h1 {
-  font-family: 'Cinzel', serif;
-
-  font-size: clamp(24px, 6vw, 37px);
-  line-height: 1.3;
-
   margin: 0;
 
-  color: #F5E6C5;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(25px, 6vw, 35px);
+  line-height: 1.3;
+  font-weight: 800;
 
-  text-shadow:
-    0 3px 8px rgba(0,0,0,.8);
+  color: var(--cream);
+  text-shadow: 0 3px 10px #000;
 }
 
 /* PODNADPIS */
@@ -134,100 +172,78 @@ h1 {
 .subtitle {
   margin-top: 13px;
 
-  color: #D9C395;
-
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 2px;
 
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
+  color: var(--gold);
 }
 
-/* KARTA S ÚVODEM */
+/* KARTA */
 
 .card {
   width: 100%;
-
-  margin-top: 27px;
+  margin-top: 26px;
   padding: 25px 20px;
 
-  border-radius: 15px;
-
-  background: rgba(9, 39, 30, .94);
   border: 1px solid #B89B60;
+  border-radius: 16px;
+
+  background: rgba(8, 37, 28, .94);
 
   box-shadow:
-    0 10px 35px rgba(0,0,0,.45),
-    inset 0 0 20px rgba(201,168,98,.06);
+    0 12px 35px rgba(0, 0, 0, .45);
 }
 
 .card h2 {
+  margin: 0 0 17px;
+
   font-family: 'Cinzel', serif;
-
-  color: #E7CD91;
-
   font-size: 20px;
-  margin: 0 0 15px;
+  color: #E7CD91;
 }
 
 .card p {
+  margin: 0 0 15px;
   font-size: 14px;
-  line-height: 1.8;
-
-  margin: 0 0 13px;
-
+  line-height: 1.75;
   color: #F2E9D6;
 }
 
 .card .joke {
+  font-size: 13px;
   font-style: italic;
   color: #D8BF8A;
-  font-size: 13px;
 }
 
-/* HLAVNÍ TLAČÍTKO */
+/* TLAČÍTKO */
 
 .start-button {
   display: block;
-
   width: 100%;
 
-  margin-top: 23px;
+  margin-top: 22px;
   padding: 18px 12px;
 
   border: 2px solid #E4CA8B;
-  border-radius: 10px;
+  border-radius: 11px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #D9BE7B,
-      #B38A47
-    );
+  background: linear-gradient(
+    135deg,
+    #E3CB90,
+    #B38A47
+  );
 
   color: #092F25;
-
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
 
-  letter-spacing: .5px;
   text-decoration: none;
+  text-align: center;
 
   box-shadow: 0 5px 0 #6C502A;
-
-  transition:
-    transform .2s,
-    box-shadow .2s;
-}
-
-.start-button:hover {
-  background:
-    linear-gradient(
-      135deg,
-      #E9D29A,
-      #C6A05E
-    );
+  transition: transform .2s;
 }
 
 .start-button:active {
@@ -236,61 +252,41 @@ h1 {
 }
 
 .start-button:focus-visible {
-  outline: 3px solid #FFFFFF;
+  outline: 3px solid white;
   outline-offset: 4px;
 }
 
 /* PATIČKA */
 
 .footer {
-  margin-top: 30px;
+  margin-top: 27px;
+  padding-bottom: 5px;
 
   color: #D5C097;
-
   font-size: 11px;
   letter-spacing: 1px;
-
   text-shadow: 0 2px 5px #000;
 }
 
-/* ANIMACE LOGA */
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: scale(.88);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* MOBILY */
+/* MALÉ MOBILY */
 
 @media (max-width: 390px) {
-
   .container {
     padding-left: 16px;
     padding-right: 16px;
   }
 
-  .logo-circle {
-    width: min(60vw, 230px);
-  }
-
-  .ornament {
-    margin: 20px 0 13px;
+  .logo-wrapper {
+    width: min(60vw, 215px);
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 25px;
   }
 
   .card {
-    margin-top: 22px;
     padding: 21px 16px;
+    margin-top: 22px;
   }
 
   .card h2 {
@@ -303,41 +299,23 @@ h1 {
 
   .start-button {
     font-size: 12px;
-    padding: 17px 10px;
   }
 }
 
-/* MALÁ VÝŠKA DISPLEJE */
+/* NÍZKÉ DISPLEJE */
 
 @media (max-height: 700px) {
-
-  .container {
-    padding-top: max(25px, env(safe-area-inset-top));
-    padding-bottom: max(25px, env(safe-area-inset-bottom));
+  .logo-wrapper {
+    width: min(52vw, 190px);
   }
 
-  .logo-circle {
-    width: min(55vw, 210px);
+  .container {
+    padding-top:
+      calc(18px + env(safe-area-inset-top));
   }
 
   .ornament {
-    margin: 16px 0 12px;
-  }
-
-  .card {
-    margin-top: 20px;
-  }
-}
-
-/* OMEZENÍ ANIMACÍ */
-
-@media (prefers-reduced-motion: reduce) {
-  .logo-circle {
-    animation: none;
-  }
-
-  .start-button {
-    transition: none;
+    margin-bottom: 12px;
   }
 }
 
@@ -346,21 +324,33 @@ h1 {
 
 <body>
 
-<!-- HISTORICKÉ POZADÍ -->
-
 <div class="background"></div>
-
-<!-- HLAVNÍ OBSAH -->
 
 <main class="container">
 
   <!-- LOGO -->
 
-  <div class="logo-circle">
+  <div class="logo-wrapper">
+
     <img
+      id="mainLogo"
       src="Logo.png"
-      alt="Plným plynem Kutnou Horou"
+      alt=""
+      onerror="
+        this.style.display='none';
+        document.getElementById('logoFallback')
+          .style.display='flex';
+      "
     >
+
+    <div
+      class="logo-fallback"
+      id="logoFallback"
+    >
+      <span>🧭</span>
+      <strong>PLNÝM PLYNEM<br>KUTNOU HOROU</strong>
+    </div>
+
   </div>
 
   <!-- ORNAMENT -->
@@ -380,7 +370,7 @@ h1 {
     🧭 KUTNÁ HORA ČEKÁ
   </div>
 
-  <!-- ÚVODNÍ KARTA -->
+  <!-- UVÍTACÍ KARTA -->
 
   <section class="card">
 
@@ -405,15 +395,11 @@ h1 {
       upřímnou soustrast. 😂
     </p>
 
-    <!-- START HRY -->
-
     <a href="s1.html" class="start-button">
       🧭 VYDAT SE NA DOBRODRUŽSTVÍ
     </a>
 
   </section>
-
-  <!-- PATIČKA -->
 
   <div class="footer">
     ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
