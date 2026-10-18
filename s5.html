@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Počítání schodů | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(4,24,18,.38),rgba(4,24,18,.62)),
+    url("pozadi.png") center center / cover no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    calc(30px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(25px,6vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin: 13px 0 0;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.card {
+  width: 100%;
+  margin-top: 27px;
+  padding: 28px 20px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 20px;
+  color: #E7CD91;
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+}
+
+.riddle {
+  padding: 28px 14px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.riddle-icon {
+  font-size: 39px;
+  margin-bottom: 20px;
+}
+
+.verse {
+  margin: 0;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(14px,3.8vw,18px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.highlight {
+  color: #E7CD91;
+}
+
+.question {
+  margin: 28px 0 18px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+}
+
+.answer-button {
+  min-width: 0;
+  padding: 20px 4px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: clamp(20px,6vw,29px);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #6C502A;
+  transition: transform .15s,filter .15s;
+}
+
+.answer-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.answer-button:disabled {
+  opacity: .6;
+  cursor: default;
+}
+
+.answer-button:focus-visible,
+.next-button:focus-visible,
+.close-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.note {
+  margin: 25px 0 0;
+  color: #D9C395;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.success {
+  display: none;
+  margin-top: 25px;
+  padding: 20px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: #174D39;
+}
+
+.success.visible {
+  display: block;
+}
+
+.success h3 {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+}
+
+.success p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.next-button {
+  display: block;
+  margin-top: 20px;
+  padding: 18px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px #000;
+}
+
+/* GIF PŘI ŠPATNÉ ODPOVĚDI */
+
+.wrong-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.94);
+}
+
+.wrong-overlay.visible {
+  display: flex;
+}
+
+.wrong-content {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wrong-content img {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.wrong-text {
+  margin-top: 22px;
+  color: #F5E6C5;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(18px,5vw,25px);
+  font-weight: 800;
+  text-shadow: 0 0 20px #9B1717;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .logo { width: min(40vw,140px); }
+  .card { padding: 22px 14px; }
+  .riddle { padding: 23px 10px; }
+  .answers { gap: 8px; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .answer-button { transition: none; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img class="logo" src="Logo.jpg"
+       alt="Plným plynem Kutnou Horou">
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>TAJEMSTVÍ<br>SCHODIŠTĚ</h1>
+
+  <p class="subtitle">
+    🧮 MATEMATICKÁ ZKOUŠKA
+  </p>
+
+  <section class="card">
+
+    <h2>📜 VAŠE ZADÁNÍ</h2>
+
+    <div class="riddle">
+      <div class="riddle-icon">🪜 🔢 🗝️</div>
+
+      <p class="verse">
+        Všechny schody počítáme,<br>
+        <span class="highlight">
+          dokud správné numero nezadáme!
+        </span>
+      </p>
+    </div>
+
+    <p class="question">
+      KOLIK SCHODŮ JSTE NAPOČÍTALI?
+    </p>
+
+    <div class="answers" id="answers">
+      <button class="answer-button" type="button"
+              onclick="checkAnswer(35)">35</button>
+
+      <button class="answer-button" type="button"
+              onclick="checkAnswer(25)">25</button>
+
+      <button class="answer-button" type="button"
+              onclick="checkAnswer(6)">6</button>
+    </div>
+
+    <p class="note" id="answerNote">
+      Počítejte pečlivě. Schody se samy
+      nepřepočítají. Bohužel ani váš tým. 😂
+    </p>
+
+    <div class="success" id="success" aria-live="polite">
+      <h3>🎉 SPRÁVNÁ ODPOVĚĎ!</h3>
+
+      <p>
+        Šest schodů! Gratulujeme.
+        Právě jste úspěšně zvládli
+        matematiku na úrovni první třídy.
+        Vaše vedení na vás může být pyšné. 😈
+      </p>
+
+      <a href="s6.html" class="next-button">
+        ➜ POKRAČOVAT DÁL
+      </a>
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- ŠPATNÁ ODPOVĚĎ: GIF NA 3 SEKUNDY -->
+
+<div class="wrong-overlay" id="wrongOverlay"
+     role="alertdialog"
+     aria-label="Špatná odpověď">
+
+  <div class="wrong-content">
+
+    <img id="wrongGif"
+         src="wrong.gif"
+         alt="Špatná odpověď">
+
+    <div class="wrong-text">
+      ❌ ŠPATNĚ! ZKUSTE TO ZNOVU.
+    </div>
+
+  </div>
+</div>
+
+<script>
+const wrongOverlay = document.getElementById("wrongOverlay");
+const wrongGif = document.getElementById("wrongGif");
+const success = document.getElementById("success");
+const answers = document.getElementById("answers");
+const answerNote = document.getElementById("answerNote");
+
+let wrongTimer = null;
+let locked = false;
+let solved = false;
+
+function checkAnswer(number) {
+  if (locked || solved) return;
+
+  if (number === 6) {
+    solved = true;
+    answers.style.display = "none";
+    answerNote.style.display = "none";
+    success.classList.add("visible");
+
+    // Uložení dokončení stanoviště
+    localStorage.setItem("kh_s5_completed", "1");
+
+    success.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+
+    return;
+  }
+
+  // Nesprávná odpověď
+  locked = true;
+
+  // Znovunačtení GIFu od začátku
+  wrongGif.src = "wrong.gif?t=" + Date.now();
+
+  wrongOverlay.classList.add("visible");
+  document.body.style.overflow = "hidden";
+
+  // Po 3 sekundách GIF zmizí
+  clearTimeout(wrongTimer);
+
+  wrongTimer = setTimeout(function() {
+    wrongOverlay.classList.remove("visible");
+    document.body.style.overflow = "";
+    locked = false;
+  }, 3000);
+}
+</script>
+
+</body>
+</html>
