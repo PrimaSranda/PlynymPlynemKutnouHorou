@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Vetřelec mezi svatými | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(4,24,18,.38),rgba(4,24,18,.62)),
+    url("pozadi.png") center center / cover no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(25px,6vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin: 13px 0 0;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.7;
+}
+
+.card {
+  width: 100%;
+  margin-top: 27px;
+  padding: 27px 20px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 18px;
+  color: #E7CD91;
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+}
+
+.intro {
+  padding: 22px 13px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.intro p {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(13px,3.6vw,17px);
+  line-height: 1.9;
+  font-weight: 600;
+}
+
+.highlight {
+  color: #E7CD91;
+}
+
+.goodjob {
+  display: block;
+  width: min(100%,310px);
+  max-height: 260px;
+  object-fit: contain;
+  margin: 24px auto 6px;
+  border-radius: 12px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 27px 0;
+  color: var(--gold);
+  font-size: 17px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  width: 55px;
+  height: 1px;
+  background: rgba(217,190,123,.55);
+}
+
+.task {
+  padding: 22px 14px;
+  border: 1px solid rgba(217,190,123,.5);
+  border-radius: 12px;
+  background: rgba(6,28,21,.75);
+}
+
+.task p {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(13px,3.5vw,16px);
+  line-height: 2;
+  font-weight: 600;
+}
+
+.question {
+  margin: 27px 0 17px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.answer-input {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 17px 12px;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  background: #F9F0DC;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: 7px;
+  text-align: center;
+}
+
+.answer-input:focus {
+  outline: 3px solid rgba(217,190,123,.35);
+  outline-offset: 3px;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 18px 12px;
+  border-radius: 12px;
+  font-family: 'Montserrat',sans-serif;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+}
+
+.submit-button {
+  margin-top: 17px;
+  border: 2px solid #F0D99B;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-size: 16px;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.hint-button {
+  margin-top: 23px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg,#174D39,#0B3024);
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.button:active {
+  transform: translateY(2px);
+}
+
+.button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.note {
+  margin: 20px 0 0;
+  color: #D9C395;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px #000;
+}
+
+/* VYSKAKOVACÍ OKNA */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    18px
+    calc(20px + env(safe-area-inset-bottom));
+  background: rgba(0,0,0,.91);
+}
+
+.overlay.visible {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 25px 18px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  background: #103629;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0,0,0,.6);
+}
+
+.modal h2 {
+  margin: 0 0 16px;
+  font-family: 'Cinzel',serif;
+  font-size: 21px;
+  color: var(--gold);
+}
+
+.modal p {
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.modal img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  max-height: 50dvh;
+  object-fit: contain;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+.close-button {
+  margin-top: 18px;
+  border: 1px solid var(--gold);
+  background: #174D39;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+/* ŠPATNÁ ODPOVĚĎ */
+
+.wrong-overlay {
+  z-index: 200;
+  background: rgba(0,0,0,.95);
+}
+
+.wrong-content {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wrong-content img {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.wrong-text {
+  margin-top: 20px;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* AUDIO */
+
+.audio-symbol {
+  font-size: 46px;
+  margin: 10px 0;
+}
+
+.audio-status {
+  color: var(--gold) !important;
+  font-size: 13px !important;
+  font-weight: 700;
+}
+
+.audio-retry {
+  display: none;
+  margin-top: 18px;
+  border: 2px solid var(--gold);
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+}
+
+.audio-retry.visible {
+  display: block;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .logo {
+    width: min(40vw,140px);
+  }
+
+  .card {
+    padding: 22px 14px;
+  }
+
+  .intro,
+  .task {
+    padding: 19px 10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>VETŘELEC<br>MEZI SVATÝMI</h1>
+
+  <p class="subtitle">
+    🏛️ DALŠÍ ZKOUŠKA VAŠEHO DŮVTIPU
+  </p>
+
+  <section class="card">
+
+    <h2>👏 MALÁ POCHVALA</h2>
+
+    <div class="intro">
+      <p>
+        Tak mozkové závity jste si zahřáli,<br>
+        <span class="highlight">
+          tak to abychom vám opravdové úkoly
+          dávat začali!
+        </span>
+      </p>
+    </div>
+
+    <!-- GIF POCHVALA -->
+
+    <img
+      class="goodjob"
+      src="goodjob.gif"
+      alt="Výborná práce!"
+    >
+
+    <div class="divider">✦</div>
+
+    <h2>📜 VAŠE ZADÁNÍ</h2>
+
+    <div class="task">
+      <p>
+        Cesta kolem Jezuitské koleje<br>
+        svatými lemovaná jest,<br>
+        avšak jeden vetřelec se tam nachází.<br>
+        <span class="highlight">
+          Kdo to je? Najdi jeho zlatý text.
+        </span>
+      </p>
+    </div>
+
+    <p class="question">
+      🔢 JAKÝ LETOPOČET SKRÝVÁ?
+    </p>
+
+    <!-- ZADÁNÍ ODPOVĚDI -->
+
+    <form id="answerForm">
+
+      <input
+        type="text"
+        id="answer"
+        class="answer-input"
+        inputmode="numeric"
+        pattern="[0-9]{4}"
+        maxlength="4"
+        placeholder="????"
+        autocomplete="off"
+        aria-label="Zadejte čtyřmístný letopočet"
+        required
+      >
+
+      <button
+        type="submit"
+        class="button submit-button"
+      >
+        🔐 POTVRDIT ODPOVĚĎ
+      </button>
+
+    </form>
+
+    <!-- NÁPOVĚDA -->
+
+    <button
+      type="button"
+      class="button hint-button"
+      id="hintButton"
+    >
+      💡 V PŘÍPADĚ INTELEKTUÁLNÍHO KOLAPSU
+    </button>
+
+    <p class="note">
+      Pokud to nepůjde, nezoufejte.
+      Historie je plná lidí, kteří také
+      netušili, co dělají. 😂
+    </p>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- ŠPATNÁ ODPOVĚĎ -->
+
+<div
+  class="overlay wrong-overlay"
+  id="wrongOverlay"
+  role="alertdialog"
+  aria-label="Špatná odpověď"
+>
+  <div class="wrong-content">
+
+    <img
+      id="wrongGif"
+      src="wrong.gif"
+      alt="Špatná odpověď"
+    >
+
+    <div class="wrong-text">
+      ❌ ŠPATNĚ! ZKUSTE TO ZNOVU.
+    </div>
+
+  </div>
+</div>
+
+<!-- NÁPOVĚDA -->
+
+<div
+  class="overlay"
+  id="hintOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hintTitle"
+>
+  <div class="modal">
+
+    <h2 id="hintTitle">
+      💡 NÁPOVĚDA
+    </h2>
+
+    <div id="hintContent"></div>
+
+    <button
+      type="button"
+      class="button close-button"
+      id="closeHint"
+    >
+      ✕ ZAVŘÍT
+    </button>
+
+  </div>
+</div>
+
+<!-- SPRÁVNÁ ODPOVĚĎ / AUDIO -->
+
+<div
+  class="overlay"
+  id="audioOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="audioTitle"
+>
+  <div class="modal">
+
+    <h2 id="audioTitle">
+      🎉 SPRÁVNÁ ODPOVĚĎ!
+    </h2>
+
+    <div class="audio-symbol">👑</div>
+
+    <p>
+      Letopočet <strong>1712</strong> je správný!
+      Teď si poslechněte příběh
+      Karla Velikého.
+    </p>
+
+    <p class="audio-status" id="audioStatus">
+      🎧 Spouštíme nahrávku...
+    </p>
+
+    <button
+      type="button"
+      class="button audio-retry"
+      id="audioRetry"
+    >
+      ▶ PŘEHRÁT NAHRÁVKU
+    </button>
+
+    <audio id="karelAudio" preload="auto">
+      <source src="karelveliky.mp3" type="audio/mpeg">
+    </audio>
+
+  </div>
+</div>
+
+<script>
+const answerForm = document.getElementById("answerForm");
+const answerInput = document.getElementById("answer");
+
+const wrongOverlay = document.getElementById("wrongOverlay");
+const wrongGif = document.getElementById("wrongGif");
+
+const hintButton = document.getElementById("hintButton");
+const hintOverlay = document.getElementById("hintOverlay");
+const hintContent = document.getElementById("hintContent");
+const closeHint = document.getElementById("closeHint");
+
+const audioOverlay = document.getElementById("audioOverlay");
+const karelAudio = document.getElementById("karelAudio");
+const audioStatus = document.getElementById("audioStatus");
+const audioRetry = document.getElementById("audioRetry");
+
+let locked = false;
+let solved = false;
+let wrongTimer = null;
+
+// TŘI POSTUPNÉ NÁPOVĚDY
+
+const hints = [
+  "<p>👑 <strong>1. NÁPOVĚDA</strong></p><p>Je to <strong>Karel Veliký</strong>.</p>",
+  "<p>🧮 <strong>2. NÁPOVĚDA</strong></p><p>Zkus sečíst čísla.</p>",
+  '<p>🗺️ <strong>3. NÁPOVĚDA</strong></p><p>Tady máš poslední záchranu.</p><img src="napoveda.png" alt="Obrázková nápověda">'
+];
+
+let hintIndex = 0;
+
+// POČÍTÁNÍ NÁPOVĚD
+
+function countHint() {
+  const current = Number(
+    localStorage.getItem("kh_hints") || "0"
+  );
+
+  localStorage.setItem(
+    "kh_hints",
+    String(current + 1)
+  );
+}
+
+// OTEVŘENÍ NÁPOVĚDY
+
+hintButton.addEventListener("click", function() {
+  if (solved) return;
+
+  if (hintIndex < hints.length) {
+    hintContent.innerHTML = hints[hintIndex];
+    hintIndex++;
+
+    countHint();
+  } else {
+    hintContent.innerHTML =
+      "<p>Všechny tři nápovědy už jste vyčerpali.</p>" +
+      "<p>Teď už to budete muset zvládnout sami. 😈</p>";
+  }
+
+  hintOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+  closeHint.focus();
+});
+
+function hideHint() {
+  hintOverlay.classList.remove("visible");
+  document.body.classList.remove("modal-open");
+  hintButton.focus();
+}
+
+closeHint.addEventListener("click", hideHint);
+
+hintOverlay.addEventListener("click", function(event) {
+  if (event.target === hintOverlay) {
+    hideHint();
+  }
+});
+
+// ŠPATNÁ ODPOVĚĎ
+
+function showWrong() {
+  locked = true;
+
+  // Znovu spustí GIF od začátku
+  wrongGif.src = "wrong.gif?t=" + Date.now();
+
+  wrongOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+  clearTimeout(wrongTimer);
+
+  wrongTimer = setTimeout(function() {
+    wrongOverlay.classList.remove("visible");
+    document.body.classList.remove("modal-open");
+    locked = false;
+    answerInput.focus();
+  }, 2000);
+}
+
+// KONTROLA ODPOVĚDI
+
+answerForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (locked || solved) return;
+
+  const answer = answerInput.value.trim();
+
+  if (answer === "1712") {
+    solved = true;
+    localStorage.setItem("kh_s6_completed", "1");
+    startAudio();
+  } else {
+    showWrong();
+  }
+});
+
+// SPRÁVNÁ ODPOVĚĎ: AUDIO
+
+async function startAudio() {
+  audioOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+  audioStatus.textContent = "🎧 Spouštíme nahrávku...";
+
+  try {
+    await karelAudio.play();
+  } catch (error) {
+    // Některé mobilní prohlížeče mohou
+    // automatické přehrání zablokovat.
+    audioStatus.textContent =
+      "Klepněte na tlačítko pro spuštění nahrávky.";
+    audioRetry.classList.add("visible");
+  }
+}
+
+audioRetry.addEventListener("click", async function() {
+  try {
+    await karelAudio.play();
+    audioRetry.classList.remove("visible");
+  } catch (error) {
+    audioStatus.textContent =
+      "Nahrávku nelze spustit. Zkontrolujte soubor karelveliky.mp3.";
+  }
+});
+
+karelAudio.addEventListener("play", function() {
+  audioStatus.textContent =
+    "🎧 Právě posloucháte příběh Karla Velikého...";
+});
+
+karelAudio.addEventListener("ended", function() {
+  audioStatus.textContent =
+    "✓ Nahrávka dokončena. Pokračujeme!";
+
+  window.location.href = "s7.html";
+});
+
+karelAudio.addEventListener("error", function() {
+  audioStatus.textContent =
+    "Nahrávku se nepodařilo načíst. Zkontrolujte karelveliky.mp3.";
+  audioRetry.classList.add("visible");
+});
+
+// ESC ZAVŘE JEN NÁPOVĚDU
+
+document.addEventListener("keydown", function(event) {
+  if (
+    event.key === "Escape" &&
+    hintOverlay.classList.contains("visible")
+  ) {
+    hideHint();
+  }
+});
+</script>
+
+</body>
+</html>
