@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Hrádek a tajenka | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(4,24,18,.38),rgba(4,24,18,.65)),
+    url("pozadi.png") center center / cover no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding:
+    calc(25px + env(safe-area-inset-top))
+    16px
+    calc(40px + env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: min(40vw,150px);
+  height: auto;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(25px,6vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin: 12px 0 0;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.7;
+}
+
+.card {
+  margin-top: 25px;
+  padding: 25px 18px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.96);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 18px;
+  color: #E7CD91;
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+}
+
+.history {
+  padding: 21px 16px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(145deg,#174D39,#071F18);
+  text-align: left;
+}
+
+.history p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.history strong {
+  color: #E7CD91;
+}
+
+.audio-box {
+  margin-top: 20px;
+  padding: 18px 14px;
+  border: 1px solid rgba(217,190,123,.5);
+  border-radius: 12px;
+  background: #103629;
+}
+
+.audio-box p {
+  margin: 0 0 13px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.audio-status {
+  margin: 12px 0 0 !important;
+  color: #D9C395 !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 1.6;
+}
+
+.button {
+  width: 100%;
+  padding: 16px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #6C502A;
+}
+
+.button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.button:focus-visible,
+.answer:focus-within,
+.secret-input:focus-visible {
+  outline: 3px solid #FFFFFF;
+  outline-offset: 3px;
+}
+
+.divider {
+  margin: 28px 0;
+  color: var(--gold);
+  letter-spacing: 6px;
+}
+
+.instructions {
+  color: #E7CD91;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0 0 23px;
+}
+
+/* OTÁZKY */
+
+.question-card {
+  margin-bottom: 19px;
+  padding: 19px 14px;
+  border: 1px solid rgba(217,190,123,.45);
+  border-radius: 12px;
+  background: rgba(6,28,21,.75);
+  text-align: left;
+}
+
+.question-number {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+.question-title {
+  margin: 0 0 17px;
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border: 1px solid rgba(217,190,123,.4);
+  border-radius: 9px;
+  background: #123D2D;
+  cursor: pointer;
+  transition: background .15s,border-color .15s;
+}
+
+.answer.selected {
+  background: #295A3F;
+  border-color: #F0D99B;
+}
+
+.answer input {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: #D9BE7B;
+  cursor: pointer;
+}
+
+.letter {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #D9BE7B;
+  border-radius: 7px;
+  color: #E7CD91;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.answer-text {
+  color: var(--cream);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* TAJENKA */
+
+.secret-section {
+  margin-top: 28px;
+  padding: 24px 14px;
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  background: linear-gradient(145deg,#174D39,#071F18);
+}
+
+.secret-section h2 {
+  margin: 0 0 13px;
+}
+
+.secret-section p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--cream);
+}
+
+.secret-letters {
+  display: grid;
+  grid-template-columns: repeat(10,minmax(0,1fr));
+  gap: 4px;
+  margin: 23px 0;
+}
+
+.secret-letter {
+  min-width: 0;
+  aspect-ratio: 1 / 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  background: #092F25;
+  color: #E7CD91;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(11px,3vw,18px);
+  font-weight: 800;
+}
+
+.secret-letter.empty {
+  color: #8E987E;
+}
+
+.secret-input {
+  display: block;
+  width: 100%;
+  margin: 18px 0 15px;
+  padding: 17px 10px;
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  background: #F9F0DC;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.progress-note {
+  margin: 12px 0 0;
+  color: #D9C395 !important;
+  font-size: 11px !important;
+}
+
+/* ÚSPĚCH */
+
+.success {
+  display: none;
+  margin-top: 23px;
+  padding: 22px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: #174D39;
+}
+
+.success.visible {
+  display: block;
+}
+
+.success h3 {
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+}
+
+.next-button {
+  display: block;
+  margin-top: 17px;
+  padding: 17px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* ŠPATNÁ ODPOVĚĎ */
+
+.wrong-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.94);
+}
+
+.wrong-overlay.visible {
+  display: flex;
+}
+
+.wrong-content {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wrong-content img {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.wrong-content p {
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+@media (max-width:390px) {
+  .container { padding-left: 12px; padding-right: 12px; }
+  .card { padding: 20px 12px; }
+  .question-card { padding: 16px 10px; }
+  .secret-section { padding: 20px 9px; }
+  .secret-letters { gap: 3px; }
+  .secret-letter { font-size: 11px; }
+  .secret-input { font-size: 16px; letter-spacing: 1px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img class="logo" src="Logo.jpg"
+       alt="Plným plynem Kutnou Horou">
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>TAJEMSTVÍ<br>HRÁDKU</h1>
+
+  <p class="subtitle">
+    ⛏️ STŘÍBRO, HORNÍCI A ZTRACENÁ TAJENKA
+  </p>
+
+  <section class="card">
+
+    <h2>🏰 HRÁDEK</h2>
+
+    <div class="history">
+      <p>
+        Tahle nenápadná stavba s názvem
+        <strong>Hrádek</strong> ukrývá jeden
+        z největších pokladů Kutné Hory.
+        Dnes zde sídlí
+        <strong>České muzeum stříbra</strong>
+        a návštěvníci odtud mohou sestoupit
+        do autentického středověkého dolu.
+        <br><br>
+        Původní gotická tvrz se postupně
+        proměnila v honosné sídlo bohatých
+        měšťanů. Zatímco majitelé dolů žili
+        v pohodlí, horníci pracovali v úzkých
+        chodbách, často pouze za světla
+        malých kahanců.
+        <br><br>
+        Těžba byla mimořádně nebezpečná,
+        ale stříbro bylo příliš cenné na to,
+        aby se s ní přestalo.
+        <strong>
+          Bezpečnost práce tehdy zkrátka
+          neměla vlastní oddělení.
+        </strong>
+      </p>
+    </div>
+
+    <!-- AUDIO -->
+
+    <div class="audio-box">
+      <p>🎧 HISTORICKÁ AUDIOZPRÁVA</p>
+
+      <button
+        type="button"
+        class="button"
+        id="audioButton"
+      >
+        ▶ PŘEHRÁT ZNOVU
+      </button>
+
+      <p class="audio-status" id="audioStatus">
+        Pokoušíme se spustit nahrávku...
+      </p>
+
+      <audio id="hradekAudio" preload="auto">
+        <source src="hradek.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="divider">✦ ⚜ ✦</div>
+
+    <h2>🧠 HORNICKÝ KVÍZ</h2>
+
+    <p class="instructions">
+      Vyberte u každé otázky jednu odpověď.
+      Každá možnost má své písmeno.
+      <strong>
+        Z vybraných písmen postupně
+        sestavíte tajenku.
+      </strong>
+    </p>
+
+    <!-- OTÁZKY SE VYGENERUJÍ Z JAVASCRIPTU -->
+
+    <div id="quiz"></div>
+
+    <!-- TAJENKA -->
+
+    <div class="secret-section">
+
+      <h2>🗝️ TAJENKA</h2>
+
+      <p>
+        Písmena vašich odpovědí se
+        zobrazují v pořadí otázek.
+        Pokud vám vyjde nesmysl,
+        možná jste někde šlápli vedle.
+        A tentokrát to není do důlní šachty.
+      </p>
+
+      <div class="secret-letters" id="secretLetters"></div>
+
+      <p class="progress-note" id="progressNote">
+        Zodpovězeno 0 z 10 otázek.
+      </p>
+
+      <form id="secretForm">
+
+        <input
+          type="text"
+          id="secretInput"
+          class="secret-input"
+          placeholder="ZADEJTE TAJENKU"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          aria-label="Zadejte tajenku"
+          required
+        >
+
+        <button type="submit" class="button">
+          🔐 OVĚŘIT TAJENKU
+        </button>
+
+      </form>
+
+      <div class="success" id="success">
+
+        <h3>🎉 SPRÁVNÁ TAJENKA!</h3>
+
+        <p>
+          RUTHARDSKÁ! Výborně.
+          Deset otázek a stále jste
+          schopni tvořit slova.
+          To je na dnešní poměry
+          úctyhodný výkon. 😈
+        </p>
+
+        <a href="s9.html" class="next-button">
+          ➜ POKRAČOVAT NA DALŠÍ STANOVIŠTĚ
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- ŠPATNÁ TAJENKA -->
+
+<div class="wrong-overlay" id="wrongOverlay"
+     role="alertdialog" aria-label="Špatná tajenka">
+
+  <div class="wrong-content">
+
+    <img id="wrongGif" src="wrong.gif"
+         alt="Špatná odpověď">
+
+    <p>❌ ŠPATNĚ! ZKUSTE TO ZNOVU.</p>
+
+  </div>
+
+</div>
+
+<script>
+/* DATA KVÍZU */
+
+const questions = [
+  {
+    question: "Který kov proslavil středověkou Kutnou Horu?",
+    options: [
+      ["P", "Zlato"],
+      ["R", "Stříbro"],
+      ["L", "Měď"]
+    ]
+  },
+  {
+    question: "Jak se nazývá svislá důlní chodba vedoucí k povrchu?",
+    options: [
+      ["O", "Štola"],
+      ["E", "Komín"],
+      ["U", "Šachta"]
+    ]
+  },
+  {
+    question: "Který český král zavedl pražský groš?",
+    options: [
+      ["T", "Václav II."],
+      ["S", "Karel IV."],
+      ["C", "Přemysl Otakar II."]
+    ]
+  },
+  {
+    question: "Jak se nazývá vodorovné důlní dílo ústící na povrch?",
+    options: [
+      ["N", "Šachta"],
+      ["H", "Štola"],
+      ["O", "Jáma"]
+    ]
+  },
+  {
+    question: "Které město bylo významným centrem ražby pražských grošů?",
+    options: [
+      ["K", "Plzeň"],
+      ["L", "Brno"],
+      ["A", "Kutná Hora"]
+    ]
+  },
+  {
+    question: "Jak se nazývá hornina nebo nerost obsahující využitelný kov?",
+    options: [
+      ["R", "Ruda"],
+      ["V", "Struska"],
+      ["B", "Hlušina"]
+    ]
+  },
+  {
+    question: "Kde se v Kutné Hoře razily pražské groše?",
+    options: [
+      ["C", "Na Hrádku"],
+      ["D", "Ve Vlašském dvoře"],
+      ["I", "V chrámu sv. Barbory"]
+    ]
+  },
+  {
+    question: "Kdo byl tradiční patronkou horníků?",
+    options: [
+      ["L", "Svatá Kateřina"],
+      ["N", "Svatá Ludmila"],
+      ["S", "Svatá Barbora"]
+    ]
+  },
+  {
+    question: "Jak se nazývá oddělování užitečného nerostu od hlušiny?",
+    options: [
+      ["K", "Úprava rudy"],
+      ["P", "Ražba mincí"],
+      ["E", "Tavení skla"]
+    ]
+  },
+  {
+    question: "Jaký kov tvořil základ pražského groše?",
+    options: [
+      ["O", "Železo"],
+      ["Á", "Stříbro"],
+      ["U", "Cín"]
+    ]
+  }
+];
+
+/* VYKRESLENÍ KVÍZU */
+
+const quiz = document.getElementById("quiz");
+const secretLetters = document.getElementById("secretLetters");
+const progressNote = document.getElementById("progressNote");
+
+const selections = Array(questions.length).fill(null);
+
+questions.forEach((item, index) => {
+  const card = document.createElement("div");
+  card.className = "question-card";
+
+  const number = document.createElement("div");
+  number.className = "question-number";
+  number.textContent = "OTÁZKA " + (index + 1) + " / 10";
+
+  const title = document.createElement("p");
+  title.className = "question-title";
+  title.textContent = item.question;
+
+  const options = document.createElement("div");
+  options.className = "options";
+
+  item.options.forEach(([letter, text]) => {
+    const label = document.createElement("label");
+    label.className = "answer";
+
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "question_" + index;
+    radio.value = letter;
+
+    const letterSpan = document.createElement("span");
+    letterSpan.className = "letter";
+    letterSpan.textContent = letter;
+
+    const answerText = document.createElement("span");
+    answerText.className = "answer-text";
+    answerText.textContent = text;
+
+    radio.addEventListener("change", () => {
+      selections[index] = letter;
+
+      options.querySelectorAll(".answer").forEach(el => {
+        el.classList.remove("selected");
+      });
+
+      label.classList.add("selected");
+      updateSecret();
+    });
+
+    label.append(radio,letterSpan,answerText);
+    options.appendChild(label);
+  });
+
+  card.append(number,title,options);
+  quiz.appendChild(card);
+});
+
+/* TAJENKA */
+
+function updateSecret() {
+  secretLetters.innerHTML = "";
+
+  selections.forEach(letter => {
+    const cell = document.createElement("div");
+    cell.className = "secret-letter";
+
+    if (letter === null) {
+      cell.classList.add("empty");
+      cell.textContent = "·";
+    } else {
+      cell.textContent = letter;
+    }
+
+    secretLetters.appendChild(cell);
+  });
+
+  const completed = selections.filter(x => x !== null).length;
+
+  progressNote.textContent =
+    "Zodpovězeno " + completed + " z 10 otázek.";
+}
+
+updateSecret();
+
+/* OVĚŘENÍ TAJENKY */
+
+const secretForm = document.getElementById("secretForm");
+const secretInput = document.getElementById("secretInput");
+const success = document.getElementById("success");
+
+const wrongOverlay = document.getElementById("wrongOverlay");
+const wrongGif = document.getElementById("wrongGif");
+
+let wrongTimer = null;
+let locked = false;
+let solved = false;
+
+secretForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (locked || solved) return;
+
+  const answer = secretInput.value
+    .trim()
+    .toLocaleUpperCase("cs-CZ")
+    .normalize("NFC");
+
+  if (answer === "RUTHARDSKÁ" && selections.every(x => x !== null)) {
+    solved = true;
+    localStorage.setItem("kh_s8_completed","1");
+
+    secretForm.style.display = "none";
+    success.classList.add("visible");
+
+    success.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  } else {
+    showWrong();
+  }
+});
+
+function showWrong() {
+  locked = true;
+  wrongGif.src = "wrong.gif?t=" + Date.now();
+  wrongOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+  clearTimeout(wrongTimer);
+
+  wrongTimer = setTimeout(() => {
+    wrongOverlay.classList.remove("visible");
+    document.body.classList.remove("modal-open");
+    locked = false;
+  }, 2000);
+}
+
+/* AUDIO HRÁDEK */
+
+const audio = document.getElementById("hradekAudio");
+const audioButton = document.getElementById("audioButton");
+const audioStatus = document.getElementById("audioStatus");
+
+async function playAudio() {
+  try {
+    await audio.play();
+  } catch (error) {
+    audioStatus.textContent =
+      "Automatické přehrávání bylo zablokováno. Klepněte na tlačítko.";
+  }
+}
+
+audioButton.addEventListener("click", async () => {
+  if (audio.paused) {
+    await playAudio();
+  } else {
+    audio.pause();
+  }
+});
+
+audio.addEventListener("play", () => {
+  audioButton.textContent = "⏸ POZASTAVIT";
+  audioStatus.textContent = "🎧 Přehrává se příběh Hrádku...";
+});
+
+audio.addEventListener("pause", () => {
+  audioButton.textContent = "▶ PŘEHRÁT / POKRAČOVAT";
+  if (!audio.ended) {
+    audioStatus.textContent = "Nahrávka pozastavena.";
+  }
+});
+
+audio.addEventListener("ended", () => {
+  audioButton.textContent = "↻ PŘEHRÁT ZNOVU";
+  audioStatus.textContent = "✓ Nahrávka dokončena.";
+});
+
+audio.addEventListener("error", () => {
+  audioStatus.textContent =
+    "Nahrávku nelze načíst. Zkontrolujte soubor hradek.mp3.";
+});
+
+window.addEventListener("load", () => {
+  playAudio();
+});
+</script>
+
+</body>
+</html>
