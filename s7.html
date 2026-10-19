@@ -3,9 +3,9 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>S7 – Test přesměrování</title>
+<title>S7 | Plným plynem Kutnou Horou</title>
 
 <style>
 * {
@@ -15,6 +15,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,6 +61,38 @@ p {
   font-size: 50px;
   margin: 20px 0;
 }
+
+/* TLAČÍTKO POKRAČOVAT */
+
+.next-button {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+  padding: 19px 15px;
+
+  background: linear-gradient(135deg, #E9D29A, #B38A47);
+  color: #092F25;
+
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+
+  font-size: 17px;
+  font-weight: 800;
+  text-decoration: none;
+
+  box-shadow: 0 5px 0 #6C502A;
+  transition: transform .2s;
+}
+
+.next-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.next-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
 </style>
 </head>
 
@@ -81,8 +114,14 @@ p {
   </p>
 
   <p>
-    🏰 Další dobrodružství již brzy...
+    🏰 Další dobrodružství čeká!
   </p>
+
+  <!-- PŘESMĚROVÁNÍ NA S8 -->
+
+  <a href="s8.html" class="next-button">
+    ➜ POKRAČOVAT DÁL
+  </a>
 
 </div>
 
