@@ -188,22 +188,12 @@ h1 {
 .submit-button {
   margin-top: 18px;
   border: 2px solid #F0D99B;
-  background: linear-gradient(
-    135deg,
-    #E9D29A,
-    #B38A47
-  );
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
   color: var(--green);
   box-shadow: 0 5px 0 #6C502A;
 }
 
-.submit-button:active,
-.next-button:active {
-  transform: translateY(4px);
-}
-
-.button:focus-visible,
-.next-button:focus-visible {
+.button:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
 }
@@ -238,8 +228,6 @@ h1 {
   line-height: 1.9;
 }
 
-/* OBRÁZEK ČOKOLÁDY */
-
 .chocolate-image {
   display: block;
   width: 100%;
@@ -251,23 +239,77 @@ h1 {
   box-shadow: 0 8px 25px rgba(0,0,0,.4);
 }
 
+/* TLAČÍTKO ČOKOLÁDOVNY */
+
 .next-button {
   display: block;
+  width: 100%;
   margin-top: 24px;
-  padding: 20px 12px;
+  padding: 21px 12px;
   border: 2px solid #F0D99B;
   border-radius: 12px;
-  background: linear-gradient(
-    135deg,
-    #E9D29A,
-    #B38A47
-  );
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
   color: var(--green);
   font-family: 'Montserrat',sans-serif;
   font-size: 16px;
   font-weight: 800;
-  text-decoration: none;
+  cursor: pointer;
   box-shadow: 0 5px 0 #6C502A;
+}
+
+.next-button:disabled {
+  opacity: .7;
+  cursor: default;
+}
+
+.audio-status {
+  display: none;
+  margin-top: 22px;
+  padding: 20px 14px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(5,29,21,.8);
+}
+
+.audio-status.visible {
+  display: block;
+}
+
+.audio-status h4 {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 18px;
+}
+
+.audio-status p {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.audio-retry {
+  display: none;
+  width: 100%;
+  margin-top: 15px;
+  padding: 15px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 10px;
+  background: #E9D29A;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.audio-retry.visible {
+  display: block;
+}
+
+audio {
+  width: 100%;
+  margin-top: 12px;
 }
 
 .footer {
@@ -365,7 +407,7 @@ h1 {
       <p class="verse">
 
         Po takové námaze,<br>
-        to chce energii někde dobít,<br>
+        to chce energii někde dopít,<br>
         dát něco na zub<br>
         a poté dobře popít!
         <br><br>
@@ -386,7 +428,7 @@ h1 {
     </div>
 
     <p class="question">
-      🍫 KAM MÁTE NAMÍŘENO?
+      🍫 TAK JAKOU TOVÁRNU VLASTNÍ?
     </p>
 
     <form id="answerForm">
@@ -426,9 +468,45 @@ h1 {
         class="chocolate-image"
       >
 
-      <a href="s16.html" class="next-button">
-        📍 JSEM NA MÍSTĚ!
-      </a>
+      <button
+        type="button"
+        class="next-button"
+        id="arrivedButton"
+      >
+        🍫 JSEM PŘED ČOKOLÁDOVNOU!
+      </button>
+
+      <!-- PŘEHRÁVAČ SE ZOBRAZÍ PO KLIKNUTÍ -->
+
+      <div class="audio-status" id="audioStatus">
+
+        <h4>🎧 POSLOUCHEJTE POZORNĚ!</h4>
+
+        <p id="audioMessage">
+          Právě se přehrává nahrávka.
+          Po jejím skončení budete automaticky
+          pokračovat na další stanoviště.
+        </p>
+
+        <audio
+          id="chocolateAudio"
+          preload="none"
+          controls
+          playsinline
+        >
+          <source src="cokolada.mp3" type="audio/mpeg">
+          Váš prohlížeč nepodporuje přehrávání audia.
+        </audio>
+
+        <button
+          type="button"
+          class="audio-retry"
+          id="retryButton"
+        >
+          ▶️ SPUSTIT NAHRÁVKU
+        </button>
+
+      </div>
 
     </div>
 
@@ -471,9 +549,16 @@ const success = document.getElementById("success");
 const wrongOverlay = document.getElementById("wrongOverlay");
 const wrongGif = document.getElementById("wrongGif");
 
+const arrivedButton = document.getElementById("arrivedButton");
+const audioStatus = document.getElementById("audioStatus");
+const audioMessage = document.getElementById("audioMessage");
+const chocolateAudio = document.getElementById("chocolateAudio");
+const retryButton = document.getElementById("retryButton");
+
 let solved = false;
 let locked = false;
 let wrongTimer = null;
+let audioStarted = false;
 
 /* ODSTRANĚNÍ DIAKRITIKY A INTERPUNKCE */
 
@@ -539,6 +624,64 @@ function showWrong() {
     answerInput.focus();
   }, 2000);
 }
+
+/* SPUŠTĚNÍ AUDIO NAHRÁVKY */
+
+arrivedButton.addEventListener("click", function() {
+  if (audioStarted) return;
+
+  audioStarted = true;
+
+  arrivedButton.style.display = "none";
+  audioStatus.classList.add("visible");
+
+  audioStatus.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+
+  playChocolateAudio();
+});
+
+async function playChocolateAudio() {
+  retryButton.classList.remove("visible");
+
+  try {
+    await chocolateAudio.play();
+
+    audioMessage.textContent =
+      "Právě se přehrává nahrávka. Po jejím skončení budete automaticky pokračovat na další stanoviště.";
+
+  } catch (error) {
+    audioMessage.textContent =
+      "Automatické přehrávání se nepodařilo spustit. Klepněte na tlačítko níže nebo použijte přehrávač.";
+
+    retryButton.classList.add("visible");
+  }
+}
+
+/* RUČNÍ SPUŠTĚNÍ, KDYBY PROHLÍŽEČ BLOKOVAL AUDIO */
+
+retryButton.addEventListener("click", function() {
+  playChocolateAudio();
+});
+
+/* PO SKONČENÍ NAHRÁVKY PŘESMĚROVÁNÍ */
+
+chocolateAudio.addEventListener("ended", function() {
+  localStorage.setItem("kh_s15_audio_completed", "1");
+
+  window.location.href = "s16.html";
+});
+
+/* OŠETŘENÍ CHYBĚJÍCÍHO NEBO NEFUNKČNÍHO MP3 */
+
+chocolateAudio.addEventListener("error", function() {
+  audioMessage.textContent =
+    "Nahrávku se nepodařilo načíst. Zkontrolujte, zda je soubor cokolada.mp3 nahraný na GitHubu.";
+
+  retryButton.classList.add("visible");
+});
 </script>
 
 </body>
