@@ -4,84 +4,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
 
-<title>S7 | Plným plynem Kutnou Horou</title>
+<title>Další cíl | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
 
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   background:
-    linear-gradient(rgba(4,24,18,.6), rgba(4,24,18,.8)),
-    url("pozadi.png") center / cover;
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.7)
+    ),
+    url("pozadi.png") center / cover no-repeat;
+}
 
-  color: #F5E6C5;
-  font-family: Arial, sans-serif;
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(30px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+}
+
+.logo {
+  width: min(40vw,150px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  margin: 0 0 25px;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(27px,7vw,38px);
+  text-shadow: 0 3px 12px #000;
 }
 
 .card {
   width: 100%;
-  max-width: 450px;
-  padding: 35px 25px;
-  background: #092F25;
-  border: 2px solid #D9BE7B;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0,0,0,.5);
+  padding: 28px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
 }
 
-.logo {
-  width: 130px;
-  max-width: 100%;
-  border-radius: 50%;
-  margin-bottom: 25px;
+.qr {
+  display: block;
+  width: min(100%,320px);
+  height: auto;
+  margin: 0 auto 27px;
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
 }
-
-h1 {
-  color: #D9BE7B;
-  font-size: 28px;
-}
-
-p {
-  line-height: 1.8;
-  font-size: 16px;
-}
-
-.success {
-  font-size: 50px;
-  margin: 20px 0;
-}
-
-/* TLAČÍTKO POKRAČOVAT */
 
 .next-button {
   display: block;
   width: 100%;
-  margin-top: 30px;
-  padding: 19px 15px;
-
-  background: linear-gradient(135deg, #E9D29A, #B38A47);
-  color: #092F25;
+  padding: 21px 14px;
 
   border: 2px solid #F0D99B;
-  border-radius: 12px;
+  border-radius: 13px;
 
-  font-size: 17px;
+  background: linear-gradient(
+    135deg,
+    #E9D29A,
+    #B38A47
+  );
+
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 18px;
   font-weight: 800;
   text-decoration: none;
 
   box-shadow: 0 5px 0 #6C502A;
-  transition: transform .2s;
 }
 
 .next-button:active {
@@ -93,37 +144,66 @@ p {
   outline: 3px solid white;
   outline-offset: 4px;
 }
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    padding: 20px 14px;
+  }
+
+  .qr {
+    width: min(100%,280px);
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="background"></div>
 
-  <img src="Logo.jpg" class="logo" alt="Logo">
+<main class="container">
 
-  <div class="success">🎉</div>
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
 
-  <h1>PŘESMĚROVÁNÍ FUNGUJE!</h1>
+  <div class="ornament">✦ ⚜ ✦</div>
 
-  <p>
-    Gratulujeme! 🎧<br>
-    Úspěšně jste dokončili nahrávku
-    o Karlu Velikém a dostali se
-    na stránku <strong>s7.html</strong>.
-  </p>
+  <h1>🗺️ DALŠÍ CÍL!</h1>
 
-  <p>
-    🏰 Další dobrodružství čeká!
-  </p>
+  <section class="card">
 
-  <!-- PŘESMĚROVÁNÍ NA S8 -->
+    <img
+      class="qr"
+      src="ruthqr.png"
+      alt="QR kód k dalšímu cíli"
+    >
 
-  <a href="s8.html" class="next-button">
-    ➜ POKRAČOVAT DÁL
-  </a>
+    <a href="s7.2.html" class="next-button">
+      📍 JSEM NA MÍSTĚ!
+    </a>
 
-</div>
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
 
 </body>
 </html>
