@@ -9,7 +9,7 @@
 <title>Hledání rozdílů | Plným plynem Kutnou Horou</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -47,7 +47,10 @@ body.modal-open {
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(rgba(4,24,18,.38),rgba(4,24,18,.65)),
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.65)
+    ),
     url("pozadi.png") center center / cover no-repeat;
 }
 
@@ -59,10 +62,12 @@ body.modal-open {
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
+
   padding:
     calc(28px + env(safe-area-inset-top))
     18px
     calc(35px + env(safe-area-inset-bottom));
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -191,7 +196,11 @@ h1 {
 .submit-button {
   margin-top: 17px;
   border: 2px solid #F0D99B;
-  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  background: linear-gradient(
+    135deg,
+    #E9D29A,
+    #B38A47
+  );
   color: var(--green);
   font-size: 16px;
   box-shadow: 0 5px 0 #6C502A;
@@ -200,11 +209,16 @@ h1 {
 .hint-button {
   margin-top: 23px;
   border: 1px solid var(--gold);
-  background: linear-gradient(135deg,#174D39,#0B3024);
+  background: linear-gradient(
+    135deg,
+    #174D39,
+    #0B3024
+  );
   color: var(--cream);
   font-size: 14px;
 }
 
+/* SVÍTÍCÍ AUDIO TLAČÍTKO */
 
 .audio-button {
   margin-top: 25px;
@@ -221,7 +235,7 @@ h1 {
   );
 
   color: #092F25;
-  font-size: clamp(16px, 4vw, 19px);
+  font-size: clamp(16px,4vw,19px);
   font-weight: 800;
   letter-spacing: 0.5px;
 
@@ -260,8 +274,6 @@ h1 {
   }
 }
 
-}
-
 .audio-status {
   margin: 10px 0 0;
   color: #D9C395;
@@ -269,7 +281,8 @@ h1 {
   line-height: 1.6;
 }
 
-.button:focus-visible {
+.button:focus-visible,
+.next-button:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
 }
@@ -281,6 +294,8 @@ h1 {
   font-style: italic;
   line-height: 1.7;
 }
+
+/* SPRÁVNÁ ODPOVĚĎ */
 
 .success {
   display: none;
@@ -313,7 +328,11 @@ h1 {
   padding: 18px 12px;
   border: 2px solid #F0D99B;
   border-radius: 12px;
-  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  background: linear-gradient(
+    135deg,
+    #E9D29A,
+    #B38A47
+  );
   color: var(--green);
   font-size: 15px;
   font-weight: 800;
@@ -326,6 +345,8 @@ h1 {
   font-size: 11px;
   letter-spacing: 1px;
 }
+
+/* VYSKAKOVACÍ OKNA */
 
 .overlay {
   position: fixed;
@@ -375,6 +396,8 @@ h1 {
   color: var(--cream);
   font-size: 14px;
 }
+
+/* WRONG GIF */
 
 .wrong-overlay {
   z-index: 200;
@@ -464,7 +487,7 @@ h1 {
       </p>
     </div>
 
-    <!-- AUDIO -->
+    <!-- AUDIO JAKUB.MP3 -->
 
     <audio id="jakubAudio" preload="auto">
       <source src="jakub.mp3" type="audio/mpeg">
@@ -481,6 +504,8 @@ h1 {
     <p class="audio-status" id="audioStatus">
       Pokoušíme se automaticky spustit nahrávku...
     </p>
+
+    <!-- ÚKOL -->
 
     <p class="question">
       🔍 NAJDĚTE TŘI ROZDÍLY
@@ -503,7 +528,10 @@ h1 {
         required
       ></textarea>
 
-      <button type="submit" class="button submit-button">
+      <button
+        type="submit"
+        class="button submit-button"
+      >
         🔐 OVĚŘIT ODPOVĚĎ
       </button>
 
@@ -522,6 +550,8 @@ h1 {
       že jste si oči nepřinesli jen
       jako módní doplněk. 😈
     </p>
+
+    <!-- POTVRZENÍ -->
 
     <div class="success" id="success">
 
@@ -549,7 +579,7 @@ h1 {
 
 </main>
 
-<!-- NÁPOVĚDA -->
+<!-- NÁPOVĚDY -->
 
 <div
   class="overlay"
@@ -621,7 +651,7 @@ let solved = false;
 let locked = false;
 let wrongTimer = null;
 
-/* AUDIO JAKUB.MP3 */
+/* AUTOMATICKÉ AUDIO */
 
 async function playJakub() {
   try {
@@ -642,12 +672,14 @@ audioButton.addEventListener("click", function() {
 
 jakubAudio.addEventListener("play", function() {
   audioButton.textContent = "⏸ POZASTAVIT NAHRÁVKU";
-  audioStatus.textContent = "🎧 Přehrává se příběh svatého Jakuba...";
+  audioStatus.textContent =
+    "🎧 Přehrává se příběh svatého Jakuba...";
 });
 
 jakubAudio.addEventListener("pause", function() {
   if (!jakubAudio.ended) {
-    audioButton.textContent = "▶ POKRAČOVAT V PŘEHRÁVÁNÍ";
+    audioButton.textContent =
+      "▶ POKRAČOVAT V PŘEHRÁVÁNÍ";
     audioStatus.textContent = "Nahrávka pozastavena.";
   }
 });
@@ -662,12 +694,11 @@ jakubAudio.addEventListener("error", function() {
     "Nahrávku nelze načíst. Zkontrolujte soubor jakub.mp3.";
 });
 
-// Automatické spuštění při načtení stránky
 window.addEventListener("load", function() {
   playJakub();
 });
 
-/* NÁPOVĚDY */
+/* POSTUPNÉ NÁPOVĚDY */
 
 const hints = [
   "🔍 <strong>1. NÁPOVĚDA</strong><br><br>Co je na fotce jinak než v realitě?",
@@ -681,11 +712,19 @@ hintButton.addEventListener("click", function() {
   if (solved) return;
 
   if (hintIndex < hints.length) {
-    hintContent.innerHTML = "<p>" + hints[hintIndex] + "</p>";
+    hintContent.innerHTML =
+      "<p>" + hints[hintIndex] + "</p>";
+
     hintIndex++;
 
-    const total = Number(localStorage.getItem("kh_hints") || "0");
-    localStorage.setItem("kh_hints", String(total + 1));
+    const total = Number(
+      localStorage.getItem("kh_hints") || "0"
+    );
+
+    localStorage.setItem(
+      "kh_hints",
+      String(total + 1)
+    );
   } else {
     hintContent.innerHTML =
       "<p>Všechny nápovědy už jste vyčerpali. Teď už zbývá jen pořádně koukat. 😈</p>";
@@ -718,7 +757,7 @@ function normalizeWord(word) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-/* KONTROLA TŘÍ ROZDÍLŮ */
+/* KONTROLA ROZDÍLŮ V LIBOVOLNÉM POŘADÍ */
 
 answerForm.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -727,18 +766,24 @@ answerForm.addEventListener("submit", function(event) {
 
   const text = normalizeWord(answerInput.value);
 
+  // Přijímá mezery, čárky, středníky,
+  // tečky, pomlčky i nové řádky.
   const words = text
-    .split(/[\s,;]+/)
+    .split(/[\s,;.\-]+/)
     .filter(Boolean);
 
+  // Správné rozdíly
   const expected = ["strom", "kun", "lampa"];
 
+  // Musí být přesně tři správná slova.
+  // Jejich pořadí není důležité.
   const correct =
     words.length === 3 &&
     expected.every(word => words.includes(word));
 
   if (correct) {
     solved = true;
+
     localStorage.setItem("kh_s11_completed", "1");
 
     answerForm.style.display = "none";
@@ -749,17 +794,19 @@ answerForm.addEventListener("submit", function(event) {
       behavior: "smooth",
       block: "nearest"
     });
+
   } else {
     showWrong();
   }
 });
 
-/* WRONG GIF NA 2 SEKUNDY */
+/* ŠPATNÁ ODPOVĚĎ: WRONG.GIF */
 
 function showWrong() {
   locked = true;
 
   wrongGif.src = "wrong.gif?t=" + Date.now();
+
   wrongOverlay.classList.add("visible");
   document.body.classList.add("modal-open");
 
@@ -768,6 +815,7 @@ function showWrong() {
   wrongTimer = setTimeout(function() {
     wrongOverlay.classList.remove("visible");
     document.body.classList.remove("modal-open");
+
     locked = false;
     answerInput.focus();
   }, 2000);
