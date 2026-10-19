@@ -205,6 +205,21 @@ h1 {
   font-size: 14px;
 }
 
+.audio-button {
+  margin-top: 20px;
+  border: 1px solid var(--gold);
+  background: #174D39;
+  color: var(--cream);
+  font-size: 13px;
+}
+
+.audio-status {
+  margin: 10px 0 0;
+  color: #D9C395;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
 .button:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
@@ -217,8 +232,6 @@ h1 {
   font-style: italic;
   line-height: 1.7;
 }
-
-/* ÚSPĚCH */
 
 .success {
   display: none;
@@ -265,8 +278,6 @@ h1 {
   letter-spacing: 1px;
 }
 
-/* VYSKAKOVACÍ OKNA */
-
 .overlay {
   position: fixed;
   inset: 0;
@@ -285,6 +296,8 @@ h1 {
 .modal {
   width: 100%;
   max-width: 420px;
+  max-height: 90dvh;
+  overflow-y: auto;
   padding: 26px 20px;
   border: 2px solid var(--gold);
   border-radius: 16px;
@@ -313,8 +326,6 @@ h1 {
   color: var(--cream);
   font-size: 14px;
 }
-
-/* WRONG GIF */
 
 .wrong-overlay {
   z-index: 200;
@@ -348,9 +359,18 @@ h1 {
     padding-left: 14px;
     padding-right: 14px;
   }
-  .logo { width: min(40vw,140px); }
-  .card { padding: 22px 13px; }
-  .riddle { padding: 20px 10px; }
+
+  .logo {
+    width: min(40vw,140px);
+  }
+
+  .card {
+    padding: 22px 13px;
+  }
+
+  .riddle {
+    padding: 20px 10px;
+  }
 }
 </style>
 </head>
@@ -361,8 +381,11 @@ h1 {
 
 <main class="container">
 
-  <img class="logo" src="Logo.jpg"
-       alt="Plným plynem Kutnou Horou">
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
 
   <div class="ornament">✦ ⚜ ✦</div>
 
@@ -392,6 +415,24 @@ h1 {
       </p>
     </div>
 
+    <!-- AUDIO -->
+
+    <audio id="jakubAudio" preload="auto">
+      <source src="jakub.mp3" type="audio/mpeg">
+    </audio>
+
+    <button
+      type="button"
+      class="button audio-button"
+      id="audioButton"
+    >
+      🎧 PŘEHRÁT NAHRÁVKU
+    </button>
+
+    <p class="audio-status" id="audioStatus">
+      Pokoušíme se automaticky spustit nahrávku...
+    </p>
+
     <p class="question">
       🔍 NAJDĚTE TŘI ROZDÍLY
     </p>
@@ -419,8 +460,11 @@ h1 {
 
     </form>
 
-    <button type="button" class="button hint-button"
-            id="hintButton">
+    <button
+      type="button"
+      class="button hint-button"
+      id="hintButton"
+    >
       💡 V PŘÍPADĚ INTELEKTUÁLNÍHO KOLAPSU
     </button>
 
@@ -458,18 +502,24 @@ h1 {
 
 <!-- NÁPOVĚDA -->
 
-<div class="overlay" id="hintOverlay"
-     role="dialog" aria-modal="true"
-     aria-labelledby="hintTitle">
-
+<div
+  class="overlay"
+  id="hintOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hintTitle"
+>
   <div class="modal">
 
     <h2 id="hintTitle">💡 NÁPOVĚDA</h2>
 
     <div id="hintContent"></div>
 
-    <button type="button" class="button close-button"
-            id="closeHint">
+    <button
+      type="button"
+      class="button close-button"
+      id="closeHint"
+    >
       ✕ ZAVŘÍT
     </button>
 
@@ -478,13 +528,19 @@ h1 {
 
 <!-- WRONG GIF -->
 
-<div class="overlay wrong-overlay" id="wrongOverlay"
-     role="alertdialog" aria-label="Špatná odpověď">
-
+<div
+  class="overlay wrong-overlay"
+  id="wrongOverlay"
+  role="alertdialog"
+  aria-label="Špatná odpověď"
+>
   <div class="wrong-content">
 
-    <img id="wrongGif" src="wrong.gif"
-         alt="Špatná odpověď">
+    <img
+      id="wrongGif"
+      src="wrong.gif"
+      alt="Špatná odpověď"
+    >
 
     <div class="wrong-text">
       ❌ ŠPATNĚ! ZKUSTE TO ZNOVU.
@@ -494,6 +550,8 @@ h1 {
 </div>
 
 <script>
+/* ELEMENTY */
+
 const answerForm = document.getElementById("answerForm");
 const answerInput = document.getElementById("answer");
 const success = document.getElementById("success");
@@ -506,9 +564,59 @@ const closeHint = document.getElementById("closeHint");
 const wrongOverlay = document.getElementById("wrongOverlay");
 const wrongGif = document.getElementById("wrongGif");
 
+const jakubAudio = document.getElementById("jakubAudio");
+const audioButton = document.getElementById("audioButton");
+const audioStatus = document.getElementById("audioStatus");
+
 let solved = false;
 let locked = false;
 let wrongTimer = null;
+
+/* AUDIO JAKUB.MP3 */
+
+async function playJakub() {
+  try {
+    await jakubAudio.play();
+  } catch (error) {
+    audioStatus.textContent =
+      "Automatické přehrávání bylo zablokováno. Klepněte na tlačítko.";
+  }
+}
+
+audioButton.addEventListener("click", function() {
+  if (jakubAudio.paused) {
+    playJakub();
+  } else {
+    jakubAudio.pause();
+  }
+});
+
+jakubAudio.addEventListener("play", function() {
+  audioButton.textContent = "⏸ POZASTAVIT NAHRÁVKU";
+  audioStatus.textContent = "🎧 Přehrává se příběh svatého Jakuba...";
+});
+
+jakubAudio.addEventListener("pause", function() {
+  if (!jakubAudio.ended) {
+    audioButton.textContent = "▶ POKRAČOVAT V PŘEHRÁVÁNÍ";
+    audioStatus.textContent = "Nahrávka pozastavena.";
+  }
+});
+
+jakubAudio.addEventListener("ended", function() {
+  audioButton.textContent = "↻ PŘEHRÁT ZNOVU";
+  audioStatus.textContent = "✓ Nahrávka dokončena.";
+});
+
+jakubAudio.addEventListener("error", function() {
+  audioStatus.textContent =
+    "Nahrávku nelze načíst. Zkontrolujte soubor jakub.mp3.";
+});
+
+// Automatické spuštění při načtení stránky
+window.addEventListener("load", function() {
+  playJakub();
+});
 
 /* NÁPOVĚDY */
 
@@ -570,8 +678,6 @@ answerForm.addEventListener("submit", function(event) {
 
   const text = normalizeWord(answerInput.value);
 
-  // Podporuje zadání oddělené čárkami,
-  // mezerami, středníky i novými řádky.
   const words = text
     .split(/[\s,;]+/)
     .filter(Boolean);
