@@ -8,7 +8,7 @@
 <title>Tajemství lavičky | Plným plynem Kutnou Horou</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -85,10 +85,7 @@ body.modal-open {
   height: auto;
   border-radius: 50%;
   margin-bottom: 20px;
-
-  filter: drop-shadow(
-    0 8px 18px rgba(0,0,0,.5)
-  );
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
 }
 
 /* ORNAMENT */
@@ -106,4 +103,442 @@ h1 {
   margin: 0;
   font-family: 'Cinzel',serif;
   font-size: clamp(25px,6vw,35px);
-  line-height
+  line-height: 1.3;
+  text-shadow: 0 3px 10px #000;
+}
+
+.subtitle {
+  margin: 13px 0 0;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* KARTA */
+
+.card {
+  width: 100%;
+  margin-top: 27px;
+  padding: 27px 19px;
+  border: 1px solid #B89B60;
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.card h2 {
+  margin: 0 0 20px;
+  color: #E7CD91;
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+}
+
+/* BÁSNIČKA */
+
+.riddle {
+  padding: 25px 13px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.verse {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(12px,3.2vw,16px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.highlight {
+  color: #E7CD91;
+}
+
+/* OTÁZKA */
+
+.question {
+  margin: 27px 0 17px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* TLAČÍTKA */
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 18px 12px;
+  border-radius: 12px;
+  font-family: 'Montserrat',sans-serif;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+}
+
+.submit-button {
+  margin-top: 17px;
+  border: 2px solid #F0D99B;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-size: 16px;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.hint-button {
+  margin-top: 23px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg,#174D39,#0B3024);
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.note {
+  margin: 23px 0 0;
+  color: #D9C395;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* ÚSPĚCH */
+
+.success {
+  display: none;
+  margin-top: 25px;
+  padding: 20px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: #174D39;
+}
+
+.success.visible {
+  display: block;
+}
+
+.success h3 {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+}
+
+.success p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.next-button {
+  display: block;
+  margin-top: 20px;
+  padding: 18px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* PATIČKA */
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* VYSKAKOVACÍ OKNO */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.93);
+}
+
+.overlay.visible {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 20px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  background: #103629;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0,0,0,.6);
+}
+
+.modal h2 {
+  margin: 0 0 18px;
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+.modal p {
+  color: var(--cream);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.close-button {
+  margin-top: 20px;
+  border: 1px solid var(--gold);
+  background: #174D39;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+/* MALÉ MOBILY */
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .logo {
+    width: min(40vw,140px);
+  }
+
+  .card {
+    padding: 22px 13px;
+  }
+
+  .riddle {
+    padding: 20px 10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <!-- LOGO -->
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>TAJEMSTVÍ<br>SVATÉHO JAKUBA</h1>
+
+  <p class="subtitle">
+    🔍 POZOROVACÍ ZKOUŠKA
+  </p>
+
+  <section class="card">
+
+    <h2>📜 VAŠE ZADÁNÍ</h2>
+
+    <!-- PŮVODNÍ BÁSNIČKA -->
+
+    <div class="riddle">
+      <p class="verse">
+
+        Kostel honosný a výhled krásný,<br>
+        tak vám to ještě zpříjemníme básní.<br><br>
+
+        Doufáme, že brýle všichni vlastníte,<br>
+        jinak na ta malá písmena neuvidíte!<br><br>
+
+        A co tu hledáte? To vám rádi napovíme,<br>
+        vždyť to ani jinak neumíme.<br><br>
+
+        <span class="highlight">
+          HLEDÁM, KOUKÁM, VPRAVO, VLEVO,<br>
+          MŮJ POHLED ZACHYTILO NEJBLIŽŠÍ DŘEVO.
+        </span>
+        <br><br>
+
+        Hledej, co tam nepatří<br>
+        a co oči tvé jen tak nespatří!
+
+      </p>
+    </div>
+
+    <!-- NOVÁ OTÁZKA -->
+
+    <p class="question">
+      🔎 NAŠLI JSTE NÁPOVĚDU?
+    </p>
+
+    <!-- MÁM NÁPOVĚDU -->
+
+    <button
+      type="button"
+      class="button submit-button"
+      id="haveHint"
+    >
+      🔑 MÁM NÁPOVĚDU
+    </button>
+
+    <!-- NEMÁM NÁPOVĚDU -->
+
+    <button
+      type="button"
+      class="button hint-button"
+      id="noHint"
+    >
+      ❓ NEMÁM NÁPOVĚDU
+    </button>
+
+    <p class="note">
+      Někdy je odpověď přímo před nosem.
+      Což je samozřejmě ideální místo,
+      kde ji nikdo nehledá. 😈
+    </p>
+
+    <!-- ÚSPĚŠNÉ NALEZENÍ -->
+
+    <div class="success" id="success">
+
+      <h3>🎉 SUPER, NAŠLI JSTE JI!</h3>
+
+      <p>
+        Výborně! Dokázali jste najít
+        něco, co tam nemělo být.
+        Sherlock Holmes by měl radost.
+        Jeho účetní už o něco menší.
+      </p>
+
+      <a href="s11.html" class="next-button">
+        ➜ POKRAČOVAT DÁL
+      </a>
+
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- VYSKAKOVACÍ OKNO -->
+
+<div
+  class="overlay"
+  id="hintOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hintTitle"
+>
+  <div class="modal">
+
+    <h2 id="hintTitle">
+      📞 POTŘEBUJETE POMOC?
+    </h2>
+
+    <p>
+      Napište organizátorovi.
+    </p>
+
+    <button
+      type="button"
+      class="button close-button"
+      id="closeHint"
+    >
+      ✕ ZAVŘÍT
+    </button>
+
+  </div>
+</div>
+
+<script>
+
+/* PRVKY */
+
+const success = document.getElementById("success");
+const haveHint = document.getElementById("haveHint");
+const noHint = document.getElementById("noHint");
+
+const hintOverlay = document.getElementById("hintOverlay");
+const closeHint = document.getElementById("closeHint");
+
+/* MÁM NÁPOVĚDU */
+
+haveHint.addEventListener("click", function() {
+
+  localStorage.setItem("kh_s10_completed", "1");
+
+  haveHint.style.display = "none";
+  noHint.style.display = "none";
+
+  success.classList.add("visible");
+
+  success.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+
+});
+
+/* NEMÁM NÁPOVĚDU */
+
+noHint.addEventListener("click", function() {
+
+  hintOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+});
+
+/* ZAVŘENÍ OKNA */
+
+function hideHint() {
+  hintOverlay.classList.remove("visible");
+  document.body.classList.remove("modal-open");
+}
+
+closeHint.addEventListener("click", hideHint);
+
+/* ZAVŘENÍ KLIKNUTÍM MIMO OKNO */
+
+hintOverlay.addEventListener("click", function(event) {
+  if (event.target === hintOverlay) {
+    hideHint();
+  }
+});
+
+/* ESC ZAVŘE OKNO */
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    hideHint();
+  }
+});
+
+</script>
+
+</body>
+</html>
