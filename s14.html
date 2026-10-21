@@ -37,6 +37,12 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
+/* POZADÍ */
+
 .background {
   position: fixed;
   inset: 0;
@@ -48,6 +54,8 @@ body {
     ),
     url("pozadi.png") center / cover no-repeat;
 }
+
+/* HLAVNÍ OBSAH */
 
 .container {
   position: relative;
@@ -70,6 +78,8 @@ body {
   text-align: center;
 }
 
+/* LOGO */
+
 .logo {
   display: block;
   width: min(42vw,160px);
@@ -79,12 +89,16 @@ body {
   filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
 }
 
+/* ORNAMENT */
+
 .ornament {
   color: var(--gold);
   font-size: 20px;
   letter-spacing: 5px;
   margin-bottom: 17px;
 }
+
+/* NADPIS */
 
 h1 {
   margin: 0 0 25px;
@@ -94,6 +108,8 @@ h1 {
   text-shadow: 0 3px 12px #000;
 }
 
+/* KARTA */
+
 .card {
   width: 100%;
   padding: 28px 19px;
@@ -102,6 +118,8 @@ h1 {
   background: rgba(8,37,28,.95);
   box-shadow: 0 12px 35px rgba(0,0,0,.45);
 }
+
+/* BÁSNIČKA */
 
 .riddle {
   padding: 28px 14px;
@@ -133,36 +151,210 @@ h1 {
   letter-spacing: 6px;
 }
 
+/* OTÁZKA */
+
+.question {
+  margin: 15px 0 20px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+/* ODPOVĚĎ */
+
+.answer-input {
+  display: block;
+  width: 100%;
+  padding: 17px 12px;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  background: #F9F0DC;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.answer-input:focus {
+  outline: 3px solid rgba(217,190,123,.4);
+  outline-offset: 3px;
+}
+
+/* TLAČÍTKA */
+
+.button,
 .next-button {
   display: block;
   width: 100%;
-  padding: 21px 14px;
-  border: 2px solid #F0D99B;
-  border-radius: 13px;
+  padding: 19px 12px;
+  border-radius: 12px;
+  font-family: 'Montserrat',sans-serif;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+}
 
+.submit-button,
+.next-button {
+  margin-top: 20px;
+  border: 2px solid #F0D99B;
   background: linear-gradient(
     135deg,
     #E9D29A,
     #B38A47
   );
-
   color: var(--green);
-  font-family: 'Montserrat',sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  text-decoration: none;
+  font-size: 16px;
   box-shadow: 0 5px 0 #6C502A;
 }
 
-.next-button:active {
-  transform: translateY(4px);
-  box-shadow: 0 1px 0 #6C502A;
+.next-button {
+  text-decoration: none;
 }
 
+.hint-button {
+  margin-top: 23px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(
+    135deg,
+    #174D39,
+    #0B3024
+  );
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.button:active,
+.next-button:active {
+  transform: translateY(4px);
+}
+
+.button:focus-visible,
 .next-button:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
 }
+
+/* ÚSPĚCH */
+
+.success {
+  display: none;
+  margin-top: 25px;
+  padding: 24px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: #174D39;
+  animation: appear .5s ease;
+}
+
+.success.visible {
+  display: block;
+}
+
+.success h3 {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+}
+
+.success p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* NÁPOVĚDA */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.93);
+}
+
+.overlay.visible {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 20px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  background: #103629;
+  text-align: center;
+}
+
+.modal h2 {
+  margin: 0 0 18px;
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+.modal p {
+  color: var(--cream);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.close-button {
+  margin-top: 20px;
+  border: 1px solid var(--gold);
+  background: #174D39;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+/* WRONG GIF */
+
+.wrong-overlay {
+  z-index: 200;
+  background: rgba(0,0,0,.95);
+}
+
+.wrong-content {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wrong-content img {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.wrong-text {
+  margin-top: 20px;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* PATIČKA */
 
 .footer {
   margin-top: 30px;
@@ -170,6 +362,8 @@ h1 {
   font-size: 11px;
   letter-spacing: 1px;
 }
+
+/* MOBILY */
 
 @media (max-width:390px) {
   .container {
@@ -194,6 +388,8 @@ h1 {
 
 <main class="container">
 
+  <!-- LOGO -->
+
   <img
     class="logo"
     src="Logo.jpg"
@@ -205,6 +401,8 @@ h1 {
   <h1>🔑 ZPÁTKY<br>DO MINCÍŘSKÉ!</h1>
 
   <section class="card">
+
+    <!-- PŮVODNÍ BÁSNIČKA -->
 
     <div class="riddle">
 
@@ -223,14 +421,14 @@ h1 {
 
         <span class="highlight">
           Na konci vlevo,<br>
-          klíčky tam hledejte,<br>
-          nápovědu s číslem<br>
-          na truhličce najdete.
+          malé lahvičky hledejte,<br>
+          otevřete a čuchejte<br>
+          a níže název vůně zadejte.
         </span>
         <br><br>
 
-        Jakmile to máte,<br>
-        ihned oboje do batůžku dáte!
+        Je to vůně, která se s Kutnou Horou pojí,<br>
+        uhádnout její tajemství za pokus stojí!
 
       </p>
 
@@ -238,9 +436,57 @@ h1 {
 
     <div class="divider">✦ ⚜ ✦</div>
 
-    <a href="s15.html" class="next-button">
-      🔑 MÁME OBOJE!
-    </a>
+    <!-- OTÁZKA -->
+
+    <h2 class="question">
+      👃 CO JE TO ZA VŮNI?
+    </h2>
+
+    <form id="answerForm">
+
+      <input
+        type="text"
+        id="answer"
+        class="answer-input"
+        placeholder="Napište název vůně..."
+        autocomplete="off"
+        spellcheck="false"
+        required
+      >
+
+      <button type="submit" class="button submit-button">
+        🔍 OVĚŘIT ODPOVĚĎ
+      </button>
+
+    </form>
+
+    <!-- NÁPOVĚDY -->
+
+    <button
+      type="button"
+      class="button hint-button"
+      id="hintButton"
+    >
+      💡 POTŘEBUJEME NÁPOVĚDU
+    </button>
+
+    <!-- SPRÁVNÁ ODPOVĚĎ -->
+
+    <div class="success" id="success">
+
+      <h3>🎉 SPRÁVNĚ!</h3>
+
+      <p>
+        Výborně! Vůni jste odhalili.
+        Alchymisté by z vás měli radost.
+        A cukráři nejspíš také. 😈
+      </p>
+
+      <a href="s15.html" class="next-button">
+        🔑 MÁME OBOJE!
+      </a>
+
+    </div>
 
   </section>
 
@@ -249,6 +495,229 @@ h1 {
   </div>
 
 </main>
+
+<!-- OKNO S NÁPOVĚDOU -->
+
+<div
+  class="overlay"
+  id="hintOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hintTitle"
+>
+
+  <div class="modal">
+
+    <h2 id="hintTitle">💡 NÁPOVĚDA</h2>
+
+    <div id="hintContent"></div>
+
+    <button
+      type="button"
+      class="button close-button"
+      id="closeHint"
+    >
+      ✕ ZAVŘÍT
+    </button>
+
+  </div>
+
+</div>
+
+<!-- WRONG GIF -->
+
+<div
+  class="overlay wrong-overlay"
+  id="wrongOverlay"
+  role="alertdialog"
+  aria-label="Špatná odpověď"
+>
+
+  <div class="wrong-content">
+
+    <img
+      id="wrongGif"
+      src="wrong.gif"
+      alt="Špatná odpověď"
+    >
+
+    <div class="wrong-text">
+      ❌ ŠPATNĚ! ZKUSTE TO ZNOVU.
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* PRVKY */
+
+const answerForm = document.getElementById("answerForm");
+const answerInput = document.getElementById("answer");
+
+const success = document.getElementById("success");
+
+const hintButton = document.getElementById("hintButton");
+const hintOverlay = document.getElementById("hintOverlay");
+const hintContent = document.getElementById("hintContent");
+const closeHint = document.getElementById("closeHint");
+
+const wrongOverlay = document.getElementById("wrongOverlay");
+const wrongGif = document.getElementById("wrongGif");
+
+let solved = false;
+let locked = false;
+let wrongTimer = null;
+
+/* NORMALIZACE ODPOVĚDI */
+
+function normalizeAnswer(text) {
+  return text
+    .trim()
+    .toLocaleLowerCase("cs-CZ")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ");
+}
+
+/* SPRÁVNÉ ODPOVĚDI */
+
+const correctAnswers = [
+  "pernik",
+  "pernikove koreni"
+];
+
+/* OVĚŘENÍ ODPOVĚDI */
+
+answerForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (solved || locked) return;
+
+  const answer = normalizeAnswer(answerInput.value);
+
+  if (correctAnswers.includes(answer)) {
+
+    solved = true;
+
+    localStorage.setItem("kh_s14_completed", "1");
+
+    answerForm.style.display = "none";
+    hintButton.style.display = "none";
+
+    success.classList.add("visible");
+
+    success.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+
+  } else {
+    showWrong();
+  }
+});
+
+/* NÁPOVĚDY */
+
+const hints = [
+  "🌿 <strong>1. NÁPOVĚDA</strong><br><br>Směs koření.",
+  "🎄 <strong>2. NÁPOVĚDA</strong><br><br>Vánoce.",
+  "🍪 <strong>3. NÁPOVĚDA</strong><br><br>Jmenuje se po tom buchta."
+];
+
+let hintIndex = Number(
+  localStorage.getItem("kh_s14_hint_index") || "0"
+);
+
+hintButton.addEventListener("click", function() {
+
+  if (solved) return;
+
+  if (hintIndex < hints.length) {
+
+    hintContent.innerHTML =
+      "<p>" + hints[hintIndex] + "</p>";
+
+    hintIndex++;
+
+    localStorage.setItem(
+      "kh_s14_hint_index",
+      String(hintIndex)
+    );
+
+    const total = Number(
+      localStorage.getItem("kh_hints") || "0"
+    );
+
+    localStorage.setItem(
+      "kh_hints",
+      String(total + 1)
+    );
+
+  } else {
+
+    hintContent.innerHTML =
+      "<p>Všechny nápovědy už jste vyčerpali. Teď už zbývá jen pořádně přičichnout. 😈</p>";
+
+  }
+
+  hintOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+});
+
+/* ZAVŘENÍ NÁPOVĚDY */
+
+function hideHint() {
+  hintOverlay.classList.remove("visible");
+  document.body.classList.remove("modal-open");
+}
+
+closeHint.addEventListener("click", hideHint);
+
+hintOverlay.addEventListener("click", function(event) {
+  if (event.target === hintOverlay) {
+    hideHint();
+  }
+});
+
+/* WRONG GIF */
+
+function showWrong() {
+
+  locked = true;
+
+  wrongGif.src = "wrong.gif?t=" + Date.now();
+
+  wrongOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+  clearTimeout(wrongTimer);
+
+  wrongTimer = setTimeout(function() {
+
+    wrongOverlay.classList.remove("visible");
+    document.body.classList.remove("modal-open");
+
+    locked = false;
+    answerInput.focus();
+
+  }, 2000);
+}
+
+/* ESC ZAVŘE NÁPOVĚDU */
+
+document.addEventListener("keydown", function(event) {
+  if (
+    event.key === "Escape" &&
+    hintOverlay.classList.contains("visible")
+  ) {
+    hideHint();
+  }
+});
+
+</script>
 
 </body>
 </html>
