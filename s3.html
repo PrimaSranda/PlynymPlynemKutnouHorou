@@ -9,8 +9,7 @@ content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Hádanka | Plným plynem Kutnou Horou</title>
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect"
 href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap"
@@ -42,13 +41,10 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* POZADÍ */
-
 .background {
   position: fixed;
   inset: 0;
   z-index: 0;
-
   background:
     linear-gradient(
       rgba(4,24,18,.38),
@@ -57,17 +53,13 @@ body {
     url("pozadi.png") center center / cover no-repeat;
 }
 
-/* HLAVNÍ OBSAH */
-
 .container {
   position: relative;
   z-index: 1;
-
   width: 100%;
   max-width: 540px;
   min-height: 100vh;
   min-height: 100dvh;
-
   margin: 0 auto;
 
   padding:
@@ -81,21 +73,14 @@ body {
   text-align: center;
 }
 
-/* LOGO */
-
 .logo {
   display: block;
-  width: min(42vw, 160px);
+  width: min(42vw,160px);
   height: auto;
   border-radius: 50%;
   margin-bottom: 20px;
-
-  filter: drop-shadow(
-    0 8px 18px rgba(0,0,0,.5)
-  );
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
 }
-
-/* ORNAMENT */
 
 .ornament {
   color: var(--gold);
@@ -104,14 +89,11 @@ body {
   margin-bottom: 16px;
 }
 
-/* NADPIS */
-
 h1 {
   margin: 0;
-  font-family: 'Cinzel', serif;
-  font-size: clamp(26px, 6vw, 36px);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(26px,6vw,36px);
   line-height: 1.3;
-  color: var(--cream);
   text-shadow: 0 3px 10px #000;
 }
 
@@ -123,36 +105,27 @@ h1 {
   letter-spacing: 2px;
 }
 
-/* KARTA */
-
 .card {
   width: 100%;
   margin-top: 27px;
   padding: 30px 20px;
-
   border: 1px solid #B89B60;
   border-radius: 16px;
-
   background: rgba(8,37,28,.95);
-
-  box-shadow:
-    0 12px 35px rgba(0,0,0,.45);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
 }
 
 .card h2 {
   margin: 0 0 20px;
   color: #E7CD91;
-  font-family: 'Cinzel', serif;
+  font-family: 'Cinzel',serif;
   font-size: 21px;
 }
-
-/* BÁSNIČKA */
 
 .riddle {
   padding: 25px 13px;
   border: 1px solid rgba(217,190,123,.55);
   border-radius: 12px;
-
   background: linear-gradient(
     145deg,
     rgba(29,77,56,.75),
@@ -167,10 +140,9 @@ h1 {
 
 .verse {
   margin: 0 0 24px;
-  color: #F5E6C5;
-
-  font-family: 'Cinzel', serif;
-  font-size: clamp(13px, 3.7vw, 17px);
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(13px,3.7vw,17px);
   font-weight: 600;
   line-height: 1.9;
 }
@@ -183,32 +155,28 @@ h1 {
   color: #E7CD91;
 }
 
-/* TLAČÍTKO */
+/* TLAČÍTKA */
 
 .next-button {
   display: block;
   width: 100%;
-
   margin-top: 27px;
   padding: 19px 12px;
-
   border: 2px solid #F0D99B;
   border-radius: 12px;
-
   background: linear-gradient(
     135deg,
     #E9D29A,
     #B38A47
   );
-
-  color: #092F25;
-  font-family: 'Montserrat', sans-serif;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
   font-size: 17px;
   font-weight: 800;
   text-decoration: none;
-
+  text-align: center;
+  cursor: pointer;
   box-shadow: 0 5px 0 #6C502A;
-  transition: transform .2s;
 }
 
 .next-button:active {
@@ -221,8 +189,6 @@ h1 {
   outline-offset: 4px;
 }
 
-/* VTÍPEK */
-
 .note {
   margin: 20px 0 0;
   color: #D9C395;
@@ -231,7 +197,59 @@ h1 {
   line-height: 1.7;
 }
 
-/* PATIČKA */
+/* POSTUPNĚ ZOBRAZOVANÉ KROKY */
+
+.step {
+  display: none;
+  animation: fadeIn .45s ease;
+}
+
+.step.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.instruction-box {
+  padding: 25px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(25,72,53,.8);
+}
+
+.instruction-box h3 {
+  margin: 0 0 20px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.instruction-box p {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(14px,3.6vw,17px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.surprise {
+  border: 2px solid #F0D99B;
+  box-shadow: 0 0 25px rgba(217,190,123,.2);
+}
+
+.surprise strong {
+  color: var(--gold);
+}
 
 .footer {
   margin-top: 30px;
@@ -241,16 +259,14 @@ h1 {
   text-shadow: 0 2px 5px #000;
 }
 
-/* MALÉ MOBILY */
-
-@media (max-width: 390px) {
+@media (max-width:390px) {
   .container {
     padding-left: 14px;
     padding-right: 14px;
   }
 
   .logo {
-    width: min(40vw, 140px);
+    width: min(40vw,140px);
   }
 
   .card {
@@ -269,12 +285,6 @@ h1 {
     font-size: 15px;
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .next-button {
-    transition: none;
-  }
-}
 </style>
 </head>
 
@@ -283,8 +293,6 @@ h1 {
 <div class="background"></div>
 
 <main class="container">
-
-  <!-- LOGO -->
 
   <img
     class="logo"
@@ -300,53 +308,112 @@ h1 {
     🗝️ DALŠÍ ZKOUŠKA VAŠEHO DŮVTIPU
   </p>
 
-  <!-- KARTA S HÁDANKOU -->
-
   <section class="card">
 
-    <h2>📜 VAŠE ZADÁNÍ</h2>
+    <!-- KROK 1: PŮVODNÍ HÁDANKA -->
 
-    <div class="riddle">
+    <div class="step active" id="step1">
 
-      <div class="riddle-icon">
-        💧 🗝️ 🪙
+      <h2>📜 VAŠE ZADÁNÍ</h2>
+
+      <div class="riddle">
+
+        <div class="riddle-icon">
+          💧 🗝️ 🪙
+        </div>
+
+        <p class="verse">
+          Jak už to tak bývá,<br>
+          <span class="highlight">
+            u vody se něco skrývá!
+          </span>
+        </p>
+
+        <p class="verse">
+          Uprostřed amfiteátru stojím,<br>
+          <span class="highlight">
+            a prostřední můstek volím.
+          </span>
+        </p>
+
+        <p class="verse">
+          Levá strana, ta to jistí,<br>
+          <span class="highlight">
+            pod hranou laviček se něco blyští!
+          </span>
+        </p>
+
       </div>
 
-      <p class="verse">
-        Jak už to tak bývá,<br>
-        <span class="highlight">
-          u vody se něco skrývá!
-        </span>
-      </p>
+      <button
+        type="button"
+        class="next-button"
+        onclick="showStep(2)"
+      >
+        🪙 NAŠLI JSME TO!
+      </button>
 
-      <p class="verse">
-        Uprostřed amfiteátru stojím,<br>
-        <span class="highlight">
-          a prostřední můstek volím.
-        </span>
-      </p>
-
-      <p class="verse">
-        Levá strana, ta to jistí,<br>
-        <span class="highlight">
-          pod hranou laviček se něco blyští!
-        </span>
+      <p class="note">
+        Než kliknete, ujistěte se,
+        že jste skutečně něco našli.
+        Sebevědomí se jako důkaz
+        bohužel nepočítá. 😂
       </p>
 
     </div>
 
-    <!-- POKRAČOVÁNÍ -->
+    <!-- KROK 2: VÝBĚR KLÍČKU -->
 
-    <a href="s4.html" class="next-button">
-      🪙 MÁME TO!
-    </a>
+    <div class="step" id="step2">
 
-    <p class="note">
-      Než kliknete, ujistěte se,
-      že jste skutečně něco našli.
-      Sebevědomí se jako důkaz
-      bohužel nepočítá. 😂
-    </p>
+      <div class="instruction-box">
+
+        <h3>🔑 KTERÝ KLÍČEK JE TEN PRAVÝ?</h3>
+
+        <p>
+          Podívejte se na číslo
+          uvedené na <strong>černé krabičce</strong>.
+          <br><br>
+          Podle tohoto čísla
+          <strong>vyberte správný klíček.</strong>
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="next-button"
+        onclick="showStep(3)"
+      >
+        🔑 MÁM SPRÁVNÝ KLÍČEK!
+      </button>
+
+    </div>
+
+    <!-- KROK 3: PŘEKVAPENÍ -->
+
+    <div class="step" id="step3">
+
+      <div class="instruction-box surprise">
+
+        <h3>🎉 SUPER, JSTE ŠIKOVNÍ!</h3>
+
+        <p>
+          Avšak...
+          <br><br>
+          <strong>
+            Klíček od krabičky máte
+            z druhé strany krabičky!
+          </strong>
+        </p>
+
+      </div>
+
+      <a href="s4.html" class="next-button">
+        ➜ POKRAČOVAT
+      </a>
+
+    </div>
 
   </section>
 
@@ -355,6 +422,21 @@ h1 {
   </div>
 
 </main>
+
+<script>
+function showStep(number) {
+  document.querySelectorAll(".step").forEach(function(step) {
+    step.classList.remove("active");
+  });
+
+  document.getElementById("step" + number).classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+</script>
 
 </body>
 </html>
