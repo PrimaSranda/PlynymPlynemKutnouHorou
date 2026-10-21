@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Alchymistova zkouška | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(4,24,18,.38),rgba(4,24,18,.76)),
+    url("pozadi.png") center / cover no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(24px,6vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 12px #000;
+}
+
+.card {
+  width: 100%;
+  padding: 27px 19px;
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.stage {
+  display: none;
+  animation: appear .5s ease-out;
+}
+
+.stage.active {
+  display: block;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stage-title {
+  margin: 0 0 20px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.riddle {
+  padding: 25px 13px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.verse {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(12px,3.2vw,16px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.highlight {
+  display: block;
+  margin-top: 20px;
+  color: #F2D99C;
+  font-weight: 800;
+}
+
+.question {
+  margin: 27px 0 17px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(17px,4.3vw,21px);
+  line-height: 1.7;
+}
+
+.answer-input {
+  display: block;
+  width: 100%;
+  padding: 17px 12px;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  background: #F9F0DC;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.answer-input:focus {
+  outline: 3px solid rgba(217,190,123,.4);
+  outline-offset: 3px;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 19px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+/* AUDIO */
+
+.audio-panel {
+  margin-top: 25px;
+  padding: 22px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(20,65,48,.8);
+}
+
+.audio-panel h3 {
+  margin: 0 0 15px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+}
+
+.audio-panel p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+audio {
+  display: block;
+  width: 100%;
+}
+
+.retry-button {
+  display: none;
+}
+
+.retry-button.visible {
+  display: block;
+}
+
+/* WRONG GIF */
+
+.wrong-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.95);
+}
+
+.wrong-overlay.visible {
+  display: flex;
+}
+
+.wrong-content {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wrong-content img {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+}
+
+.wrong-text {
+  margin-top: 20px;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    padding: 22px 13px;
+  }
+
+  .riddle {
+    padding: 20px 10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>🧪 ALCHYMISTOVA<br>ZKOUŠKA</h1>
+
+  <section class="card">
+
+    <!-- KROK 1: MÍCHÁNÍ BAREV -->
+
+    <div class="stage active" id="stage1">
+
+      <h2 class="stage-title">🎨 TAJEMSTVÍ LEKTVARŮ</h2>
+
+      <div class="riddle">
+        <p class="verse">
+          Alchymista tajemství své dobře střežil,<br>
+          do barev a lektvarů své naděje vložil.
+          <br><br>
+          Teď přišla chvíle, kdy se ukáže váš um,<br>
+          zda dokážete rozluštit i jeho tajný výzkum.
+          <br><br>
+          📦 Z vaku kartonovou krabičku vytáhněte,<br>
+          opatrně ji otevřete a obsah prohlédněte.
+          <br><br>
+          Tři barvy v ní čekají, až je spojíte,<br>
+          jaký nový odstín vznikne, sami objevíte.
+
+          <span class="highlight">
+            🎨 Barvy společně smíchejte
+            a výsledný odstín do hry zadejte!
+          </span>
+        </p>
+      </div>
+
+      <form id="form1">
+        <h3 class="question">🎨 JAKÁ BARVA VZNIKLA?</h3>
+
+        <input
+          type="text"
+          id="answer1"
+          class="answer-input"
+          placeholder="Výsledná barva..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit" class="button">
+          🧪 OVĚŘIT ODSTÍN
+        </button>
+      </form>
+
+    </div>
+
+    <!-- KROK 2: VLAJKA -->
+
+    <div class="stage" id="stage2">
+
+      <h2 class="stage-title">✨ POKUS SE ZDAŘIL!</h2>
+
+      <div class="riddle">
+        <p class="verse">
+          Tři barvy jste smíchali, nový odstín získali,<br>
+          teď vzpomeňte, co jste na začátku měli.
+          <br><br>
+          Modrá, bílá, červená, každá své místo má,<br>
+          když se správně poskládají, symbol země vzniká.
+        </p>
+      </div>
+
+      <form id="form2">
+        <h3 class="question">
+          🇨🇿 JAKÝ SYMBOL SE ZA TĚMITO
+          BARVAMI UKRÝVÁ?
+        </h3>
+
+        <input
+          type="text"
+          id="answer2"
+          class="answer-input"
+          placeholder="Státní symbol..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit" class="button">
+          🇨🇿 OVĚŘIT ODPOVĚĎ
+        </button>
+      </form>
+
+    </div>
+
+    <!-- KROK 3: HYMNA AUDIO -->
+
+    <div class="stage" id="stage3">
+
+      <h2 class="stage-title">🇨🇿 DALŠÍ STÁTNÍ SYMBOL</h2>
+
+      <div class="audio-panel">
+
+        <h3>🎧 POSLOUCHEJTE!</h3>
+
+        <p id="audioMessage">
+          Právě se přehrává nahrávka.
+          Po jejím skončení se objeví další otázka.
+        </p>
+
+        <audio id="hymnaAudio" controls preload="none" playsinline>
+          <source src="hymna.mp3" type="audio/mpeg">
+          Váš prohlížeč nepodporuje přehrávání audia.
+        </audio>
+
+        <button
+          type="button"
+          class="button retry-button"
+          id="retryButton"
+        >
+          ▶️ SPUSTIT NAHRÁVKU
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- KROK 4: HYMNA OTÁZKA -->
+
+    <div class="stage" id="stage4">
+
+      <h2 class="stage-title">🎼 ZNÁTE DALŠÍ SYMBOL?</h2>
+
+      <div class="riddle">
+        <p class="verse">
+          Vlajku jste poznali, správnou cestu našli,<br>
+          však další symbol země jste ještě neodhalili.
+          <br><br>
+          Nemá barvu, nemá tvar,<br>
+          přesto v srdcích zanechá dar.
+          <br><br>
+          Když jeho tóny zazní,<br>
+          nejeden Čech se hrdě narovná.
+        </p>
+      </div>
+
+      <form id="form3">
+        <h3 class="question">
+          🎼 O JAKÝ STÁTNÍ SYMBOL SE JEDNÁ?
+        </h3>
+
+        <input
+          type="text"
+          id="answer3"
+          class="answer-input"
+          placeholder="Vaše odpověď..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit" class="button">
+          🎼 OVĚŘIT ODPOVĚĎ
+        </button>
+      </form>
+
+    </div>
+
+    <!-- KROK 5: AUTOR HYMNY -->
+
+    <div class="stage" id="stage5">
+
+      <h2 class="stage-title">📜 KDO NAPSAL SLOVA?</h2>
+
+      <div class="riddle">
+        <p class="verse">
+          Píseň naší země znáte,<br>
+          její slova jistě zazpíváte.
+          <br><br>
+          Kdo však verše kdysi psal,<br>
+          aby je celý národ znal?
+          <br><br>
+          V Kutné Hoře světlo světa spatřil,<br>
+          českému divadlu svůj život zasvětil.
+        </p>
+      </div>
+
+      <form id="form4">
+        <h3 class="question">
+          ✍️ KDO BYL AUTOREM SLOV ČESKÉ HYMNY?
+        </h3>
+
+        <input
+          type="text"
+          id="answer4"
+          class="answer-input"
+          placeholder="Jméno a příjmení..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit" class="button">
+          ✍️ OVĚŘIT ODPOVĚĎ
+        </button>
+      </form>
+
+    </div>
+
+    <!-- KROK 6: FINÁLE -->
+
+    <div class="stage" id="stage6">
+
+      <h2 class="stage-title">🎉 VÝBORNĚ, POUTNÍCI!</h2>
+
+      <div class="riddle">
+        <p class="verse">
+          Výborně, poutníci, správně jste hádali,<br>
+          jméno slavného rodáka jste odhalili.
+          <br><br>
+          Kde jeho život první kapitolu psal,<br>
+          tam váš další úkol čeká dál.
+          <br><br>
+          Dům jeho jméno dodnes nese,<br>
+          tak vzhůru za ním, ať vás cesta nezanese!
+        </p>
+      </div>
+
+      <a href="s24.html" class="button">
+        🏠 VYRÁŽÍME K TYLOVU DOMU!
+      </a>
+
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- WRONG GIF -->
+
+<div class="wrong-overlay" id="wrongOverlay" role="alertdialog">
+  <div class="wrong-content">
+
+    <img
+      id="wrongGif"
+      src="wrong.gif"
+      alt="Špatná odpověď"
+    >
+
+    <div class="wrong-text">
+      ❌ ŠPATNĚ! ZKUSTE TO ZNOVU.
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+/*
+  NASTAVENÍ SPRÁVNÉ BARVY
+
+  ZMĚŇ "fialova" na skutečnou výslednou barvu,
+  kterou hráči získají smícháním barev.
+
+  Příklady:
+  "zelena"
+  "oranzova"
+  "hneda"
+  "fialova"
+*/
+
+const SPRAVNA_BARVA = "fialova";
+
+/* PRVKY */
+
+const stages = [
+  document.getElementById("stage1"),
+  document.getElementById("stage2"),
+  document.getElementById("stage3"),
+  document.getElementById("stage4"),
+  document.getElementById("stage5"),
+  document.getElementById("stage6")
+];
+
+const wrongOverlay = document.getElementById("wrongOverlay");
+const wrongGif = document.getElementById("wrongGif");
+
+const hymnaAudio = document.getElementById("hymnaAudio");
+const audioMessage = document.getElementById("audioMessage");
+const retryButton = document.getElementById("retryButton");
+
+let currentStage = 1;
+let locked = false;
+let wrongTimer = null;
+let audioFinished = false;
+
+/* NORMALIZACE */
+
+function normalizeAnswer(text) {
+  return text
+    .trim()
+    .toLocaleLowerCase("cs-CZ")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/* ZOBRAZENÍ DALŠÍHO KROKU */
+
+function showStage(number) {
+  currentStage = number;
+
+  stages.forEach(function(stage) {
+    stage.classList.remove("active");
+  });
+
+  stages[number - 1].classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+/* WRONG GIF */
+
+function showWrong() {
+  if (locked) return;
+
+  locked = true;
+
+  wrongGif.src = "wrong.gif?t=" + Date.now();
+
+  wrongOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+  clearTimeout(wrongTimer);
+
+  wrongTimer = setTimeout(function() {
+    wrongOverlay.classList.remove("visible");
+    document.body.classList.remove("modal-open");
+    locked = false;
+  }, 2000);
+}
+
+/* KROK 1: BARVA */
+
+document.getElementById("form1").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (locked || currentStage !== 1) return;
+
+  const answer = normalizeAnswer(
+    document.getElementById("answer1").value
+  );
+
+  if (answer === SPRAVNA_BARVA) {
+    showStage(2);
+  } else {
+    showWrong();
+  }
+});
+
+/* KROK 2: VLAJKA */
+
+document.getElementById("form2").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (locked || currentStage !== 2) return;
+
+  const answer = normalizeAnswer(
+    document.getElementById("answer2").value
+  );
+
+  if (
+    answer === "vlajka" ||
+    answer === "statni vlajka" ||
+    answer === "ceska vlajka"
+  ) {
+    showStage(3);
+    playHymna();
+  } else {
+    showWrong();
+  }
+});
+
+/* PŘEHRÁNÍ HYMNY */
+
+async function playHymna() {
+  retryButton.classList.remove("visible");
+
+  try {
+    await hymnaAudio.play();
+
+    audioMessage.textContent =
+      "Přehrává se nahrávka. Po jejím skončení se objeví další otázka.";
+
+  } catch (error) {
+    audioMessage.textContent =
+      "Přehrávání se nepodařilo spustit automaticky. Použijte přehrávač nebo tlačítko níže.";
+
+    retryButton.classList.add("visible");
+  }
+}
+
+retryButton.addEventListener("click", playHymna);
+
+hymnaAudio.addEventListener("ended", function() {
+  if (audioFinished) return;
+
+  audioFinished = true;
+  showStage(4);
+});
+
+/* KROK 4: HYMNA */
+
+document.getElementById("form3").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (locked || currentStage !== 4) return;
+
+  const answer = normalizeAnswer(
+    document.getElementById("answer3").value
+  );
+
+  if (
+    answer === "hymna" ||
+    answer === "statni hymna" ||
+    answer === "ceska hymna"
+  ) {
+    showStage(5);
+  } else {
+    showWrong();
+  }
+});
+
+/* KROK 5: AUTOR */
+
+document.getElementById("form4").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (locked || currentStage !== 5) return;
+
+  const answer = normalizeAnswer(
+    document.getElementById("answer4").value
+  );
+
+  if (
+    answer === "josef kajetan tyl" ||
+    answer === "josef k tyl"
+  ) {
+    localStorage.setItem("kh_s23_completed", "1");
+    showStage(6);
+  } else {
+    showWrong();
+  }
+});
+
+</script>
+
+</body>
+</html>
