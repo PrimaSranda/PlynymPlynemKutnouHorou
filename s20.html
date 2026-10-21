@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Cesta podle mapy | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat',sans-serif;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.72)
+    ),
+    url("pozadi.png") center / cover no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(30px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 17px;
+}
+
+h1 {
+  margin: 0 0 25px;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(25px,6.5vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 12px #000;
+}
+
+.card {
+  width: 100%;
+  padding: 30px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.instruction {
+  padding: 26px 15px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.instruction p {
+  margin: 0;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(17px,4.3vw,22px);
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.instruction strong {
+  color: var(--gold);
+}
+
+/* MAP GIF */
+
+.map-gif {
+  display: block;
+  width: min(100%,310px);
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  margin: 28px auto;
+  border-radius: 12px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.45));
+}
+
+.divider {
+  margin: 10px auto 24px;
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 6px;
+}
+
+/* BUTTON */
+
+.next-button {
+  display: block;
+  width: 100%;
+  padding: 21px 14px;
+  border: 2px solid #F0D99B;
+  border-radius: 13px;
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.next-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.next-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    padding: 22px 13px;
+  }
+
+  .instruction {
+    padding: 22px 12px;
+  }
+
+  .map-gif {
+    width: min(100%,260px);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>🗺️ DALŠÍ CESTA!</h1>
+
+  <section class="card">
+
+    <div class="instruction">
+
+      <p>
+        Dále pokračujte<br>
+        dle vámi <strong>složené mapy.</strong>
+      </p>
+
+    </div>
+
+    <!-- MAP GIF -->
+
+    <img
+      src="map.gif"
+      alt="Animovaná mapa"
+      class="map-gif"
+    >
+
+    <div class="divider">✦ ⚜ ✦</div>
+
+    <a href="s21.html" class="next-button">
+      📍 JSEM NA MÍSTĚ!
+    </a>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+</body>
+</html>
