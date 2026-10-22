@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Velké finále | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+/* POZADÍ */
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      rgba(4,24,18,.35),
+      rgba(4,24,18,.85)
+    ),
+    url("pozadi.png") center / cover no-repeat;
+}
+
+/* KONFETY A OHŇOSTROJE */
+
+#celebrationCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* HLAVNÍ OBSAH */
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 580px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding:
+    calc(30px + env(safe-area-inset-top))
+    17px
+    calc(55px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 24px;
+  filter:
+    drop-shadow(0 0 15px rgba(217,190,123,.7))
+    drop-shadow(0 5px 15px rgba(0,0,0,.6));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 24px;
+  letter-spacing: 6px;
+  margin-bottom: 18px;
+}
+
+h1 {
+  margin: 0 0 27px;
+  color: #FFE4A0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(25px,6.2vw,38px);
+  line-height: 1.45;
+  text-shadow:
+    0 0 12px rgba(255,207,90,.7),
+    0 4px 12px #000;
+  animation: titleGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  from {
+    text-shadow:
+      0 0 10px rgba(255,207,90,.45),
+      0 4px 12px #000;
+  }
+  to {
+    text-shadow:
+      0 0 25px rgba(255,207,90,1),
+      0 0 45px rgba(255,207,90,.5),
+      0 4px 12px #000;
+  }
+}
+
+/* KARTA */
+
+.card {
+  width: 100%;
+  padding: 30px 20px;
+  border: 2px solid var(--gold);
+  border-radius: 18px;
+  background: rgba(8,37,28,.96);
+  box-shadow:
+    0 0 25px rgba(217,190,123,.22),
+    0 15px 40px rgba(0,0,0,.55);
+}
+
+/* BÁSNIČKA */
+
+.riddle {
+  padding: 26px 14px;
+  border: 1px solid rgba(217,190,123,.6);
+  border-radius: 13px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.8),
+    rgba(7,31,24,.95)
+  );
+}
+
+.verse {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(12px,3.2vw,16px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.verse + .verse {
+  margin-top: 25px;
+}
+
+/* KÓD POKLADU */
+
+.treasure-box {
+  margin: 30px 0;
+  padding: 25px 14px;
+  border: 3px solid #F5D78E;
+  border-radius: 16px;
+  background: linear-gradient(
+    145deg,
+    #174E3B,
+    #092F25
+  );
+  box-shadow:
+    0 0 20px rgba(255,211,90,.4),
+    inset 0 0 20px rgba(255,211,90,.1);
+  animation: treasureGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes treasureGlow {
+  from {
+    box-shadow: 0 0 10px rgba(255,211,90,.25);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(255,211,90,.7);
+  }
+}
+
+.treasure-label {
+  margin: 0;
+  color: var(--cream);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.treasure-code {
+  display: block;
+  margin: 12px 0;
+  color: #FFE7A4;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(55px,15vw,85px);
+  font-weight: 800;
+  letter-spacing: 12px;
+  text-shadow:
+    0 0 15px rgba(255,210,80,.8);
+}
+
+/* PODĚKOVÁNÍ */
+
+.thank-you {
+  margin-top: 25px;
+  padding: 25px 15px;
+  border-top: 1px solid rgba(217,190,123,.6);
+}
+
+.thank-you h2 {
+  margin: 0 0 23px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(17px,4.3vw,22px);
+  line-height: 1.7;
+}
+
+.thank-you p {
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.final-message {
+  margin-top: 28px !important;
+  color: #FFE3A0;
+  font-family: 'Cinzel',serif;
+  font-size: 19px !important;
+  font-weight: 800;
+  line-height: 1.8;
+}
+
+.signature {
+  margin-top: 25px;
+  color: var(--gold);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* OBRÁZEK */
+
+.final-image {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin: 28px auto 0;
+  border-radius: 14px;
+  filter: drop-shadow(0 0 15px rgba(217,190,123,.35));
+}
+
+/* PATIČKA */
+
+.footer {
+  margin-top: 35px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .card {
+    padding: 22px 12px;
+  }
+
+  .riddle {
+    padding: 20px 8px;
+  }
+
+  .treasure-code {
+    letter-spacing: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1,
+  .treasure-box {
+    animation: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<!-- KONFETY A OHŇOSTROJE -->
+
+<canvas id="celebrationCanvas" aria-hidden="true"></canvas>
+
+<main class="container">
+
+  <!-- LOGO -->
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ 🏆 ✦</div>
+
+  <h1>
+    🏆 GRATULUJEME,<br>
+    PŘEŽILI JSTE! 🏆
+  </h1>
+
+  <section class="card">
+
+    <!-- GRATULACE -->
+
+    <div class="riddle">
+
+      <p class="verse">
+        Stříbrný poklad jste vypátrali,<br>
+        všechny nástrahy překonali.
+        <br><br>
+
+        Kutnou Horou jste se prohnali,<br>
+        snad se přitom i pobavili!
+      </p>
+
+      <p class="verse">
+        Někdo bloudil, někdo hádal,<br>
+        někdo by se nejradši vzdal.
+        <br><br>
+
+        Přesto jste to spolu zvládli,<br>
+        až do cíle šťastně dorazili!
+      </p>
+
+    </div>
+
+    <!-- KÓD POKLADU -->
+
+    <div class="treasure-box">
+
+      <p class="treasure-label">
+        🔐 ČÍSELNÝ KÓD, KTERÝ VÁM<br>
+        ODHALÍ STŘÍBRNÝ POKLAD:
+      </p>
+
+      <span class="treasure-code">000</span>
+
+      <p class="treasure-label">
+        🪙 VÁŠ POKLAD ČEKÁ!
+      </p>
+
+    </div>
+
+    <!-- PODĚKOVÁNÍ -->
+
+    <div class="thank-you">
+
+      <h2>
+        ❤️ DĚKUJEME VÁM ZA ÚČAST,<br>
+        SKVĚLOU NÁLADU A TÝMOVÉHO DUCHA!
+      </h2>
+
+      <p>
+        Doufáme, že jste si dnešní dobrodružství užili,
+        dozvěděli se něco nového a odnášíte si nejen
+        zaslouženou odměnu, ale i pár zážitků,
+        na které budete ještě dlouho vzpomínat.
+      </p>
+
+      <p>
+        A pokud jste se cestou několikrát ztratili,
+        pohádali nebo zapochybovali o inteligenci
+        svých kolegů, nezoufejte.
+        I to je součást týmové spolupráce. 😂
+      </p>
+
+      <p class="final-message">
+        🏁 DĚKUJEME, ŽE JSTE S NÁMI VYRAZILI<br>
+        PLNÝM PLYNEM KUTNOU HOROU!
+      </p>
+
+      <p class="signature">
+        Vaše organizační komando ❤️
+      </p>
+
+      <!-- ZÁVĚREČNÝ OBRÁZEK -->
+
+      <img
+        class="final-image"
+        src="sb.png"
+        alt="Závěrečný obrázek"
+      >
+
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<script>
+
+/* ======================================
+   KONFETY A OHŇOSTROJE
+====================================== */
+
+const canvas = document.getElementById("celebrationCanvas");
+const ctx = canvas.getContext("2d");
+
+let width;
+let height;
+let dpr = 1;
+
+const confetti = [];
+const fireworks = [];
+const sparks = [];
+
+const colors = [
+  "#FFD700",
+  "#FF5757",
+  "#FFFFFF",
+  "#55D6BE",
+  "#FF8A3D",
+  "#E8C77D",
+  "#9B7AFF"
+];
+
+/* NASTAVENÍ VELIKOSTI */
+
+function resizeCanvas() {
+
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  width = window.innerWidth;
+  height = window.innerHeight;
+
+  canvas.width = Math.round(width * dpr);
+  canvas.height = Math.round(height * dpr);
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+/* NÁHODNÉ ČÍSLO */
+
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+/* KONFETY */
+
+function createConfetti(initial = false) {
+
+  return {
+    x: random(0, width),
+    y: initial ? random(-height, height) : random(-50, -10),
+    size: random(4, 10),
+    speed: random(1.3, 3.5),
+    drift: random(-1.2, 1.2),
+    rotation: random(0, Math.PI * 2),
+    rotationSpeed: random(-0.06, 0.06),
+    color: colors[Math.floor(random(0, colors.length))]
+  };
+
+}
+
+for (let i = 0; i < 160; i++) {
+  confetti.push(createConfetti(true));
+}
+
+function updateConfetti() {
+
+  for (let i = 0; i < confetti.length; i++) {
+
+    const piece = confetti[i];
+
+    piece.y += piece.speed;
+    piece.x += piece.drift +
+      Math.sin(piece.y * 0.012) * 0.5;
+
+    piece.rotation += piece.rotationSpeed;
+
+    if (piece.y > height + 20) {
+      confetti[i] = createConfetti();
+      continue;
+    }
+
+    if (piece.x > width + 20) piece.x = -20;
+    if (piece.x < -20) piece.x = width + 20;
+
+    ctx.save();
+
+    ctx.translate(piece.x, piece.y);
+    ctx.rotate(piece.rotation);
+
+    ctx.fillStyle = piece.color;
+    ctx.fillRect(
+      -piece.size / 2,
+      -piece.size / 2,
+      piece.size,
+      piece.size * 0.55
+    );
+
+    ctx.restore();
+
+  }
+
+}
+
+/* OHŇOSTROJE */
+
+function launchFirework() {
+
+  const x = random(width * 0.12, width * 0.88);
+  const targetY = random(height * 0.08, height * 0.55);
+
+  fireworks.push({
+    x: x,
+    y: height + 15,
+    targetY: targetY,
+    speed: random(7, 11),
+    color: colors[Math.floor(random(0, colors.length))]
+  });
+
+}
+
+function explode(x, y, color) {
+
+  const count = 65;
+
+  for (let i = 0; i < count; i++) {
+
+    const angle = (Math.PI * 2 * i) / count;
+    const speed = random(1.5, 5.5);
+
+    sparks.push({
+      x: x,
+      y: y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      life: 1,
+      decay: random(0.009, 0.018),
+      color: color,
+      size: random(1.5, 3.5)
+    });
+
+  }
+
+}
+
+function updateFireworks() {
+
+  for (let i = fireworks.length - 1; i >= 0; i--) {
+
+    const rocket = fireworks[i];
+
+    rocket.y -= rocket.speed;
+
+    ctx.beginPath();
+    ctx.arc(rocket.x, rocket.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = rocket.color;
+    ctx.fill();
+
+    if (rocket.y <= rocket.targetY) {
+
+      explode(rocket.x, rocket.y, rocket.color);
+      fireworks.splice(i, 1);
+
+    }
+
+  }
+
+}
+
+/* JISKRY */
+
+function updateSparks() {
+
+  for (let i = sparks.length - 1; i >= 0; i--) {
+
+    const spark = sparks[i];
+
+    spark.x += spark.vx;
+    spark.y += spark.vy;
+
+    spark.vy += 0.045;
+    spark.vx *= 0.99;
+
+    spark.life -= spark.decay;
+
+    if (spark.life <= 0) {
+      sparks.splice(i, 1);
+      continue;
+    }
+
+    ctx.globalAlpha = spark.life;
+
+    ctx.beginPath();
+    ctx.arc(
+      spark.x,
+      spark.y,
+      spark.size,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle = spark.color;
+    ctx.fill();
+
+    ctx.globalAlpha = 1;
+
+  }
+
+}
+
+/* ANIMACE */
+
+let lastLaunch = 0;
+let animationId = null;
+
+function animate(timestamp) {
+
+  ctx.clearRect(0, 0, width, height);
+
+  updateConfetti();
+  updateFireworks();
+  updateSparks();
+
+  if (timestamp - lastLaunch > 650) {
+
+    launchFirework();
+    lastLaunch = timestamp;
+
+  }
+
+  animationId = requestAnimationFrame(animate);
+
+}
+
+/* VELKÝ ÚVODNÍ OHŇOSTROJ */
+
+function grandFinale() {
+
+  for (let i = 0; i < 5; i++) {
+
+    const x = width * (0.15 + i * 0.175);
+    const y = height * random(0.15, 0.45);
+
+    explode(
+      x,
+      y,
+      colors[i % colors.length]
+    );
+
+  }
+
+}
+
+/* SPUŠTĚNÍ */
+
+grandFinale();
+
+if (!window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches) {
+
+  animationId = requestAnimationFrame(animate);
+
+} else {
+
+  ctx.clearRect(0, 0, width, height);
+  grandFinale();
+  updateSparks();
+
+}
+
+/* ÚSPORA VÝKONU PŘI PŘEPNUTÍ KARTY */
+
+document.addEventListener("visibilitychange", function() {
+
+  if (document.hidden) {
+
+    if (animationId !== null) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+
+  } else if (
+    animationId === null &&
+    !window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+  ) {
+
+    lastLaunch = 0;
+    animationId = requestAnimationFrame(animate);
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
