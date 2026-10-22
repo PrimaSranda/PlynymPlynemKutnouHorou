@@ -9,7 +9,7 @@
 <title>Zpátky do Mincířské | Plným plynem Kutnou Horou</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -212,6 +212,11 @@ h1 {
 
 .next-button {
   text-decoration: none;
+  display: none;
+}
+
+.next-button.visible {
+  display: block;
 }
 
 .hint-button {
@@ -275,6 +280,80 @@ h1 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* NAHRÁVKA */
+
+.audio-panel {
+  margin-top: 23px;
+  padding: 22px 14px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(8,37,28,.8);
+}
+
+.audio-panel h4 {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+}
+
+.audio-panel p {
+  margin: 0 0 18px;
+  color: var(--cream);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.audio-panel audio {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+}
+
+.audio-start {
+  margin-top: 0;
+  border: 2px solid #FFF0B9;
+  background: linear-gradient(
+    135deg,
+    #FCE6A5,
+    #D6A94F
+  );
+  color: var(--green);
+  font-size: 16px;
+  box-shadow:
+    0 0 12px rgba(255,215,115,.8),
+    0 0 28px rgba(255,215,115,.55),
+    0 5px 0 #6C502A;
+  animation: audioGlow 1.4s ease-in-out infinite alternate;
+}
+
+.audio-start.played {
+  animation: none;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+@keyframes audioGlow {
+  from {
+    box-shadow:
+      0 0 8px rgba(255,215,115,.5),
+      0 0 16px rgba(255,215,115,.25),
+      0 5px 0 #6C502A;
+  }
+  to {
+    box-shadow:
+      0 0 20px rgba(255,215,115,1),
+      0 0 42px rgba(255,215,115,.7),
+      0 5px 0 #6C502A;
+  }
+}
+
+.audio-status {
+  margin-top: 15px !important;
+  margin-bottom: 0 !important;
+  color: var(--gold) !important;
+  font-weight: 700;
 }
 
 /* NÁPOVĚDA */
@@ -379,6 +458,12 @@ h1 {
     padding: 22px 10px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-start {
+    animation: none;
+  }
+}
 </style>
 </head>
 
@@ -470,7 +555,7 @@ h1 {
       💡 POTŘEBUJEME NÁPOVĚDU
     </button>
 
-    <!-- SPRÁVNÁ ODPOVĚĎ -->
+    <!-- SPRÁVNÁ ODPOVĚĎ A AUDIO -->
 
     <div class="success" id="success">
 
@@ -482,7 +567,46 @@ h1 {
         A cukráři nejspíš také. 😈
       </p>
 
-      <a href="s15.html" class="next-button">
+      <div class="audio-panel">
+
+        <h4>🎧 ČAS NA NAHRÁVKU!</h4>
+
+        <p>
+          Než vyrazíte dál, spusťte si další
+          kutnohorské vyprávění.
+        </p>
+
+        <button
+          type="button"
+          class="button audio-start"
+          id="playAudioButton"
+        >
+          ▶️ SPUSTIT NAHRÁVKU
+        </button>
+
+        <audio
+          id="pernikAudio"
+          controls
+          preload="none"
+          playsinline
+        >
+          <source src="pernik.mp3" type="audio/mpeg">
+          Váš prohlížeč nepodporuje přehrávání audia.
+        </audio>
+
+        <p class="audio-status" id="audioStatus" aria-live="polite">
+          🔊 Nahrávka čeká na spuštění.
+        </p>
+
+      </div>
+
+      <!-- DALŠÍ STANOVIŠTĚ SE OBJEVÍ PO SPUŠTĚNÍ AUDIA -->
+
+      <a
+        href="s15.html"
+        class="next-button"
+        id="nextButton"
+      >
         🔑 MÁME OBOJE!
       </a>
 
@@ -566,6 +690,11 @@ const closeHint = document.getElementById("closeHint");
 const wrongOverlay = document.getElementById("wrongOverlay");
 const wrongGif = document.getElementById("wrongGif");
 
+const playAudioButton = document.getElementById("playAudioButton");
+const pernikAudio = document.getElementById("pernikAudio");
+const audioStatus = document.getElementById("audioStatus");
+const nextButton = document.getElementById("nextButton");
+
 let solved = false;
 let locked = false;
 let wrongTimer = null;
@@ -591,6 +720,7 @@ const correctAnswers = [
 /* OVĚŘENÍ ODPOVĚDI */
 
 answerForm.addEventListener("submit", function(event) {
+
   event.preventDefault();
 
   if (solved || locked) return;
@@ -614,8 +744,43 @@ answerForm.addEventListener("submit", function(event) {
     });
 
   } else {
+
     showWrong();
+
   }
+
+});
+
+/* SPUŠTĚNÍ NAHRÁVKY */
+
+playAudioButton.addEventListener("click", async function() {
+
+  try {
+
+    await pernikAudio.play();
+
+  } catch (error) {
+
+    audioStatus.textContent =
+      "⚠️ Nahrávku se nepodařilo spustit. Zkuste přehrávač níže.";
+
+  }
+
+});
+
+/* PO SKUTEČNÉM SPUŠTĚNÍ AUDIA */
+
+pernikAudio.addEventListener("play", function() {
+
+  playAudioButton.classList.add("played");
+
+  playAudioButton.textContent = "🔊 NAHRÁVKA SPUŠTĚNA";
+
+  audioStatus.textContent =
+    "🎧 Poslouchejte! Až budete připraveni, můžete pokračovat.";
+
+  nextButton.classList.add("visible");
+
 });
 
 /* NÁPOVĚDY */
@@ -704,6 +869,7 @@ function showWrong() {
     answerInput.focus();
 
   }, 2000);
+
 }
 
 /* ESC ZAVŘE NÁPOVĚDU */
