@@ -62,6 +62,7 @@ body.modal-open {
     calc(28px + env(safe-area-inset-top))
     18px
     calc(35px + env(safe-area-inset-bottom));
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -154,7 +155,7 @@ h1 {
   font-weight: 800;
 }
 
-/* NOVÉ INSTRUKCE K MÍCHÁNÍ */
+/* INSTRUKCE K MÍCHÁNÍ */
 
 .mix-instructions {
   margin-top: 23px;
@@ -384,7 +385,7 @@ audio {
         </p>
       </div>
 
-      <!-- NOVÝ POSTUP MÍCHÁNÍ -->
+      <!-- POSTUP MÍCHÁNÍ -->
 
       <div class="mix-instructions">
 
@@ -461,11 +462,27 @@ audio {
 
     </div>
 
-    <!-- KROK 3: HYMNA AUDIO -->
+    <!-- KROK 3: VTÍPEK O KOSTNICI + HYMNA -->
 
     <div class="stage" id="stage3">
 
-      <h2 class="stage-title">🇨🇿 DALŠÍ STÁTNÍ SYMBOL</h2>
+      <h2 class="stage-title">😈 NACHYTALI JSME VÁS!</h2>
+
+      <!-- NOVÁ BÁSNIČKA NAD NAHRÁVKOU -->
+
+      <div class="riddle">
+
+        <p class="verse">
+          Nebojte, jen jsme si vás vystřelili,<br>
+          a teď abychom pravdu ihned vychrlili.
+          <br><br>
+          Kostnice vás dneska mine,<br>
+          to by byla dálka, my víme. 😂
+        </p>
+
+      </div>
+
+      <!-- NAHRÁVKA -->
 
       <div class="audio-panel">
 
@@ -653,7 +670,7 @@ let locked = false;
 let wrongTimer = null;
 let audioFinished = false;
 
-/* NORMALIZACE */
+/* NORMALIZACE ODPOVĚDI */
 
 function normalizeAnswer(text) {
   return text
@@ -669,6 +686,7 @@ function normalizeAnswer(text) {
 /* ZOBRAZENÍ DALŠÍHO KROKU */
 
 function showStage(number) {
+
   currentStage = number;
 
   stages.forEach(function(stage) {
@@ -681,11 +699,13 @@ function showStage(number) {
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 /* WRONG GIF */
 
 function showWrong() {
+
   if (locked) return;
 
   locked = true;
@@ -698,15 +718,20 @@ function showWrong() {
   clearTimeout(wrongTimer);
 
   wrongTimer = setTimeout(function() {
+
     wrongOverlay.classList.remove("visible");
     document.body.classList.remove("modal-open");
+
     locked = false;
+
   }, 2000);
+
 }
 
 /* KROK 1: BARVA */
 
 document.getElementById("form1").addEventListener("submit", function(e) {
+
   e.preventDefault();
 
   if (locked || currentStage !== 1) return;
@@ -716,15 +741,21 @@ document.getElementById("form1").addEventListener("submit", function(e) {
   );
 
   if (answer === SPRAVNA_BARVA) {
+
     showStage(2);
+
   } else {
+
     showWrong();
+
   }
+
 });
 
 /* KROK 2: VLAJKA */
 
 document.getElementById("form2").addEventListener("submit", function(e) {
+
   e.preventDefault();
 
   if (locked || currentStage !== 2) return;
@@ -738,44 +769,58 @@ document.getElementById("form2").addEventListener("submit", function(e) {
     answer === "statni vlajka" ||
     answer === "ceska vlajka"
   ) {
+
     showStage(3);
     playHymna();
+
   } else {
+
     showWrong();
+
   }
+
 });
 
 /* PŘEHRÁNÍ HYMNY */
 
 async function playHymna() {
+
   retryButton.classList.remove("visible");
 
   try {
+
     await hymnaAudio.play();
 
     audioMessage.textContent =
       "Přehrává se nahrávka. Po jejím skončení se objeví další otázka.";
 
   } catch (error) {
+
     audioMessage.textContent =
       "Přehrávání se nepodařilo spustit automaticky. Použijte přehrávač nebo tlačítko níže.";
 
     retryButton.classList.add("visible");
+
   }
+
 }
 
 retryButton.addEventListener("click", playHymna);
 
 hymnaAudio.addEventListener("ended", function() {
+
   if (audioFinished) return;
 
   audioFinished = true;
+
   showStage(4);
+
 });
 
 /* KROK 4: HYMNA */
 
 document.getElementById("form3").addEventListener("submit", function(e) {
+
   e.preventDefault();
 
   if (locked || currentStage !== 4) return;
@@ -789,15 +834,21 @@ document.getElementById("form3").addEventListener("submit", function(e) {
     answer === "statni hymna" ||
     answer === "ceska hymna"
   ) {
+
     showStage(5);
+
   } else {
+
     showWrong();
+
   }
+
 });
 
 /* KROK 5: AUTOR */
 
 document.getElementById("form4").addEventListener("submit", function(e) {
+
   e.preventDefault();
 
   if (locked || currentStage !== 5) return;
@@ -810,11 +861,17 @@ document.getElementById("form4").addEventListener("submit", function(e) {
     answer === "josef kajetan tyl" ||
     answer === "josef k tyl"
   ) {
+
     localStorage.setItem("kh_s23_completed", "1");
+
     showStage(6);
+
   } else {
+
     showWrong();
+
   }
+
 });
 
 </script>
