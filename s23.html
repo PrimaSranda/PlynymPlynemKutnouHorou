@@ -154,6 +154,34 @@ h1 {
   font-weight: 800;
 }
 
+/* NOVÉ INSTRUKCE K MÍCHÁNÍ */
+
+.mix-instructions {
+  margin-top: 23px;
+  padding: 22px 15px;
+  border: 2px solid var(--gold);
+  border-radius: 13px;
+  background: rgba(20,65,48,.9);
+  text-align: center;
+}
+
+.mix-instructions h3 {
+  margin: 0 0 19px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+}
+
+.mix-instructions p {
+  margin: 12px 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.mix-instructions strong {
+  color: #F2D99C;
+}
+
 .question {
   margin: 27px 0 17px;
   color: var(--gold);
@@ -303,6 +331,10 @@ audio {
   .riddle {
     padding: 20px 10px;
   }
+
+  .mix-instructions {
+    padding: 18px 10px;
+  }
 }
 </style>
 </head>
@@ -350,6 +382,26 @@ audio {
             a výsledný odstín do hry zadejte!
           </span>
         </p>
+      </div>
+
+      <!-- NOVÝ POSTUP MÍCHÁNÍ -->
+
+      <div class="mix-instructions">
+
+        <h3>🧪 POSTUP MÍCHÁNÍ</h3>
+
+        <p>
+          ⚪ Nejdříve <strong>5 kapátek bílé</strong>
+        </p>
+
+        <p>
+          🔴 Poté <strong>½ kapátka červené</strong>
+        </p>
+
+        <p>
+          🔵 A nakonec <strong>½ kapátka modré</strong>
+        </p>
+
       </div>
 
       <form id="form1">
@@ -574,18 +626,7 @@ audio {
 
 <script>
 
-/*
-  NASTAVENÍ SPRÁVNÉ BARVY
-
-  ZMĚŇ "fialova" na skutečnou výslednou barvu,
-  kterou hráči získají smícháním barev.
-
-  Příklady:
-  "zelena"
-  "oranzova"
-  "hneda"
-  "fialova"
-*/
+/* SPRÁVNÁ BARVA */
 
 const SPRAVNA_BARVA = "fialova";
 
