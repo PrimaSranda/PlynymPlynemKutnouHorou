@@ -73,6 +73,8 @@ body {
   text-align: center;
 }
 
+/* LOGO */
+
 .logo {
   display: block;
   width: min(42vw,160px);
@@ -88,6 +90,8 @@ body {
   letter-spacing: 5px;
   margin-bottom: 16px;
 }
+
+/* NADPIS */
 
 h1 {
   margin: 0;
@@ -105,6 +109,8 @@ h1 {
   letter-spacing: 2px;
 }
 
+/* HLAVNÍ KARTA */
+
 .card {
   width: 100%;
   margin-top: 27px;
@@ -121,6 +127,8 @@ h1 {
   font-family: 'Cinzel',serif;
   font-size: 21px;
 }
+
+/* HÁDANKA */
 
 .riddle {
   padding: 25px 13px;
@@ -155,7 +163,7 @@ h1 {
   color: #E7CD91;
 }
 
-/* NOVÁ INSTRUKCE POD HÁDANKOU */
+/* INSTRUKCE POD HÁDANKOU */
 
 .team-instruction {
   margin-top: 20px;
@@ -183,7 +191,7 @@ h1 {
   color: var(--gold);
 }
 
-/* TLAČÍTKA */
+/* TLAČÍTKO */
 
 .next-button {
   display: block;
@@ -205,6 +213,7 @@ h1 {
   text-align: center;
   cursor: pointer;
   box-shadow: 0 5px 0 #6C502A;
+  transition: transform .15s ease;
 }
 
 .next-button:active {
@@ -217,6 +226,8 @@ h1 {
   outline-offset: 4px;
 }
 
+/* POZNÁMKA */
+
 .note {
   margin: 20px 0 0;
   color: #D9C395;
@@ -225,59 +236,7 @@ h1 {
   line-height: 1.7;
 }
 
-/* POSTUPNĚ ZOBRAZOVANÉ KROKY */
-
-.step {
-  display: none;
-  animation: fadeIn .45s ease;
-}
-
-.step.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.instruction-box {
-  padding: 25px 15px;
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  background: rgba(25,72,53,.8);
-}
-
-.instruction-box h3 {
-  margin: 0 0 20px;
-  color: var(--gold);
-  font-family: 'Cinzel',serif;
-  font-size: 20px;
-  line-height: 1.5;
-}
-
-.instruction-box p {
-  margin: 0;
-  font-family: 'Cinzel',serif;
-  font-size: clamp(14px,3.6vw,17px);
-  font-weight: 600;
-  line-height: 2;
-}
-
-.surprise {
-  border: 2px solid #F0D99B;
-  box-shadow: 0 0 25px rgba(217,190,123,.2);
-}
-
-.surprise strong {
-  color: var(--gold);
-}
+/* PATIČKA */
 
 .footer {
   margin-top: 30px;
@@ -286,6 +245,8 @@ h1 {
   letter-spacing: 1px;
   text-shadow: 0 2px 5px #000;
 }
+
+/* MOBILNÍ ZOBRAZENÍ */
 
 @media (max-width:390px) {
   .container {
@@ -322,6 +283,8 @@ h1 {
 
 <main class="container">
 
+  <!-- LOGO -->
+
   <img
     class="logo"
     src="Logo.jpg"
@@ -330,154 +293,87 @@ h1 {
 
   <div class="ornament">✦ ⚜ ✦</div>
 
-  <h1>TAJEMSTVÍ<br>UKRYTÉ VE VODĚ</h1>
+  <!-- NADPIS -->
+
+  <h1>
+    TAJEMSTVÍ<br>
+    UKRYTÉ VE VODĚ
+  </h1>
 
   <p class="subtitle">
     🗝️ DALŠÍ ZKOUŠKA VAŠEHO DŮVTIPU
   </p>
 
+  <!-- HÁDANKA -->
+
   <section class="card">
 
-    <!-- KROK 1: HÁDANKA -->
+    <h2>📜 VAŠE ZADÁNÍ</h2>
 
-    <div class="step active" id="step1">
+    <div class="riddle">
 
-      <h2>📜 VAŠE ZADÁNÍ</h2>
-
-      <div class="riddle">
-
-        <div class="riddle-icon">
-          💧 🗝️ 🪙
-        </div>
-
-        <p class="verse">
-          Jak už to tak bývá,<br>
-          <span class="highlight">
-            u vody se něco skrývá!
-          </span>
-        </p>
-
-        <p class="verse">
-          Uprostřed amfiteátru stojím,<br>
-          <span class="highlight">
-            a prostřední můstek volím.
-          </span>
-        </p>
-
-        <p class="verse">
-          Levá strana, ta to jistí,<br>
-          <span class="highlight">
-            pod hranou laviček se něco blyští!
-          </span>
-        </p>
-
+      <div class="riddle-icon">
+        💧 🗝️ 🪙
       </div>
 
-      <!-- NOVÁ INSTRUKCE -->
+      <p class="verse">
+        Jak už to tak bývá,<br>
+        <span class="highlight">
+          u vody se něco skrývá!
+        </span>
+      </p>
 
-      <div class="team-instruction">
+      <p class="verse">
+        Uprostřed amfiteátru stojím,<br>
+        <span class="highlight">
+          a prostřední můstek volím.
+        </span>
+      </p>
 
-        <h3>📍 DŮLEŽITÁ INSTRUKCE</h3>
-
-        <p>
-          Číslo řady a předmětu určete
-          <strong>podle čísla vašeho týmu.</strong>
-        </p>
-
-      </div>
-
-      <button
-        type="button"
-        class="next-button"
-        onclick="showStep(2)"
-      >
-        🪙 NAŠLI JSME TO!
-      </button>
-
-      <p class="note">
-        Než kliknete, ujistěte se,
-        že jste skutečně něco našli.
-        Sebevědomí se jako důkaz
-        bohužel nepočítá. 😂
+      <p class="verse">
+        Levá strana, ta to jistí,<br>
+        <span class="highlight">
+          pod hranou laviček se něco blyští!
+        </span>
       </p>
 
     </div>
 
-    <!-- KROK 2: VÝBĚR KLÍČKU -->
+    <!-- INSTRUKCE POD HÁDANKOU -->
 
-    <div class="step" id="step2">
+    <div class="team-instruction">
 
-      <div class="instruction-box">
+      <h3>📍 DŮLEŽITÁ INSTRUKCE</h3>
 
-        <h3>🔑 KTERÝ KLÍČEK JE TEN PRAVÝ?</h3>
-
-        <p>
-          Podívejte se na číslo
-          uvedené na <strong>černé krabičce</strong>.
-          <br><br>
-          Podle tohoto čísla
-          <strong>vyberte správný klíček.</strong>
-        </p>
-
-      </div>
-
-      <button
-        type="button"
-        class="next-button"
-        onclick="showStep(3)"
-      >
-        🔑 MÁM SPRÁVNÝ KLÍČEK!
-      </button>
+      <p>
+        Číslo řady a předmětu určete
+        <strong>podle čísla vašeho týmu.</strong>
+      </p>
 
     </div>
 
-    <!-- KROK 3: PŘEKVAPENÍ -->
+    <!-- PŘÍMÉ PŘESMĚROVÁNÍ NA S4.HTML -->
 
-    <div class="step" id="step3">
+    <a href="s4.html" class="next-button">
+      🪙 NAŠLI JSME TO!
+    </a>
 
-      <div class="instruction-box surprise">
-
-        <h3>🎉 SUPER, JSTE ŠIKOVNÍ!</h3>
-
-        <p>
-          Avšak...
-          <br><br>
-          <strong>
-            Klíček od krabičky máte
-            z druhé strany krabičky!
-          </strong>
-        </p>
-
-      </div>
-
-      <a href="s4.html" class="next-button">
-        ➜ POKRAČOVAT
-      </a>
-
-    </div>
+    <p class="note">
+      Než kliknete, ujistěte se,
+      že jste skutečně něco našli.
+      Sebevědomí se jako důkaz
+      bohužel nepočítá. 😂
+    </p>
 
   </section>
+
+  <!-- PATIČKA -->
 
   <div class="footer">
     ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
   </div>
 
 </main>
-
-<script>
-function showStep(number) {
-  document.querySelectorAll(".step").forEach(function(step) {
-    step.classList.remove("active");
-  });
-
-  document.getElementById("step" + number).classList.add("active");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-</script>
 
 </body>
 </html>
