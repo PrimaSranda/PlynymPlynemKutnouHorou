@@ -62,6 +62,7 @@ body.modal-open {
     calc(28px + env(safe-area-inset-top))
     18px
     calc(35px + env(safe-area-inset-bottom));
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -153,6 +154,23 @@ h1 {
 }
 
 .equipment strong {
+  color: var(--gold);
+}
+
+/* POZNÁMKA O MÍSTNÍM VÍNĚ */
+
+.wine-note {
+  margin: 20px 0 0;
+  padding: 20px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(25,72,53,.8);
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.wine-note strong {
   color: var(--gold);
 }
 
@@ -363,13 +381,18 @@ h1 {
 
     <h2>📜 VAŠE ZADÁNÍ</h2>
 
+    <!-- VYBAVENÍ -->
+
     <div class="equipment">
       🎒 <strong>KE SPLNĚNÍ ÚKOLU POTŘEBUJETE:</strong>
       <br>
       Lahev a číše z batohu.
     </div>
 
+    <!-- BÁSNIČKA -->
+
     <div class="riddle" style="margin-top:22px;">
+
       <p class="verse">
         Hrozen první, nápoj bohů,<br>
         pozvedněte číše vzhůru.<br><br>
@@ -385,6 +408,16 @@ h1 {
           co za víno to jest?
         </span>
       </p>
+
+    </div>
+
+    <!-- NOVÁ POZNÁMKA -->
+
+    <div class="wine-note">
+      🍇 <strong>VĚDĚLI JSTE, ŽE...?</strong>
+      <br><br>
+      A pozor! Právě si vychutnáváte
+      <strong>víno z místních kutnohorských vinic!</strong> 🍷
     </div>
 
     <!-- WINE GIF -->
@@ -394,6 +427,8 @@ h1 {
       alt="Kutnohorská koštovačka"
       class="wine-gif"
     >
+
+    <!-- OTÁZKA -->
 
     <p class="question">
       🍷 JAKÝ JE TO TYP VÍNA?
@@ -416,6 +451,8 @@ h1 {
       </button>
 
     </form>
+
+    <!-- SPRÁVNÁ ODPOVĚĎ -->
 
     <div class="success" id="success">
 
@@ -448,6 +485,7 @@ h1 {
   role="alertdialog"
   aria-label="Špatná odpověď"
 >
+
   <div class="wrong-content">
 
     <img
@@ -461,9 +499,11 @@ h1 {
     </div>
 
   </div>
+
 </div>
 
 <script>
+
 const answerForm = document.getElementById("answerForm");
 const answerInput = document.getElementById("answer");
 const success = document.getElementById("success");
@@ -487,6 +527,7 @@ function normalizeAnswer(text) {
 }
 
 answerForm.addEventListener("submit", function(event) {
+
   event.preventDefault();
 
   if (solved || locked) return;
@@ -499,6 +540,7 @@ answerForm.addEventListener("submit", function(event) {
   ];
 
   if (correctAnswers.includes(answer)) {
+
     solved = true;
 
     localStorage.setItem("kh_s7_2_completed", "1");
@@ -512,13 +554,17 @@ answerForm.addEventListener("submit", function(event) {
     });
 
   } else {
+
     showWrong();
+
   }
+
 });
 
 /* WRONG GIF NA 2 SEKUNDY */
 
 function showWrong() {
+
   locked = true;
 
   wrongGif.src = "wrong.gif?t=" + Date.now();
@@ -529,12 +575,17 @@ function showWrong() {
   clearTimeout(wrongTimer);
 
   wrongTimer = setTimeout(function() {
+
     wrongOverlay.classList.remove("visible");
     document.body.classList.remove("modal-open");
+
     locked = false;
     answerInput.focus();
+
   }, 2000);
+
 }
+
 </script>
 
 </body>
