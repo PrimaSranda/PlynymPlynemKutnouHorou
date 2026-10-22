@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Cesta za pokladem | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat',sans-serif;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.76)
+    ),
+    url("pozadi.png") center / cover no-repeat;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(24px,6vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 12px #000;
+}
+
+.card {
+  width: 100%;
+  padding: 27px 19px;
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+.stage-title {
+  margin: 0 0 22px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.riddle {
+  padding: 26px 13px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.verse {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(12px,3.2vw,16px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.highlight {
+  display: block;
+  margin-top: 23px;
+  color: #F2D99C;
+  font-weight: 800;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  margin-top: 25px;
+  padding: 19px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    #E9D29A,
+    #B38A47
+  );
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    padding: 22px 13px;
+  }
+
+  .riddle {
+    padding: 20px 10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <!-- LOGO -->
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>
+    👑 CESTA ZA<br>
+    KRÁLOVSKÝM POKLADEM
+  </h1>
+
+  <section class="card">
+
+    <h2 class="stage-title">
+      🪙 KAM VÁS STOPY ZAVEDOU?
+    </h2>
+
+    <!-- HÁDANKA -->
+
+    <div class="riddle">
+
+      <p class="verse">
+
+        Dům U Tří králů už dobře znáte,<br>
+        snad si z něj něco v paměti uchováte.
+        <br><br>
+
+        Teď vydejte se za pokladem,<br>
+        kde stříbro měnilo se v mince pod královským dohledem.
+        <br><br>
+
+        Pražské groše se tam razily,<br>
+        královskou pokladnici bohatstvím plnily.
+
+        <span class="highlight">
+          👑 Až místo objevíte,<br>
+          v cestě dál pokračujte!
+        </span>
+
+      </p>
+
+    </div>
+
+    <!-- POKRAČOVÁNÍ -->
+
+    <a href="s26.html" class="button">
+      🪙 JSME NA MÍSTĚ!
+    </a>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+</body>
+</html>
