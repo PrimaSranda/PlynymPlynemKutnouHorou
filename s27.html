@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#092F25">
+
+<title>Poslední sladká výzva | Plným plynem Kutnou Horou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #092F25;
+  --gold: #D9BE7B;
+  --cream: #F5E6C5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--green);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Montserrat', sans-serif;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* POZADÍ */
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      rgba(4,24,18,.38),
+      rgba(4,24,18,.76)
+    ),
+    url("pozadi.png") center / cover no-repeat;
+}
+
+/* KONTEJNER */
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    18px
+    calc(35px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* LOGO */
+
+.logo {
+  display: block;
+  width: min(42vw,160px);
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.5));
+}
+
+.ornament {
+  color: var(--gold);
+  font-size: 20px;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(24px,6vw,35px);
+  line-height: 1.3;
+  text-shadow: 0 3px 12px #000;
+}
+
+/* KARTA */
+
+.card {
+  width: 100%;
+  padding: 27px 19px;
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  background: rgba(8,37,28,.95);
+  box-shadow: 0 12px 35px rgba(0,0,0,.45);
+}
+
+/* FÁZE */
+
+.stage {
+  display: none;
+  animation: appear .5s ease-out;
+}
+
+.stage.active {
+  display: block;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stage-title {
+  margin: 0 0 22px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+/* MÝVAL */
+
+.racoon {
+  display: block;
+  width: min(100%,290px);
+  max-height: 280px;
+  object-fit: contain;
+  margin: 0 auto 25px;
+  border-radius: 12px;
+}
+
+/* BÁSNIČKA */
+
+.riddle {
+  padding: 26px 13px;
+  border: 1px solid rgba(217,190,123,.55);
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(29,77,56,.75),
+    rgba(7,31,24,.9)
+  );
+}
+
+.verse {
+  margin: 0;
+  font-family: 'Cinzel',serif;
+  font-size: clamp(12px,3.2vw,16px);
+  font-weight: 600;
+  line-height: 2;
+}
+
+.verse + .verse {
+  margin-top: 24px;
+}
+
+/* OTÁZKA */
+
+.question {
+  margin: 27px 0 17px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: clamp(17px,4.3vw,21px);
+  line-height: 1.7;
+}
+
+.answer-input {
+  display: block;
+  width: 100%;
+  padding: 17px 12px;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  background: #F9F0DC;
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.answer-input:focus {
+  outline: 3px solid rgba(217,190,123,.4);
+  outline-offset: 3px;
+}
+
+/* TLAČÍTKA */
+
+.button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 19px 12px;
+  border: 2px solid #F0D99B;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    #E9D29A,
+    #B38A47
+  );
+  color: var(--green);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+.button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #6C502A;
+}
+
+.button:disabled {
+  opacity: .65;
+  cursor: default;
+}
+
+.hint-button {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 15px 12px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(20,65,48,.9);
+  color: var(--gold);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hint-button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+/* NÁPOVĚDY */
+
+.hints {
+  margin-top: 19px;
+}
+
+.hint {
+  display: none;
+  margin-top: 12px;
+  padding: 17px 13px;
+  border: 1px solid rgba(217,190,123,.6);
+  border-radius: 11px;
+  background: rgba(22,68,49,.85);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.hint.visible {
+  display: block;
+}
+
+.hint strong {
+  color: var(--gold);
+}
+
+/* AUDIO */
+
+.audio-box {
+  margin-top: 24px;
+  padding: 22px 15px;
+  border: 2px solid var(--gold);
+  border-radius: 13px;
+  background: rgba(20,65,48,.9);
+}
+
+.audio-box p {
+  margin: 0 0 15px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+audio {
+  display: block;
+  width: 100%;
+}
+
+/* WRONG GIF */
+
+.wrong-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,.95);
+}
+
+.wrong-overlay.visible {
+  display: flex;
+}
+
+.wrong-content {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wrong-content img {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+}
+
+.wrong-text {
+  margin-top: 20px;
+  color: var(--cream);
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* PATIČKA */
+
+.footer {
+  margin-top: 30px;
+  color: #D5C097;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+@media (max-width:390px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    padding: 22px 13px;
+  }
+
+  .riddle {
+    padding: 20px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    animation: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+  <img
+    class="logo"
+    src="Logo.jpg"
+    alt="Plným plynem Kutnou Horou"
+  >
+
+  <div class="ornament">✦ ⚜ ✦</div>
+
+  <h1>
+    🍬 POSLEDNÍ<br>
+    SLADKÁ VÝZVA
+  </h1>
+
+  <section class="card">
+
+    <!-- KROK 1: HÁDANKA -->
+
+    <div class="stage active" id="stage1">
+
+      <img
+        class="racoon"
+        src="racoon.gif"
+        alt="Veselý mýval"
+      >
+
+      <div class="riddle">
+
+        <p class="verse">
+          Super, počítat umíte,<br>
+          žábu na prameni hledejte!
+        </p>
+
+        <p class="verse">
+          🍬 <strong>Poslední sladká výzva</strong>
+          <br><br>
+
+          Než se s námi rozloučíte,<br>
+          poslední dobrotu si zasloužíte!
+          <br><br>
+
+          Z batožiny Raffaello vytáhněte,<br>
+          poslední výzvě teď čelte!
+          <br><br>
+
+          Na pohled sladká, nevinná,<br>
+          ovšem uvnitř tajemství ukrývá.
+          <br><br>
+
+          Kdo má odvahu, ten ochutná,<br>
+          kdo je opatrný, ten jen přičichá.
+          <br><br>
+
+          Co tahle kulička uvnitř má?<br>
+          Kdo její tajemství rozpozná?
+        </p>
+
+      </div>
+
+      <form id="answerForm">
+
+        <h3 class="question">
+          🔎 CO SE SKRÝVÁ UVNITŘ?
+        </h3>
+
+        <input
+          type="text"
+          id="answer"
+          class="answer-input"
+          placeholder="Zadejte odpověď..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit" class="button">
+          🔐 OVĚŘIT ODPOVĚĎ
+        </button>
+
+      </form>
+
+      <!-- NÁPOVĚDY -->
+
+      <button
+        type="button"
+        class="hint-button"
+        id="hintButton"
+      >
+        💡 POTŘEBUJEME NÁPOVĚDU
+      </button>
+
+      <div class="hints">
+
+        <div class="hint" id="hint1">
+          <strong>💡 NÁPOVĚDA 1</strong>
+          <br>
+          Je to kořen, hledáte něco,
+          co se běžně používá v české kuchyni.
+        </div>
+
+        <div class="hint" id="hint2">
+          <strong>💡 NÁPOVĚDA 2</strong>
+          <br>
+          Příloha k masu.
+        </div>
+
+        <div class="hint" id="hint3">
+          <strong>💡 NÁPOVĚDA 3</strong>
+          <br>
+          Jestli vám nic neřekne české wasabi,
+          tak už nic.
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- KROK 2: SPRÁVNÁ ODPOVĚĎ -->
+
+    <div class="stage" id="stage2">
+
+      <h2 class="stage-title">
+        🎉 SPRÁVNĚ! KŘEN!
+      </h2>
+
+      <div class="riddle">
+
+        <p class="verse">
+          Tajemství jste odhalili,<br>
+          poslední výzvu překonali!
+        </p>
+
+      </div>
+
+      <div class="audio-box">
+
+        <p id="audioMessage">
+          🎧 Poslechněte si následující nahrávku!
+        </p>
+
+        <audio
+          id="krenAudio"
+          preload="auto"
+          controls
+          playsinline
+        >
+          <source src="kren.mp3" type="audio/mpeg">
+          Váš prohlížeč nepodporuje přehrávání audia.
+        </audio>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="footer">
+    ✦ PRIMAGAS • KUTNÁ HORA 2026 ✦
+  </div>
+
+</main>
+
+<!-- ŠPATNÁ ODPOVĚĎ -->
+
+<div
+  class="wrong-overlay"
+  id="wrongOverlay"
+  role="alertdialog"
+  aria-label="Špatná odpověď"
+>
+
+  <div class="wrong-content">
+
+    <img
+      id="wrongGif"
+      src="wrong.gif"
+      alt="Špatná odpověď"
+    >
+
+    <div class="wrong-text">
+      ❌ ŠPATNĚ! ZKUSTE TO ZNOVU.
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* PRVKY */
+
+const stage1 = document.getElementById("stage1");
+const stage2 = document.getElementById("stage2");
+
+const answerForm = document.getElementById("answerForm");
+const answerInput = document.getElementById("answer");
+
+const hintButton = document.getElementById("hintButton");
+const hints = [
+  document.getElementById("hint1"),
+  document.getElementById("hint2"),
+  document.getElementById("hint3")
+];
+
+const wrongOverlay = document.getElementById("wrongOverlay");
+const wrongGif = document.getElementById("wrongGif");
+
+const krenAudio = document.getElementById("krenAudio");
+const audioMessage = document.getElementById("audioMessage");
+
+let solved = false;
+let locked = false;
+let wrongTimer = null;
+
+/* NORMALIZACE ODPOVĚDI */
+
+function normalizeAnswer(value) {
+
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+}
+
+/* OVĚŘENÍ ODPOVĚDI */
+
+answerForm.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  if (solved || locked) return;
+
+  const answer = normalizeAnswer(answerInput.value);
+
+  if (answer === "kren") {
+
+    solved = true;
+
+    localStorage.setItem("kh_s28_completed", "1");
+
+    stage1.classList.remove("active");
+    stage2.classList.add("active");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+    /* AUTOMATICKÉ PŘEHRÁNÍ */
+
+    try {
+
+      await krenAudio.play();
+
+    } catch (error) {
+
+      audioMessage.textContent =
+        "🎧 Klepněte na přehrávač níže a spusťte nahrávku.";
+
+    }
+
+  } else {
+
+    showWrong();
+
+  }
+
+});
+
+/* NÁPOVĚDY */
+
+let hintIndex = Math.min(
+  3,
+  Math.max(
+    0,
+    Number(localStorage.getItem("kh_s28_hint_index")) || 0
+  )
+);
+
+/* OBNOVENÍ JIŽ ODKRYTÝCH NÁPOVĚD */
+
+for (let i = 0; i < hintIndex; i++) {
+  hints[i].classList.add("visible");
+}
+
+if (hintIndex >= hints.length) {
+  hintButton.disabled = true;
+  hintButton.textContent = "💡 VŠECHNY NÁPOVĚDY ODHALENY";
+}
+
+hintButton.addEventListener("click", function() {
+
+  if (hintIndex >= hints.length || solved) return;
+
+  hints[hintIndex].classList.add("visible");
+
+  hintIndex++;
+
+  localStorage.setItem(
+    "kh_s28_hint_index",
+    String(hintIndex)
+  );
+
+  /* CELOHERNÍ POČÍTADLO NÁPOVĚD */
+
+  const currentHints =
+    Number(localStorage.getItem("kh_hints")) || 0;
+
+  localStorage.setItem(
+    "kh_hints",
+    String(currentHints + 1)
+  );
+
+  if (hintIndex >= hints.length) {
+
+    hintButton.disabled = true;
+    hintButton.textContent =
+      "💡 VŠECHNY NÁPOVĚDY ODHALENY";
+
+  } else {
+
+    hintButton.textContent =
+      "💡 DALŠÍ NÁPOVĚDA";
+
+  }
+
+});
+
+/* ŠPATNÁ ODPOVĚĎ */
+
+function showWrong() {
+
+  locked = true;
+
+  wrongGif.src = "wrong.gif?t=" + Date.now();
+
+  wrongOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+  clearTimeout(wrongTimer);
+
+  wrongTimer = setTimeout(function() {
+
+    wrongOverlay.classList.remove("visible");
+    document.body.classList.remove("modal-open");
+
+    locked = false;
+    answerInput.focus();
+
+  }, 2000);
+
+}
+
+</script>
+
+</body>
+</html>
