@@ -9,7 +9,7 @@
 <title>Poslední sladká výzva | Plným plynem Kutnou Horou</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -41,21 +41,14 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* POZADÍ */
-
 .background {
   position: fixed;
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(
-      rgba(4,24,18,.38),
-      rgba(4,24,18,.76)
-    ),
+    linear-gradient(rgba(4,24,18,.38),rgba(4,24,18,.72)),
     url("pozadi.png") center / cover no-repeat;
 }
-
-/* HLAVNÍ KONTEJNER */
 
 .container {
   position: relative;
@@ -66,7 +59,7 @@ body.modal-open {
   min-height: 100dvh;
   margin: 0 auto;
   padding:
-    calc(28px + env(safe-area-inset-top))
+    calc(30px + env(safe-area-inset-top))
     18px
     calc(35px + env(safe-area-inset-bottom));
 
@@ -75,8 +68,6 @@ body.modal-open {
   align-items: center;
   text-align: center;
 }
-
-/* LOGO */
 
 .logo {
   display: block;
@@ -102,8 +93,6 @@ h1 {
   text-shadow: 0 3px 12px #000;
 }
 
-/* KARTA */
-
 .card {
   width: 100%;
   padding: 27px 19px;
@@ -113,49 +102,12 @@ h1 {
   box-shadow: 0 12px 35px rgba(0,0,0,.45);
 }
 
-/* FÁZE */
-
-.stage {
-  display: none;
-  animation: appear .5s ease-out;
-}
-
-.stage.active {
-  display: block;
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .stage-title {
-  margin: 0 0 22px;
+  margin: 0 0 20px;
   color: var(--gold);
   font-family: 'Cinzel',serif;
   font-size: 20px;
-  line-height: 1.5;
 }
-
-/* MÝVAL */
-
-.racoon {
-  display: block;
-  width: min(100%,290px);
-  max-height: 280px;
-  object-fit: contain;
-  margin: 0 auto 25px;
-  border-radius: 12px;
-}
-
-/* BÁSNIČKA */
 
 .riddle {
   padding: 26px 13px;
@@ -173,21 +125,33 @@ h1 {
   font-family: 'Cinzel',serif;
   font-size: clamp(12px,3.2vw,16px);
   font-weight: 600;
-  line-height: 2;
+  line-height: 2.1;
 }
 
-.verse + .verse {
-  margin-top: 24px;
+.highlight {
+  color: #F2D99C;
 }
 
-/* OTÁZKA */
+.equipment {
+  margin: 22px 0;
+  padding: 18px 13px;
+  border: 1px dashed var(--gold);
+  border-radius: 12px;
+  background: rgba(217,190,123,.08);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.equipment strong {
+  color: var(--gold);
+}
 
 .question {
-  margin: 27px 0 17px;
+  margin: 27px 0 18px;
   color: var(--gold);
   font-family: 'Cinzel',serif;
   font-size: clamp(17px,4.3vw,21px);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .answer-input {
@@ -199,8 +163,8 @@ h1 {
   background: #F9F0DC;
   color: var(--green);
   font-family: 'Montserrat',sans-serif;
-  font-size: 19px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
   text-align: center;
 }
 
@@ -209,127 +173,204 @@ h1 {
   outline-offset: 3px;
 }
 
-/* TLAČÍTKA */
-
-.button {
+.button,
+.next-button {
   display: block;
   width: 100%;
   margin-top: 20px;
   padding: 19px 12px;
   border: 2px solid #F0D99B;
   border-radius: 12px;
-  background: linear-gradient(
-    135deg,
-    #E9D29A,
-    #B38A47
-  );
+  background: linear-gradient(135deg,#E9D29A,#B38A47);
   color: var(--green);
   font-family: 'Montserrat',sans-serif;
   font-size: 16px;
   font-weight: 800;
-  text-decoration: none;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
   box-shadow: 0 5px 0 #6C502A;
 }
 
-.button:active {
+.button:active,
+.next-button:active {
   transform: translateY(4px);
   box-shadow: 0 1px 0 #6C502A;
 }
 
-.button:disabled {
-  opacity: .65;
-  cursor: default;
-}
-
 .button:focus-visible,
-.hint-button:focus-visible {
+.next-button:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
 }
 
-/* NÁPOVĚDY */
-
 .hint-button {
-  display: block;
-  width: 100%;
-  margin-top: 16px;
-  padding: 15px 12px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg,#174D39,#0B3024);
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.success {
+  display: none;
+  margin-top: 25px;
+  padding: 23px 15px;
   border: 1px solid var(--gold);
   border-radius: 12px;
-  background: rgba(20,65,48,.9);
-  color: var(--gold);
-  font-family: 'Montserrat',sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
+  background: #174D39;
+  animation: appear .5s ease;
 }
 
-.hint-button:disabled {
-  opacity: .5;
-  cursor: default;
-}
-
-.hints {
-  margin-top: 19px;
-}
-
-.hint {
-  display: none;
-  margin-top: 12px;
-  padding: 17px 13px;
-  border: 1px solid rgba(217,190,123,.6);
-  border-radius: 11px;
-  background: rgba(22,68,49,.85);
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-.hint.visible {
+.success.visible {
   display: block;
 }
 
-.hint strong {
-  color: var(--gold);
-}
-
-/* AUDIO */
-
-.audio-box {
-  margin-top: 24px;
-  padding: 22px 15px;
-  border: 2px solid var(--gold);
-  border-radius: 13px;
-  background: rgba(20,65,48,.9);
-}
-
-.audio-box p {
+.success h3 {
   margin: 0 0 15px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 21px;
+}
+
+.success p {
+  margin: 0;
   font-size: 14px;
   line-height: 1.8;
 }
 
-audio {
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* NAHRÁVKA */
+
+.audio-panel {
+  margin-top: 23px;
+  padding: 22px 14px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: rgba(8,37,28,.8);
+}
+
+.audio-panel h4 {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 19px;
+}
+
+.audio-panel p {
+  margin-bottom: 16px;
+}
+
+.audio-panel audio {
   display: block;
   width: 100%;
+  margin-top: 18px;
 }
 
-/* WRONG GIF */
+.audio-start {
+  border: 2px solid #FFF0B9;
+  background: linear-gradient(135deg,#FCE6A5,#D6A94F);
+  color: var(--green);
+  box-shadow:
+    0 0 12px rgba(255,215,115,.8),
+    0 0 28px rgba(255,215,115,.55),
+    0 5px 0 #6C502A;
+  animation: audioGlow 1.4s ease-in-out infinite alternate;
+}
 
-.wrong-overlay {
+.audio-start.played {
+  animation: none;
+  box-shadow: 0 5px 0 #6C502A;
+}
+
+@keyframes audioGlow {
+  from {
+    box-shadow:
+      0 0 8px rgba(255,215,115,.5),
+      0 0 16px rgba(255,215,115,.25),
+      0 5px 0 #6C502A;
+  }
+  to {
+    box-shadow:
+      0 0 20px rgba(255,215,115,1),
+      0 0 42px rgba(255,215,115,.7),
+      0 5px 0 #6C502A;
+  }
+}
+
+.audio-status {
+  margin-top: 15px !important;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.next-button {
+  display: none;
+}
+
+.next-button.visible {
+  display: block;
+}
+
+/* NÁPOVĚDA A WRONG GIF */
+
+.overlay {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 100;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(0,0,0,.95);
+  background: rgba(0,0,0,.93);
 }
 
-.wrong-overlay.visible {
+.overlay.visible {
   display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 20px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  background: #103629;
+  text-align: center;
+}
+
+.modal h2 {
+  margin: 0 0 18px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 22px;
+}
+
+.modal p {
+  color: var(--cream);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.close-button {
+  border: 1px solid var(--gold);
+  background: #174D39;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.wrong-overlay {
+  z-index: 200;
+  background: rgba(0,0,0,.95);
 }
 
 .wrong-content {
@@ -343,6 +384,7 @@ audio {
   width: 100%;
   max-height: 65dvh;
   object-fit: contain;
+  border-radius: 12px;
 }
 
 .wrong-text {
@@ -352,8 +394,6 @@ audio {
   font-size: 22px;
   font-weight: 800;
 }
-
-/* PATIČKA */
 
 .footer {
   margin-top: 30px;
@@ -378,7 +418,7 @@ audio {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage {
+  .audio-start {
     animation: none;
   }
 }
@@ -391,8 +431,6 @@ audio {
 
 <main class="container">
 
-  <!-- LOGO -->
-
   <img
     class="logo"
     src="Logo.jpg"
@@ -401,156 +439,139 @@ audio {
 
   <div class="ornament">✦ ⚜ ✦</div>
 
-  <h1>
-    🍬 POSLEDNÍ<br>
-    SLADKÁ VÝZVA
-  </h1>
+  <h1>🍬 POSLEDNÍ<br>SLADKÁ VÝZVA</h1>
 
   <section class="card">
 
-    <!-- KROK 1: HÁDANKA -->
+    <h2 class="stage-title">
+      🍬 POSLEDNÍ SLADKÁ VÝZVA
+    </h2>
 
-    <div class="stage active" id="stage1">
+    <!-- BÁSNIČKA -->
 
-      <img
-        class="racoon"
-        src="racoon.gif"
-        alt="Veselý mýval"
-      >
+    <div class="riddle">
+      <p class="verse">
 
-      <div class="riddle">
+        Než se s námi rozloučíte,<br>
+        poslední dobrotu si zasloužíte!
+        <br><br>
 
-        <p class="verse">
-          Super, počítat umíte,<br>
-          žábu na prameni hledejte!
-        </p>
+        Z batožiny Raffaello vytáhněte,<br>
+        poslední výzvě teď čelte!
+        <br><br>
 
-        <p class="verse">
-          🍬 <strong>Poslední sladká výzva</strong>
-          <br><br>
+        Na pohled sladká, nevinná,<br>
+        ovšem uvnitř tajemství ukrývá.
+        <br><br>
 
-          Než se s námi rozloučíte,<br>
-          poslední dobrotu si zasloužíte!
-          <br><br>
+        Kdo má odvahu, ten ochutná,<br>
+        kdo je opatrný, ten jen přičichá.
+        <br><br>
 
-          Z batožiny Raffaello vytáhněte,<br>
-          poslední výzvě teď čelte!
-          <br><br>
-
-          Na pohled sladká, nevinná,<br>
-          ovšem uvnitř tajemství ukrývá.
-          <br><br>
-
-          Kdo má odvahu, ten ochutná,<br>
-          kdo je opatrný, ten jen přičichá.
-          <br><br>
-
+        <span class="highlight">
           Co tahle kulička uvnitř má?<br>
           Kdo její tajemství rozpozná?
-        </p>
+        </span>
 
-      </div>
-
-      <!-- ODPOVĚĎ -->
-
-      <form id="answerForm">
-
-        <h3 class="question">
-          🔎 CO SE SKRÝVÁ UVNITŘ?
-        </h3>
-
-        <input
-          type="text"
-          id="answer"
-          class="answer-input"
-          placeholder="Zadejte odpověď..."
-          autocomplete="off"
-          required
-        >
-
-        <button type="submit" class="button">
-          🔐 OVĚŘIT ODPOVĚĎ
-        </button>
-
-      </form>
-
-      <!-- NÁPOVĚDY -->
-
-      <button
-        type="button"
-        class="hint-button"
-        id="hintButton"
-      >
-        💡 POTŘEBUJEME NÁPOVĚDU
-      </button>
-
-      <div class="hints">
-
-        <div class="hint" id="hint1">
-          <strong>💡 NÁPOVĚDA 1</strong>
-          <br>
-          Je to kořen, hledáte něco,
-          co se běžně používá v české kuchyni.
-        </div>
-
-        <div class="hint" id="hint2">
-          <strong>💡 NÁPOVĚDA 2</strong>
-          <br>
-          Příloha k masu.
-        </div>
-
-        <div class="hint" id="hint3">
-          <strong>💡 NÁPOVĚDA 3</strong>
-          <br>
-          Jestli vám nic neřekne české wasabi,
-          tak už nic.
-        </div>
-
-      </div>
-
+      </p>
     </div>
 
-    <!-- KROK 2: SPRÁVNÁ ODPOVĚĎ -->
+    <!-- VYBAVENÍ -->
 
-    <div class="stage" id="stage2">
+    <div class="equipment">
+      🎒 <strong>KE SPLNĚNÍ ÚKOLU POTŘEBUJETE:</strong>
+      <br>
+      Raffaello z batohu.
+    </div>
 
-      <h2 class="stage-title">
-        🎉 SPRÁVNĚ! KŘEN!
-      </h2>
+    <!-- ODPOVĚĎ -->
 
-      <div class="riddle">
+    <form id="answerForm">
 
-        <p class="verse">
-          Tajemství jste odhalili,<br>
-          poslední výzvu překonali!
+      <h3 class="question">
+        🍬 CO SE UKRÝVÁ UVNITŘ?
+      </h3>
+
+      <input
+        type="text"
+        id="answer"
+        class="answer-input"
+        placeholder="Zadejte odpověď..."
+        autocomplete="off"
+        spellcheck="false"
+        required
+      >
+
+      <button type="submit" class="button">
+        🔍 OVĚŘIT ODPOVĚĎ
+      </button>
+
+    </form>
+
+    <!-- NÁPOVĚDY -->
+
+    <button
+      type="button"
+      class="button hint-button"
+      id="hintButton"
+    >
+      💡 POTŘEBUJEME NÁPOVĚDU
+    </button>
+
+    <!-- SPRÁVNÁ ODPOVĚĎ -->
+
+    <div class="success" id="success">
+
+      <h3>🎉 SPRÁVNĚ! JE TO KŘEN!</h3>
+
+      <p>
+        Tak tohle byla opravdu sladká tečka. 😈
+        Kutná Hora vás očividně nepřestává překvapovat!
+      </p>
+
+      <!-- AUDIO -->
+
+      <div class="audio-panel">
+
+        <h4>🎧 POSLEDNÍ NAHRÁVKA</h4>
+
+        <p>
+          Než budete pokračovat, poslechněte si
+          ještě jednu kutnohorskou zajímavost!
         </p>
 
-      </div>
-
-      <!-- NAHRÁVKA -->
-
-      <div class="audio-box">
-
-        <p id="audioMessage">
-          🎧 Poslechněte si následující nahrávku!
-        </p>
+        <button
+          type="button"
+          class="button audio-start"
+          id="playAudioButton"
+        >
+          ▶️ SPUSTIT NAHRÁVKU
+        </button>
 
         <audio
           id="krenAudio"
-          preload="auto"
           controls
+          preload="none"
           playsinline
         >
           <source src="kren.mp3" type="audio/mpeg">
           Váš prohlížeč nepodporuje přehrávání audia.
         </audio>
 
+        <p class="audio-status" id="audioStatus" aria-live="polite">
+          🔊 Nahrávka čeká na spuštění.
+        </p>
+
       </div>
 
-      <!-- TLAČÍTKO DÁL - VŽDY VIDITELNÉ PO SPRÁVNÉ ODPOVĚDI -->
+      <!-- POKRAČOVÁNÍ -->
 
-      <a href="s28.html" class="button">
-        ➡️ DÁL
+      <a
+        href="s28.html"
+        class="next-button"
+        id="nextButton"
+      >
+        ➜ DALŠÍ STANOVIŠTĚ
       </a>
 
     </div>
@@ -563,10 +584,38 @@ audio {
 
 </main>
 
-<!-- ŠPATNÁ ODPOVĚĎ -->
+<!-- NÁPOVĚDA -->
 
 <div
-  class="wrong-overlay"
+  class="overlay"
+  id="hintOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hintTitle"
+>
+
+  <div class="modal">
+
+    <h2 id="hintTitle">💡 NÁPOVĚDA</h2>
+
+    <div id="hintContent"></div>
+
+    <button
+      type="button"
+      class="button close-button"
+      id="closeHint"
+    >
+      ✕ ZAVŘÍT
+    </button>
+
+  </div>
+
+</div>
+
+<!-- WRONG GIF -->
+
+<div
+  class="overlay wrong-overlay"
   id="wrongOverlay"
   role="alertdialog"
   aria-label="Špatná odpověď"
@@ -592,59 +641,42 @@ audio {
 
 /* PRVKY */
 
-const stage1 = document.getElementById("stage1");
-const stage2 = document.getElementById("stage2");
-
 const answerForm = document.getElementById("answerForm");
 const answerInput = document.getElementById("answer");
 
-const hintButton = document.getElementById("hintButton");
+const success = document.getElementById("success");
 
-const hints = [
-  document.getElementById("hint1"),
-  document.getElementById("hint2"),
-  document.getElementById("hint3")
-];
+const hintButton = document.getElementById("hintButton");
+const hintOverlay = document.getElementById("hintOverlay");
+const hintContent = document.getElementById("hintContent");
+const closeHint = document.getElementById("closeHint");
 
 const wrongOverlay = document.getElementById("wrongOverlay");
 const wrongGif = document.getElementById("wrongGif");
 
+const playAudioButton = document.getElementById("playAudioButton");
 const krenAudio = document.getElementById("krenAudio");
-const audioMessage = document.getElementById("audioMessage");
+const audioStatus = document.getElementById("audioStatus");
+const nextButton = document.getElementById("nextButton");
 
 let solved = false;
 let locked = false;
 let wrongTimer = null;
 
-/* NORMALIZACE ODPOVĚDI */
+/* NORMALIZACE */
 
-function normalizeAnswer(value) {
-
-  return value
-    .toLowerCase()
+function normalizeAnswer(text) {
+  return text
+    .trim()
+    .toLocaleLowerCase("cs-CZ")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .trim();
-
+    .replace(/\s+/g, " ");
 }
 
-/* OBNOVENÍ POSTUPU PO RELOADU */
+/* KONTROLA ODPOVĚDI */
 
-if (localStorage.getItem("kh_s27_completed") === "1") {
-
-  solved = true;
-
-  stage1.classList.remove("active");
-  stage2.classList.add("active");
-
-  audioMessage.textContent =
-    "🎧 Nahrávku si můžete znovu přehrát nebo pokračovat dál.";
-
-}
-
-/* OVĚŘENÍ ODPOVĚDI */
-
-answerForm.addEventListener("submit", async function(event) {
+answerForm.addEventListener("submit", function(event) {
 
   event.preventDefault();
 
@@ -658,26 +690,15 @@ answerForm.addEventListener("submit", async function(event) {
 
     localStorage.setItem("kh_s27_completed", "1");
 
-    stage1.classList.remove("active");
-    stage2.classList.add("active");
+    answerForm.style.display = "none";
+    hintButton.style.display = "none";
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
+    success.classList.add("visible");
+
+    success.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
     });
-
-    /* AUTOMATICKÉ PŘEHRÁNÍ NAHRÁVKY */
-
-    try {
-
-      await krenAudio.play();
-
-    } catch (error) {
-
-      audioMessage.textContent =
-        "🎧 Automatické přehrávání se nepodařilo. Spusťte nahrávku ručně nebo pokračujte dál.";
-
-    }
 
   } else {
 
@@ -687,73 +708,100 @@ answerForm.addEventListener("submit", async function(event) {
 
 });
 
-/* NÁPOVĚDY */
+/* NAHRÁVKA */
 
-let hintIndex = Math.min(
-  3,
-  Math.max(
-    0,
-    Number(localStorage.getItem("kh_s27_hint_index")) || 0
-  )
-);
+playAudioButton.addEventListener("click", async function() {
 
-/* OBNOVENÍ ODKRYTÝCH NÁPOVĚD */
+  try {
 
-for (let i = 0; i < hintIndex; i++) {
+    await krenAudio.play();
 
-  hints[i].classList.add("visible");
+  } catch (error) {
 
-}
-
-if (hintIndex >= hints.length) {
-
-  hintButton.disabled = true;
-
-  hintButton.textContent =
-    "💡 VŠECHNY NÁPOVĚDY ODHALENY";
-
-}
-
-hintButton.addEventListener("click", function() {
-
-  if (hintIndex >= hints.length || solved) return;
-
-  hints[hintIndex].classList.add("visible");
-
-  hintIndex++;
-
-  localStorage.setItem(
-    "kh_s27_hint_index",
-    String(hintIndex)
-  );
-
-  /* CELOHERNÍ POČÍTADLO NÁPOVĚD */
-
-  const currentHints =
-    Number(localStorage.getItem("kh_hints")) || 0;
-
-  localStorage.setItem(
-    "kh_hints",
-    String(currentHints + 1)
-  );
-
-  if (hintIndex >= hints.length) {
-
-    hintButton.disabled = true;
-
-    hintButton.textContent =
-      "💡 VŠECHNY NÁPOVĚDY ODHALENY";
-
-  } else {
-
-    hintButton.textContent =
-      "💡 DALŠÍ NÁPOVĚDA";
+    audioStatus.textContent =
+      "⚠️ Nahrávku se nepodařilo spustit. Zkuste přehrávač níže.";
 
   }
 
 });
 
-/* ŠPATNÁ ODPOVĚĎ */
+krenAudio.addEventListener("play", function() {
+
+  playAudioButton.classList.add("played");
+  playAudioButton.textContent = "🔊 NAHRÁVKA SPUŠTĚNA";
+
+  audioStatus.textContent =
+    "🎧 Poslouchejte! Až budete připraveni, můžete pokračovat.";
+
+  nextButton.classList.add("visible");
+
+});
+
+/* NÁPOVĚDY */
+
+const hints = [
+  "🌿 <strong>1. NÁPOVĚDA</strong><br><br>Je to kořen. V české kuchyni se hodně využívá.",
+  "🍖 <strong>2. NÁPOVĚDA</strong><br><br>Dává se to k masu.",
+  "🔥 <strong>3. NÁPOVĚDA</strong><br><br>Jestli vám nenapoví české wasabi, tak už nic."
+];
+
+let hintIndex = Number(
+  localStorage.getItem("kh_s27_hint_index") || "0"
+);
+
+hintButton.addEventListener("click", function() {
+
+  if (solved) return;
+
+  if (hintIndex < hints.length) {
+
+    hintContent.innerHTML =
+      "<p>" + hints[hintIndex] + "</p>";
+
+    hintIndex++;
+
+    localStorage.setItem(
+      "kh_s27_hint_index",
+      String(hintIndex)
+    );
+
+    const total = Number(
+      localStorage.getItem("kh_hints") || "0"
+    );
+
+    localStorage.setItem(
+      "kh_hints",
+      String(total + 1)
+    );
+
+  } else {
+
+    hintContent.innerHTML =
+      "<p>Všechny nápovědy už jste vyčerpali. Teď už vám zbývá jen ochutnat. 😈</p>";
+
+  }
+
+  hintOverlay.classList.add("visible");
+  document.body.classList.add("modal-open");
+
+});
+
+/* ZAVŘENÍ NÁPOVĚDY */
+
+function hideHint() {
+  hintOverlay.classList.remove("visible");
+  document.body.classList.remove("modal-open");
+}
+
+closeHint.addEventListener("click", hideHint);
+
+hintOverlay.addEventListener("click", function(event) {
+  if (event.target === hintOverlay) {
+    hideHint();
+  }
+});
+
+/* WRONG GIF */
 
 function showWrong() {
 
@@ -777,6 +825,17 @@ function showWrong() {
   }, 2000);
 
 }
+
+/* ESC ZAVŘE NÁPOVĚDU */
+
+document.addEventListener("keydown", function(event) {
+  if (
+    event.key === "Escape" &&
+    hintOverlay.classList.contains("visible")
+  ) {
+    hideHint();
+  }
+});
 
 </script>
 
