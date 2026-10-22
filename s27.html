@@ -9,7 +9,7 @@
 <title>Poslední sladká výzva | Plným plynem Kutnou Horou</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -55,7 +55,7 @@ body.modal-open {
     url("pozadi.png") center / cover no-repeat;
 }
 
-/* KONTEJNER */
+/* HLAVNÍ KONTEJNER */
 
 .container {
   position: relative;
@@ -130,6 +130,7 @@ h1 {
     opacity: 0;
     transform: translateY(15px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -243,6 +244,14 @@ h1 {
   cursor: default;
 }
 
+.button:focus-visible,
+.hint-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+/* NÁPOVĚDY */
+
 .hint-button {
   display: block;
   width: 100%;
@@ -262,8 +271,6 @@ h1 {
   opacity: .5;
   cursor: default;
 }
-
-/* NÁPOVĚDY */
 
 .hints {
   margin-top: 19px;
@@ -307,6 +314,38 @@ h1 {
 audio {
   display: block;
   width: 100%;
+}
+
+/* POKRAČOVÁNÍ */
+
+.next-section {
+  display: none;
+  margin-top: 26px;
+  animation: appear .5s ease-out;
+}
+
+.next-section.visible {
+  display: block;
+}
+
+.next-message {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font-family: 'Cinzel',serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.audio-error {
+  display: none;
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.audio-error.visible {
+  display: block;
 }
 
 /* WRONG GIF */
@@ -372,7 +411,8 @@ audio {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage {
+  .stage,
+  .next-section {
     animation: none;
   }
 }
@@ -384,6 +424,8 @@ audio {
 <div class="background"></div>
 
 <main class="container">
+
+  <!-- LOGO -->
 
   <img
     class="logo"
@@ -442,6 +484,8 @@ audio {
         </p>
 
       </div>
+
+      <!-- ODPOVĚĎ -->
 
       <form id="answerForm">
 
@@ -517,6 +561,8 @@ audio {
 
       </div>
 
+      <!-- NAHRÁVKA -->
+
       <div class="audio-box">
 
         <p id="audioMessage">
@@ -532,6 +578,33 @@ audio {
           <source src="kren.mp3" type="audio/mpeg">
           Váš prohlížeč nepodporuje přehrávání audia.
         </audio>
+
+      </div>
+
+      <!-- POKRAČOVÁNÍ NA S28.HTML -->
+
+      <div class="next-section" id="nextSection">
+
+        <p class="next-message">
+          🏆 POSLEDNÍ TAJEMSTVÍ JE ODHALENO!
+        </p>
+
+        <a href="s28.html" class="button">
+          🪙 POKRAČOVAT ZA POKLADEM!
+        </a>
+
+      </div>
+
+      <!-- ZÁLOŽNÍ TLAČÍTKO PŘI CHYBĚ AUDIA -->
+
+      <div class="audio-error" id="audioError">
+
+        ⚠️ Nahrávku se nepodařilo načíst.
+        Můžete pokračovat do další části hry.
+
+        <a href="s28.html" class="button">
+          🪙 POKRAČOVAT DÁL
+        </a>
 
       </div>
 
@@ -581,6 +654,7 @@ const answerForm = document.getElementById("answerForm");
 const answerInput = document.getElementById("answer");
 
 const hintButton = document.getElementById("hintButton");
+
 const hints = [
   document.getElementById("hint1"),
   document.getElementById("hint2"),
@@ -592,6 +666,9 @@ const wrongGif = document.getElementById("wrongGif");
 
 const krenAudio = document.getElementById("krenAudio");
 const audioMessage = document.getElementById("audioMessage");
+
+const nextSection = document.getElementById("nextSection");
+const audioError = document.getElementById("audioError");
 
 let solved = false;
 let locked = false;
@@ -609,6 +686,20 @@ function normalizeAnswer(value) {
 
 }
 
+/* OBNOVENÍ POSTUPU PO RELOADU */
+
+if (localStorage.getItem("kh_s27_completed") === "1") {
+
+  solved = true;
+
+  stage1.classList.remove("active");
+  stage2.classList.add("active");
+
+  audioMessage.textContent =
+    "🎧 Přehrajte si nahrávku. Po jejím skončení můžete pokračovat.";
+
+}
+
 /* OVĚŘENÍ ODPOVĚDI */
 
 answerForm.addEventListener("submit", async function(event) {
@@ -623,7 +714,7 @@ answerForm.addEventListener("submit", async function(event) {
 
     solved = true;
 
-    localStorage.setItem("kh_s28_completed", "1");
+    localStorage.setItem("kh_s27_completed", "1");
 
     stage1.classList.remove("active");
     stage2.classList.add("active");
@@ -633,7 +724,7 @@ answerForm.addEventListener("submit", async function(event) {
       behavior: "smooth"
     });
 
-    /* AUTOMATICKÉ PŘEHRÁNÍ */
+    /* AUTOMATICKÉ PŘEHRÁNÍ NAHRÁVKY */
 
     try {
 
@@ -642,7 +733,7 @@ answerForm.addEventListener("submit", async function(event) {
     } catch (error) {
 
       audioMessage.textContent =
-        "🎧 Klepněte na přehrávač níže a spusťte nahrávku.";
+        "🎧 Automatické přehrávání se nepodařilo. Spusťte nahrávku tlačítkem v přehrávači.";
 
     }
 
@@ -654,25 +745,76 @@ answerForm.addEventListener("submit", async function(event) {
 
 });
 
+/* PO SKONČENÍ NAHRÁVKY */
+
+krenAudio.addEventListener("ended", function() {
+
+  localStorage.setItem("kh_s27_audio_completed", "1");
+
+  audioMessage.textContent =
+    "🎉 Nahrávka dokončena! Můžete pokračovat.";
+
+  audioError.classList.remove("visible");
+  nextSection.classList.add("visible");
+
+  nextSection.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+
+});
+
+/* OBNOVENÍ TLAČÍTKA PO RELOADU */
+
+if (
+  localStorage.getItem("kh_s27_completed") === "1" &&
+  localStorage.getItem("kh_s27_audio_completed") === "1"
+) {
+
+  nextSection.classList.add("visible");
+
+}
+
+/* CHYBA NAČÍTÁNÍ NAHRÁVKY */
+
+krenAudio.addEventListener("error", function() {
+
+  if (solved) {
+
+    audioMessage.textContent =
+      "⚠️ Nahrávku se nepodařilo načíst.";
+
+    audioError.classList.add("visible");
+
+  }
+
+});
+
 /* NÁPOVĚDY */
 
 let hintIndex = Math.min(
   3,
   Math.max(
     0,
-    Number(localStorage.getItem("kh_s28_hint_index")) || 0
+    Number(localStorage.getItem("kh_s27_hint_index")) || 0
   )
 );
 
-/* OBNOVENÍ JIŽ ODKRYTÝCH NÁPOVĚD */
+/* OBNOVENÍ ODKRYTÝCH NÁPOVĚD */
 
 for (let i = 0; i < hintIndex; i++) {
+
   hints[i].classList.add("visible");
+
 }
 
 if (hintIndex >= hints.length) {
+
   hintButton.disabled = true;
-  hintButton.textContent = "💡 VŠECHNY NÁPOVĚDY ODHALENY";
+
+  hintButton.textContent =
+    "💡 VŠECHNY NÁPOVĚDY ODHALENY";
+
 }
 
 hintButton.addEventListener("click", function() {
@@ -684,7 +826,7 @@ hintButton.addEventListener("click", function() {
   hintIndex++;
 
   localStorage.setItem(
-    "kh_s28_hint_index",
+    "kh_s27_hint_index",
     String(hintIndex)
   );
 
@@ -701,6 +843,7 @@ hintButton.addEventListener("click", function() {
   if (hintIndex >= hints.length) {
 
     hintButton.disabled = true;
+
     hintButton.textContent =
       "💡 VŠECHNY NÁPOVĚDY ODHALENY";
 
