@@ -9,7 +9,7 @@
 <title>Poslední sladká výzva | Plným plynem Kutnou Horou</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -65,7 +65,6 @@ body.modal-open {
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-
   padding:
     calc(28px + env(safe-area-inset-top))
     18px
@@ -316,38 +315,6 @@ audio {
   width: 100%;
 }
 
-/* POKRAČOVÁNÍ */
-
-.next-section {
-  display: none;
-  margin-top: 26px;
-  animation: appear .5s ease-out;
-}
-
-.next-section.visible {
-  display: block;
-}
-
-.next-message {
-  margin: 0 0 12px;
-  color: var(--gold);
-  font-family: 'Cinzel',serif;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.7;
-}
-
-.audio-error {
-  display: none;
-  margin-top: 18px;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.audio-error.visible {
-  display: block;
-}
-
 /* WRONG GIF */
 
 .wrong-overlay {
@@ -411,8 +378,7 @@ audio {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage,
-  .next-section {
+  .stage {
     animation: none;
   }
 }
@@ -581,32 +547,11 @@ audio {
 
       </div>
 
-      <!-- POKRAČOVÁNÍ NA S28.HTML -->
+      <!-- TLAČÍTKO DÁL - VŽDY VIDITELNÉ PO SPRÁVNÉ ODPOVĚDI -->
 
-      <div class="next-section" id="nextSection">
-
-        <p class="next-message">
-          🏆 POSLEDNÍ TAJEMSTVÍ JE ODHALENO!
-        </p>
-
-        <a href="s28.html" class="button">
-          🪙 POKRAČOVAT ZA POKLADEM!
-        </a>
-
-      </div>
-
-      <!-- ZÁLOŽNÍ TLAČÍTKO PŘI CHYBĚ AUDIA -->
-
-      <div class="audio-error" id="audioError">
-
-        ⚠️ Nahrávku se nepodařilo načíst.
-        Můžete pokračovat do další části hry.
-
-        <a href="s28.html" class="button">
-          🪙 POKRAČOVAT DÁL
-        </a>
-
-      </div>
+      <a href="s28.html" class="button">
+        ➡️ DÁL
+      </a>
 
     </div>
 
@@ -667,9 +612,6 @@ const wrongGif = document.getElementById("wrongGif");
 const krenAudio = document.getElementById("krenAudio");
 const audioMessage = document.getElementById("audioMessage");
 
-const nextSection = document.getElementById("nextSection");
-const audioError = document.getElementById("audioError");
-
 let solved = false;
 let locked = false;
 let wrongTimer = null;
@@ -696,7 +638,7 @@ if (localStorage.getItem("kh_s27_completed") === "1") {
   stage2.classList.add("active");
 
   audioMessage.textContent =
-    "🎧 Přehrajte si nahrávku. Po jejím skončení můžete pokračovat.";
+    "🎧 Nahrávku si můžete znovu přehrát nebo pokračovat dál.";
 
 }
 
@@ -733,58 +675,13 @@ answerForm.addEventListener("submit", async function(event) {
     } catch (error) {
 
       audioMessage.textContent =
-        "🎧 Automatické přehrávání se nepodařilo. Spusťte nahrávku tlačítkem v přehrávači.";
+        "🎧 Automatické přehrávání se nepodařilo. Spusťte nahrávku ručně nebo pokračujte dál.";
 
     }
 
   } else {
 
     showWrong();
-
-  }
-
-});
-
-/* PO SKONČENÍ NAHRÁVKY */
-
-krenAudio.addEventListener("ended", function() {
-
-  localStorage.setItem("kh_s27_audio_completed", "1");
-
-  audioMessage.textContent =
-    "🎉 Nahrávka dokončena! Můžete pokračovat.";
-
-  audioError.classList.remove("visible");
-  nextSection.classList.add("visible");
-
-  nextSection.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
-  });
-
-});
-
-/* OBNOVENÍ TLAČÍTKA PO RELOADU */
-
-if (
-  localStorage.getItem("kh_s27_completed") === "1" &&
-  localStorage.getItem("kh_s27_audio_completed") === "1"
-) {
-
-  nextSection.classList.add("visible");
-
-}
-
-/* CHYBA NAČÍTÁNÍ NAHRÁVKY */
-
-krenAudio.addEventListener("error", function() {
-
-  if (solved) {
-
-    audioMessage.textContent =
-      "⚠️ Nahrávku se nepodařilo načíst.";
-
-    audioError.classList.add("visible");
 
   }
 
